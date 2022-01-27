@@ -278,6 +278,8 @@ table td { border: 1px solid #e8e8e8; }
 
 .justify { text-align: justify; }
 
+.center { text-align: center; }
+
 .news .title { font-size: 18px; color: black; }
 
 .news .date { font-size: 18px; color: #aaaaaa; }

@@ -16,6 +16,31 @@
 {"headline":"CAV2022","@type":"WebPage","url":"https://stlmc.github.io/cav2022/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+    inlineMath: [ ['$', '$'] ],
+    displayMath: [ ['$$', '$$'] ],
+    processEscapes: true,
+  }
+});
+MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
+	  alert("Math Processing Error: "+message[1]);
+	});
+MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
+	  alert("Math Processing Error: "+message[1]);
+	});
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+  
   
 </head>
 <body><header class="site-header" role="banner">
@@ -30,7 +55,7 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/example/">Example</a></div>
+        <div class="trigger"><a class="page-link" href="/benchmarks/">Benchmarks</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -38,9 +63,283 @@
         <div class="front">
 
   <div class="post-content justify">
-    <ul>
-  <li>techrep <a href="/assets/files/supp.pdf">supp.pdf</a></li>
+    <h4 id="documentation">Documentation</h4>
+<hr />
+
+<ul>
+  <li><a href="/assets/files/stlmc-techrep.pdf">Technical report</a> contains detailed explanations for <a href="#benchmark-models">benchmark models</a> and experimental results 
+(<a href="#experimental-results-rq1">RQ1</a>, <a href="#experimental-results-rq2">RQ2</a>).</li>
 </ul>
+
+<h4 id="benchmark-models">Benchmark Models</h4>
+<hr />
+
+<ul>
+  <li>Linear:
+    <ul>
+      <li>load management for two batteries ($\textsf{Bat}$) <a href="/benchmarks/battery.html">[here]</a>,</li>
+      <li>two networked watertank systems ($\textsf{Wat}$) <a href="/benchmarks/water.html">[here]</a>.</li>
+    </ul>
+  </li>
+  <li>Polynomial:
+    <ul>
+      <li>autonomous driving of two cars ($\textsf{Car}$) <a href="/benchmarks/car.html">[here]</a>.</li>
+      <li>a railroad gate controller ($\textsf{Rail}$) <a href="/benchmarks/railroad.html">[here]</a>.</li>
+    </ul>
+  </li>
+  <li>ODE:
+    <ul>
+      <li>two networked thermostats ($\textsf{Thm}$) <a href="/benchmarks/therm.html">[here]</a>,</li>
+      <li>a filtered oscillator ($\textsf{Oscil}$) <a href="/benchmarks/oscillator.html">[here]</a>.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="experimental-results-rq1">Experimental Results (RQ1)</h4>
+<hr />
+
+<p>We evaluate the effectiveness of the STLmc model checker using a number of hybrid system <a href="#benchmark-models">benchmarks</a>
+and nontrivial STL properties.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Label</th>
+      <th>$\epsilon$</th>
+      <th>$|\Psi|$</th>
+      <th>Time</th>
+      <th>Result</th>
+      <th>$k$</th>
+      <th>Alg.</th>
+      <th>#$\pi$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3">$\textsf{Bat}$</td>
+      <td>$\textsf{f1}$</td>
+      <td>$0.1$</td>
+      <td>$12,867$</td>
+      <td>$137$</td>
+      <td>$\top$</td>
+      <td>-</td>
+      <td>$\textsf{1-step}$</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f2}$</td>
+      <td>$3.5$</td>
+      <td>$2,762$</td>
+      <td>$5.71$</td>
+      <td>$\bot$</td>
+      <td>$5$</td>
+      <td>$\textsf{1-step}$</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f3}$</td>
+      <td>$0.1$</td>
+      <td>$3,763$</td>
+      <td>$22.1$</td>
+      <td>$\bot$</td>
+      <td>$8$</td>
+      <td>$\textsf{1-step}$</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td rowspan="3">$\textsf{Wat}$</td>
+      <td>$\textsf{f1}$</td>
+      <td>$2.5$</td>
+      <td>$18,848$</td>
+      <td>$26.2$</td>
+      <td>$\top$</td>
+      <td>-</td>
+      <td>$\textsf{1-step}$</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f2}$</td>
+      <td>$0.1$</td>
+      <td>$1,912$</td>
+      <td>$4.22$</td>
+      <td>$\bot$</td>
+      <td>$4$</td>
+      <td>$\textsf{1-step}$</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f3}$</td>
+      <td>$0.01$</td>
+      <td>$11,234$</td>
+      <td>$20.2$</td>
+      <td>$\top$</td>
+      <td>-</td>
+      <td>$\textsf{1-step}$</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td rowspan="3">$\textsf{Car}$</td>
+      <td>$\textsf{f1}$</td>
+      <td>$0.5$</td>
+      <td>$2,236$</td>
+      <td>$7.24$</td>
+      <td>$\bot$</td>
+      <td>$5$</td>
+      <td>$\textsf{1-step}$</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f2}$</td>
+      <td>$2.0$</td>
+      <td>$1,700$</td>
+      <td>$6.27$</td>
+      <td>$\bot$</td>
+      <td>$3$</td>
+      <td>$\textsf{1-step}$</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f3}$</td>
+      <td>$0.1$</td>
+      <td>$7,328$</td>
+      <td>$9.72$</td>
+      <td>$\top$</td>
+      <td>-</td>
+      <td>$\textsf{1-step}$</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td rowspan="3">$\textsf{Rail}$</td>
+      <td>$\textsf{f1}$</td>
+      <td>$1.0$</td>
+      <td>$2,344$</td>
+      <td>$3.43$</td>
+      <td>$\bot$</td>
+      <td>$5$</td>
+      <td>$\textsf{1-step}$</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f2}$</td>
+      <td>$5.0$</td>
+      <td>$3,814$</td>
+      <td>$0.86$</td>
+      <td>$\top$</td>
+      <td>-</td>
+      <td>$\textsf{1-step}$</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f3}$</td>
+      <td>$4.0$</td>
+      <td>$1,910$</td>
+      <td>$2.83$</td>
+      <td>$\bot$</td>
+      <td>$4$</td>
+      <td>$\textsf{1-step}$</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td rowspan="3">$\textsf{Thm}$</td>
+      <td>$\textsf{f1}$</td>
+      <td>$1.0$</td>
+      <td>$1,205$</td>
+      <td>$817$</td>
+      <td>$\top$</td>
+      <td>-</td>
+      <td>$\textsf{2-step}$</td>
+      <td>$3,646$</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f2}$</td>
+      <td>$2.0$</td>
+      <td>$744$</td>
+      <td>$7.46$</td>
+      <td>$\bot$</td>
+      <td>$2$</td>
+      <td>$\textsf{2-step}$</td>
+      <td>$47$</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f3}$</td>
+      <td>$2.0$</td>
+      <td>$1,150$</td>
+      <td>$59.3$</td>
+      <td>$\bot$</td>
+      <td>$4$</td>
+      <td>$\textsf{2-step}$</td>
+      <td>$212$</td>
+    </tr>
+    <tr>
+      <td rowspan="3">$\textsf{Oscil}$</td>
+      <td>$\textsf{f1}$</td>
+      <td>$0.1$</td>
+      <td>$1,543$</td>
+      <td>$110$</td>
+      <td>$\top$</td>
+      <td>-</td>
+      <td>$\textsf{2-step}$</td>
+      <td>$289$</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f2}$</td>
+      <td>$1.0$</td>
+      <td>$1,234$</td>
+      <td>$224$</td>
+      <td>$\bot$</td>
+      <td>$3$</td>
+      <td>$\textsf{2-step}$</td>
+      <td>$259$</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f3}$</td>
+      <td>$0.1$</td>
+      <td>$1,762$</td>
+      <td>$266$</td>
+      <td>$\bot$</td>
+      <td>$3$</td>
+      <td>$\textsf{2-step}$</td>
+      <td>$266$</td>
+    </tr>
+  </tbody>
+
+</table>
+
+<h4 id="experimental-results-rq2">Experimental Results (RQ2)</h4>
+<hr />
+
+<p>We evaluate the effectiveness of the parallelization by comparing 
+the non-parallelized to the parallelized $\textsf{2-step}$ algorithm, 
+applied on the same <a href="#benchmark-models">benchmarks</a>: $\textsf{Thm}$, $\textsf{Oscil}$, $\textsf{Robot}$, $\textsf{Card}$, and $\textsf{Space}$.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Label</th>
+      <th>$\epsilon$</th>
+      <th>$|\Psi|$</th>
+      <th>Time</th>
+      <th>Result</th>
+      <th>$k$</th>
+      <th>Alg.</th>
+      <th>#$\pi$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="/benchmarks/battery.html#stl-battery-auto">$\textsf{f1}$</a></td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
 
   </div>
 

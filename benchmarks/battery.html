@@ -3,17 +3,21 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>Example | STLMC</title>
+<title>Load Management for Two Batteries | STLMC</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="Example" />
+<meta property="og:title" content="Load Management for Two Batteries" />
 <meta property="og:locale" content="en_US" />
-<link rel="canonical" href="https://stlmc.github.io/example/" />
-<meta property="og:url" content="https://stlmc.github.io/example/" />
+<meta name="description" content="Load Management for Two Batteries" />
+<meta property="og:description" content="Load Management for Two Batteries" />
+<link rel="canonical" href="https://stlmc.github.io/benchmarks/battery.html" />
+<meta property="og:url" content="https://stlmc.github.io/benchmarks/battery.html" />
 <meta property="og:site_name" content="STLMC" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-01-28T01:20:33+09:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Example" />
+<meta property="twitter:title" content="Load Management for Two Batteries" />
 <script type="application/ld+json">
-{"headline":"Example","@type":"WebPage","url":"https://stlmc.github.io/example/","@context":"https://schema.org"}</script>
+{"headline":"Load Management for Two Batteries","dateModified":"2022-01-28T01:20:33+09:00","datePublished":"2022-01-28T01:20:33+09:00","description":"Load Management for Two Batteries","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://stlmc.github.io/benchmarks/battery.html"},"url":"https://stlmc.github.io/benchmarks/battery.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
     <script type="text/x-mathjax-config">
@@ -75,93 +79,241 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
         <div class="front">
 
   <div class="post-content justify">
-    <h4 id="a-thermostat-model">A thermostat model</h4>
+    <h4 id="load-management-for-two-batteries">Load Management for Two Batteries</h4>
 <hr />
 
-<p>Consider two rooms interconnected by an open door. 
-The temperature $x_i$ of each room, $i = 0, 1$, changes 
-depending on the heater’s mode $q_i \in {On, Off}$
-and the temperature of the other room.</p>
+<p>There are two fully charged batteries and a control system balancing the load between these batteries 
+to achieve longer lifetime (adapted from <a href="#ref1">[1]</a>).
+The total charge $g_i$ and kinetic energy $d_i$ of the battery $i = 1, 2$
+changes according to the controller’s modes: $\mathit{on}$ $\textsf{(On)}$, $\mathit{off}$ $\textsf{(Off)}$, and $\mathit{dead}$ $\textsf{(Dead)}$.
+The dynamics for each battery is given as follows:
+\begin{equation*}
+    \dot{d_i} = 
+    \begin{cases}
+        L/c - 0.5 d_i &amp; \textsf{(On)} \\<br />
+        - 0.5 d_i &amp; \textsf{(Off)} \\<br />
+        0 &amp; \textsf{(Dead)}
+    \end{cases}
+    \quad\quad\quad
+    \dot{g_i} = 
+    \begin{cases}
+        -L &amp; \textsf{(On)} \\<br />
+        0 &amp; \textsf{(Off)} \\<br />
+        0 &amp; \textsf{(Dead)}
+    \end{cases}
+\end{equation*}
+where $L$ is load of the battery and $c \in [0, 1]$ is a threshold constant. If the charge $g_i$ greater than $(1 - c)d_i$, the battery is dead.
+Otherwise, it can be either on or off.
+For simplification, we use the following dynamics:
+\begin{align*}
+    \dot{d_1} &amp;= 1,&amp; \dot{g_1} &amp;= -0.3,&amp; \dot{d_2} &amp;= 1,&amp; \dot{g_2} &amp;= -0.3 &amp; \textsf{(}\textsf{On}_{\textsf{1}}\textsf{On}_{\textsf{2}}\textsf{)} \\<br />
+    \dot{d_1} &amp;= 0.8,&amp; \dot{g_1} &amp;= -0.5,&amp; \dot{d_2} &amp;= -0.166,&amp; \dot{g_2} &amp;= 0 &amp; \textsf{(}\textsf{On}_{\textsf{1}}\textsf{Off}_{\textsf{2}}\textsf{)}  \\<br />
+    \dot{d_1} &amp;= -0.166,&amp; \dot{g_1} &amp;= 0,&amp; \dot{d_2} &amp;= 0.8,&amp; \dot{g_2} &amp;= -0.5 &amp; \textsf{(}\textsf{Off}_{\textsf{1}}\textsf{On}_{\textsf{2}}\textsf{)}  \\<br />
+    \dot{d_1} &amp;= 0.7,&amp; \dot{g_1} &amp;= -7,&amp; \dot{d_2} &amp;= 0,&amp; \dot{g_2} &amp;= 0 &amp; \textsf{(}\textsf{On}_{\textsf{1}}\textsf{Dead}_{\textsf{2}}\textsf{)}  \\<br />
+    \dot{d_1} &amp;= 0,&amp; \dot{g_1} &amp;= 0,&amp; \dot{d_2} &amp;= 0.7,&amp; \dot{g_2} &amp;= -7 &amp; \textsf{(}\textsf{Dead}_{\textsf{1}}\textsf{On}_{\textsf{2}}\textsf{)}  \\<br />
+    \dot{d_1} &amp;= 0,&amp; \dot{g_1} &amp;= 0,&amp; \dot{d_2} &amp;= 0,&amp; \dot{g_2} &amp;= 0 &amp; \textsf{(}\textsf{Dead}_{\textsf{1}}\textsf{Dead}_{\textsf{2}}\textsf{)} 
+\end{align*}</p>
 
-<p>The continuous dynamics of $x_i$ can be 
-specified as the ODEs:
-$\dot{x_i} =  K_i(h_i-(c_ix_i-d_ix_{1-i}))$
-for $On$, and $\dot{x_i} =  -K_i(c_ix_i-d_ix_{1-i})$
-for $Off$, where $K_i, h_i, c_i, d_i$ are determined by the size of the room, 
-the heater’s power, and the size of the door.</p>
+<p>Figure <a href="#battery-automata">[1]</a> shows a hybrid automaton of the battery system.
+The controller starts to use both batteries as an energy source, selecting
+at least one battery until both of them become dead.</p>
 
-<p><img src="/assets/img/thermo-auto.svg" alt="model" /></p>
+<p id="battery-automata"><img src="/assets/img/battery-auto.svg" alt="model" /></p>
+<p class="center">
+    <em>Fig.1: A hybrid automaton of the battery system</em>
+</p>
 
-<h4 id="an-stlmc-input-model">An STLmc input model</h4>
+<p>Table <a href="#stl-battery-auto">[1]</a> shows the STL properties.</p>
+
+<table id="stl-battery-auto">
+  <thead>
+    <tr>
+      <th>Label</th>
+      <th>STL formula</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$\textsf{f1}$</td>
+      <td>$\lozenge_{[4,10]} (d_2 \geq 4 \rightarrow \square_{[4,10]} (b_2 = 2))$</td>
+      <td>For some time point in interval $[4, 10]$, if $d_2$ is greater than or equal to $4$, then $b_2$ is always equal to $2$ during time interval $[4, 10]$.</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f2}$</td>
+      <td>$(\lozenge_{[1,5]} g_2 \leq 5) \mathbf{R}_{[5,20]} (d_2 \geq 4.5)$</td>
+      <td>Within time interval $[5,20]$, $d_2$ is greater than or equal to $4.5$ until $g_2$ is less than or equal to $5$ for some time point in interval $[1, 5]$.</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f3}$</td>
+      <td>$\square_{[4,14]}(g_2 &gt; 4 \rightarrow \lozenge_{[0, 10]} (d_2 &gt; 1))$</td>
+      <td>$g_1$ is greater than 1 for $4$ time units, until $d_1$ is greater than or equal to $2$</td>
+    </tr>
+  </tbody>
+</table>
+<p class="center">
+    <em>Table.1: STL properties for the battery system</em>
+</p>
+
+<h4 id="an-stlmc-input-model">An STLmc Input Model</h4>
 <hr />
 
-<p>We use the STLmc language to describe the thermostat model as follows:</p>
+<p>We use the STLmc language to describe the battery model (<a href="/assets/files/benchmarks/battery.model">battery.model</a>) as follows:</p>
 <pre>
-const k0 = 0.015;	const k1 = 0.045;
-const h0 = 100;	  	const h1 = 200;
-const c0 = 0.98;	const c1 = 0.97;
-const d0 = 0.01;	const d1 = 0.03;
-
-int on0;		int on1;
-[10, 35] x0;		[10, 35] x1;
-
-{ mode: on0 = 0;	on1 = 1;
-  inv:  10 &lt; x0;	x1 &lt; 30;
-  flow: 
-    d/dt[x0] = - k0 * (c0 * x0 - d0 * x1);
-    d/dt[x1] = k1 * (h1 - (c1 * x1 - d1 * x0));
-  jump: 
-    x0 &lt;= 17 =&gt; (and (on0' = 1) (on1' = 0)
-                     (x0' = x0) (x1' = x1));
-    x1 &gt;= 26 =&gt; (and (on1' = 0) (on0' = on0)
-                     (x0' = x0) (x1' = x1));
+real b1;    real b2;
+[0, 10] g1; [0, 10] g2;
+[0, 10] d2; [0, 10] d1;
+# 1: ON, 2: OFF, 3: DEAD 
+{ mode: b1 = 1; b2 = 1;
+  inv:  g1 &gt;= 0.5; g2 &gt;= 0.5;
+  flow: d/dt[d1] = 1; 
+        d/dt[d2] = 1;
+        d/dt[g1] = -0.3; 
+        d/dt[g2] = -0.3;
+  jump: g1 &gt;= 2 =&gt; (and (b1' = 1) (b2' = 2) 
+                        (d1' = d1) (d2' = d2) 
+                        (g1' = g1) (g2' = g2));
+        g1 &lt;= 1 =&gt; (and (b1' = 3) (b2' = 1) 
+                        (d1' = d1) (d2' = d2) 
+                        (g1' = g1) (g2' = g2));
+        g2 &gt;= 2 =&gt; (and (b1' = 2) (b2' = 1) 
+                        (d1' = d1) (d2' = d2) 
+                        (g1' = g1) (g2' = g2));
+        g2 &lt;= 1 =&gt; (and (b1' = 1) (b2' = 3) 
+                        (d1' = d1) (d2' = d2) 
+                        (g1' = g1) (g2' = g2));
 }
-
-{ mode: on0 = 1;	on1 = 0;
-  inv:  x0 &lt; 30;	x1 &gt; 10;
-  flow: 
-    d/dt[x0] = k0 * (h0 - (c0 * x0 - d0 * x1));
-    d/dt[x1] = - k1 * (c1 * x1 - d1 * x0);
-  jump: 
-    x1 &lt;= 16 =&gt; (and (on0' = 0) (on1' = 1)
-                     (x0' = x0) (x1' = x1));
-    x0 &gt;= 25 =&gt; (and (on0' = 0) (on1' = on1)
-                     (x0' = x0) (x1' = x1));
+{ mode: b1 = 1; b2 = 2;
+  inv:  g1 &gt;= 0.5;
+  flow: d/dt[d1] = 0.8; 
+        d/dt[d2] = -0.166;
+        d/dt[g1] = -0.5; 
+        d/dt[g2] = 0;
+  jump: g2 &gt;= 2 =&gt; (and (b1' = 2) (b2' = 1) 
+                        (d1' = d1) (d2' = d2) 
+                        (g1' = g1) (g2' = g2));
+        g1 &lt;= 1 =&gt; (and (b1' = 3) (b2' = 1) 
+                        (d1' = d1) (d2' = d2) 
+                        (g1' = g1) (g2' = g2));
 }
-
-{ mode: on0 = 0;	on1 = 0;
-  inv:  x0 &gt; 10;	x1 &gt; 10;
-  flow: 
-    d/dt[x0] = - k0 * (c0 * x0 - d0 * x1);
-    d/dt[x1] = - k1 * (c1 * x1 - d1 * x0);
+{ mode: b1 = 2; b2 = 1;
+  inv:  g2 &gt;= 0.5;
+  flow: d/dt[d1] = -0.166; 
+        d/dt[d2] = 0.8;
+        d/dt[g1] = 0; 
+        d/dt[g2] = -0.5;
+  jump: g1 &gt;= 2 =&gt; (and (b1' = 1) (b2' = 2) 
+                        (d1' = d1) (d2' = d2) 
+                        (g1' = g1) (g2' = g2));
+        g2 &lt;= 1 =&gt; (and (b1' = 1) (b2' = 3) 
+                        (d1' = d1) (d2' = d2) 
+                        (g1' = g1) (g2' = g2));
+}
+{ mode: b1 = 3; b2 = 1;
+  inv:  g1 &lt;= 1; g2 &gt;= 0.5;
+  flow: d/dt[d1] = 0; 
+        d/dt[d2] = 0.7;
+        d/dt[g1] = 0; 
+        d/dt[g2] = -7;
+  jump: g2 &lt;= 1 =&gt; (and (b1' = 3) (b2' = 3) 
+                        (d1' = d1) (d2' = d2) 
+                        (g1' = g1) (g2' = g2));
+}
+{ mode: b1 = 1; b2 = 3;
+  inv:  g1 &gt;= 0.5; g2 &lt;= 1;
+  flow: d/dt[d1] = 0.7; 
+        d/dt[d2] = 0; 
+        d/dt[g1] = -7; 
+        d/dt[g2] = 0;
+  jump: g1 &lt;= 1 =&gt; (and (b1' = 3) (b2' = 3) 
+                        (d1' = d1) (d2' = d2) 
+                        (g1' = g1) (g2' = g2));
+}
+{ mode: b1 = 3; b2 = 3;
+  inv:
+  flow: d/dt[d1] = 0; 
+        d/dt[d2] = 0;
+        d/dt[g1] = 0; 
+        d/dt[g2] = 0;
   jump:
-    x0 &lt;= 17 =&gt; (and (on0' = 1) (on1' = on1)
-                     (x0' = x0) (x1' = x1));
-    x1 &lt;= 16 =&gt; (and (on1' = 1) (on0' = on0)
-                     (x0' = x0) (x1' = x1));
 }
 
-init: on0 = 0;  18 &lt;= x0;  x0 &lt;= 22;
-      on1 = 0;  18 &lt;= x1;  x1 &lt;= 22;
-      
+init: b1 = 1; b2 = 1; 
+      0 &lt;= d1; d1 &lt;= 0.1; 8.4 &lt;= g1; g1 &lt;= 8.5; 
+      0 &lt;= d2; d2 &lt;= 0.1; 7.4 &lt;= g2; g2 &lt;= 7.5;
+
 proposition:
- [p1]: x0 - x1 &gt;= 4;    [p2]: x0 - x1 &lt;= -3;
-  
+
+# bound: 20, timebound: 30, solver: yices
 goal:
- [f1]: &lt;&gt;[0, 3](x0 &gt;= 13 U[0, inf) x1 &lt;= 22);
- [f2]: [][2, 4](p1 -&gt; &lt;&gt;[3, 10] p2);
+  [f1]: &lt;&gt;[4, 10] (d2 &gt;= 4 -&gt; [][4, 10] b2 = 2); # threshold: 0.1
+  [f2]: (&lt;&gt;[1, 5] g2 &lt;= 5) R[5, 20] (d2 &gt;= 4.5); # threshold: 3.5
+  [f3]: [][4, 14] (g2 &gt; 4 -&gt; &lt;&gt;[0, 10] d2 &gt; 1);  # threshold: 0.1
+
 </pre>
 
 <h4 id="run">Run</h4>
 <hr />
 
-<p>For the input model, the following command found a counterexample
-of an STL formula $\square_{[2, 4}((x_0 - x_1 \geq 4) \rightarrow \lozenge_{[3, 10]} (x_0 - x_1 \leq -3))$ at bound 2 with respect to $\epsilon=2$ in $83$ seconds using dReal.</p>
+<p>For the <a href="#an-stlmc-input-model">input model</a>, we use a time bound $\tau = 30$ and a discrete bound $N = 20$ as input parameters.
+Because the model has linear dynamics, we use $\textsf{yices}$ for an underlying solver with the default algorithm $\textsf{1-step}$.
+For the formulas $\textsf{f1}$, $\textsf{f2}$, and $\textsf{f3}$, we choose thresholds $\epsilon_1 = 0.1$, $\epsilon_2 = 3.5$, and $\epsilon_3 = 0.1$, respectively.</p>
+
+<p>The formula $\textsf{f1}$ is safe, while STLmc finds counterexamples for the two formulas: $\textsf{f2}$ and $\textsf{f3}$.
+The following command finds a counterexample of the formula $\textsf{f2}: (\lozenge_{[1,5]} g_2 \leq 5) \mathbf{R}_{[5,20]} (d_2 \geq 4.5)$ 
+at bound $5$ with respect to $\epsilon_2=3.5$ in $6$ seconds using yices.</p>
 
 <pre>
-./stlmc ./therm.model -bound 5 -time-bound 30 -threshold 2 \
-        -goal f2 -solver dreal -two-step -parallel -visualize
+./stlmc ./battery.model -bound 20 -time-bound 30 -threshold 3.5 \
+        -goal f2 -solver yices -visualize
 </pre>
+
+<table>
+  <thead>
+    <tr>
+      <th>Label</th>
+      <th>$\epsilon$</th>
+      <th>$| \Psi |$</th>
+      <th>Time</th>
+      <th>Result</th>
+      <th>$k$</th>
+      <th>Alg.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$\textsf{f1}$</td>
+      <td>$0.1$</td>
+      <td>$12.9$</td>
+      <td>$137$</td>
+      <td>$\top$</td>
+      <td>-</td>
+      <td>$\textsf{1-step}$</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f2}$</td>
+      <td>$3.5$</td>
+      <td>$2.76$</td>
+      <td>$5.71$</td>
+      <td>$\bot$</td>
+      <td>$5$</td>
+      <td>$\textsf{1-step}$</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f3}$</td>
+      <td>$0.1$</td>
+      <td>$3.8$</td>
+      <td>$22.1$</td>
+      <td>$\bot$</td>
+      <td>$8$</td>
+      <td>$\textsf{1-step}$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="center">
+    <em>Table.2: Verification results of the STL properties for the battery system</em>
+</p>
 
 <h4 id="visualization">Visualization</h4>
 <hr />
@@ -205,6 +357,11 @@ of an STL formula $\square_{[2, 4}((x_0 - x_1 \geq 4) \rightarrow \lozenge_{[3, 
 
 <div class="bk-root" id="c6017a4a-9e55-4830-82a0-3e598741a5be" data-root-id="1327"></div>
 
+<h4 id="reference">Reference</h4>
+<hr />
+
+<p id="ref1">[1]. Fox, M., Long, D., &amp; Magazzeni, D. (2012). Plan-based Policies for Efficient Multiple Battery Load Management. J. Artif. Intell. Res., 44, 335-382 
+(<a href="https://arxiv.org/pdf/1401.5859.pdf" target="_blank">arXiv</a>).</p>
 
   </div>
 

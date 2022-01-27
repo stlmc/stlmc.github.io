@@ -3,17 +3,21 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>Example | STLMC</title>
+<title>A Railroad Gate Controller | STLMC</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="Example" />
+<meta property="og:title" content="A Railroad Gate Controller" />
 <meta property="og:locale" content="en_US" />
-<link rel="canonical" href="https://stlmc.github.io/example/" />
-<meta property="og:url" content="https://stlmc.github.io/example/" />
+<meta name="description" content="A Railroad Gate Controller" />
+<meta property="og:description" content="A Railroad Gate Controller" />
+<link rel="canonical" href="https://stlmc.github.io/benchmarks/railroad.html" />
+<meta property="og:url" content="https://stlmc.github.io/benchmarks/railroad.html" />
 <meta property="og:site_name" content="STLMC" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-01-28T01:20:33+09:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Example" />
+<meta property="twitter:title" content="A Railroad Gate Controller" />
 <script type="application/ld+json">
-{"headline":"Example","@type":"WebPage","url":"https://stlmc.github.io/example/","@context":"https://schema.org"}</script>
+{"headline":"A Railroad Gate Controller","dateModified":"2022-01-28T01:20:33+09:00","datePublished":"2022-01-28T01:20:33+09:00","description":"A Railroad Gate Controller","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://stlmc.github.io/benchmarks/railroad.html"},"url":"https://stlmc.github.io/benchmarks/railroad.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
     <script type="text/x-mathjax-config">
@@ -75,93 +79,185 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
         <div class="front">
 
   <div class="post-content justify">
-    <h4 id="a-thermostat-model">A thermostat model</h4>
+    <h4 id="a-railroad-gate-controller">A Railroad Gate Controller</h4>
 <hr />
 
-<p>Consider two rooms interconnected by an open door. 
-The temperature $x_i$ of each room, $i = 0, 1$, changes 
-depending on the heater’s mode $q_i \in {On, Off}$
-and the temperature of the other room.</p>
+<p>There are a gate and a gate controller with a crossing bar on a circular railroad track and a train moves on the track. 
+The gate controller opens (or closes) the crossing bar when the train approaches to (or leaves from) the gate (adapted from <a href="#ref1">[1]</a>). 
+Figure <a href="#rail-automata">[1]</a> shows a hybrid automaton for this system. The position of the crossing bar $p_b$ from the ground changes according to the velocity of bar $v_b$,
+depending on the modes ($\textsf{Far}$, $\textsf{Approach}$, $\textsf{Close}$, and $\textsf{Past}$) of the gate controller and the distance $x$, between the gate and the train.</p>
 
-<p>The continuous dynamics of $x_i$ can be 
-specified as the ODEs:
-$\dot{x_i} =  K_i(h_i-(c_ix_i-d_ix_{1-i}))$
-for $On$, and $\dot{x_i} =  -K_i(c_ix_i-d_ix_{1-i})$
-for $Off$, where $K_i, h_i, c_i, d_i$ are determined by the size of the room, 
-the heater’s power, and the size of the door.</p>
+<p id="rail-automata" style="text-align: center;"><img src="/assets/img/rail-auto.svg" alt="model" /></p>
+<p class="center">
+    <em>Fig.1: A hybrid automaton of the railroad gate controller</em>
+</p>
 
-<p><img src="/assets/img/thermo-auto.svg" alt="model" /></p>
+<p>For each mode, we consider the following dynamics:
+\begin{align*}
+\dot{x} &amp;= -30,&amp; \dot{p}_b &amp;= v_b,&amp; \dot{v}_b &amp;= 0  &amp; \textsf{(Far)} \\<br />
+\dot{x} &amp;= -5,&amp; \dot{p}_b &amp;= v_b,&amp; \dot{v}_b &amp;= 0.3 &amp; \textsf{(Approach)} \\<br />
+\dot{x} &amp;= -5,&amp; \dot{p}_b &amp;= v_b,&amp; \dot{v}_b &amp;= 0.5 &amp; \textsf{(Close)} \\<br />
+\dot{x} &amp;= -5,&amp; \dot{p}_b &amp;= v_b,&amp; \dot{v}_b &amp;= -1 &amp; \textsf{(Past)}
+\end{align*}</p>
 
-<h4 id="an-stlmc-input-model">An STLmc input model</h4>
+<p>Table <a href="#stl-railroad-auto">[1]</a>
+shows the STL properties.</p>
+
+<table id="stl-railroad-auto">
+  <thead>
+    <tr>
+      <th>Label</th>
+      <th>STL formula</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$\textsf{f1}$</td>
+      <td>$\lozenge_{[0,5]} ((p_b \geq 40) \mathbf{U}_{[1,8]} (x &lt; 40))$</td>
+      <td>For some time point in interval $[0,5]$, $p_b$ is greater than or equal to $40$, until $x$ is less than $40$ during time interval $[1, 8]$.</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f2}$</td>
+      <td>$\lozenge_{[0,4]} (x &lt; 50 \to \square_{[2,10]} (p_b &gt; 40))$</td>
+      <td>Within $4$ time units, if $x$ is less than $50$, then $p_b$ is greater than $40$ for time interval $[2, 10]$.</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f3}$</td>
+      <td>$\square_{[0,5)} ((x &lt; 50) \mathbf{U}_{[2,10]} (p_b &gt; 5))$</td>
+      <td>During time interval $[0, 5)$, $x$ is less than $50$ until $p_b$ is greater than $5$ within time interval $[2, 10]$.</td>
+    </tr>
+  </tbody>
+</table>
+<p class="center">
+    <em>Table.1: STL properties for the railroad gate controller</em>
+</p>
+
+<h4 id="an-stlmc-input-model">An STLmc Input Model</h4>
 <hr />
 
-<p>We use the STLmc language to describe the thermostat model as follows:</p>
+<p>We use the STLmc language to describe the railroad model (<a href="/assets/files/benchmarks/railroad.model">railroad.model</a>) as follows:</p>
 <pre>
-const k0 = 0.015;	const k1 = 0.045;
-const h0 = 100;	  	const h1 = 200;
-const c0 = 0.98;	const c1 = 0.97;
-const d0 = 0.01;	const d1 = 0.03;
-
-int on0;		int on1;
-[10, 35] x0;		[10, 35] x1;
-
-{ mode: on0 = 0;	on1 = 1;
-  inv:  10 &lt; x0;	x1 &lt; 30;
-  flow: 
-    d/dt[x0] = - k0 * (c0 * x0 - d0 * x1);
-    d/dt[x1] = k1 * (h1 - (c1 * x1 - d1 * x0));
-  jump: 
-    x0 &lt;= 17 =&gt; (and (on0' = 1) (on1' = 0)
-                     (x0' = x0) (x1' = x1));
-    x1 &gt;= 26 =&gt; (and (on1' = 0) (on0' = on0)
-                     (x0' = x0) (x1' = x1));
+bool a;    bool b;
+[-20, 100] x; [0, 90] pb; [-50, 50] vb;
+# far
+{ mode: a = false; b = false;
+  inv:  x &gt; 60;
+  flow: d/dt[x] = -30; 
+        d/dt[pb] = vb;
+        d/dt[vb] = 0;
+  jump: x &lt; 80 =&gt; (and (a' = a) (b' = true) 
+                       (pb' = pb) (x' = x) 
+                       (vb' = 6));
+        x &lt; 70 =&gt; (and (a' = true) (b' = b) 
+                       (pb' = pb) 
+                       (x' = x) (vb' = 8));
 }
-
-{ mode: on0 = 1;	on1 = 0;
-  inv:  x0 &lt; 30;	x1 &gt; 10;
-  flow: 
-    d/dt[x0] = k0 * (h0 - (c0 * x0 - d0 * x1));
-    d/dt[x1] = - k1 * (c1 * x1 - d1 * x0);
-  jump: 
-    x1 &lt;= 16 =&gt; (and (on0' = 0) (on1' = 1)
-                     (x0' = x0) (x1' = x1));
-    x0 &gt;= 25 =&gt; (and (on0' = 0) (on1' = on1)
-                     (x0' = x0) (x1' = x1));
+# approach
+{ mode: a = false; b = true;
+  inv:  x &gt; 20;
+  flow: d/dt[x] = -5; 
+        d/dt[pb] = vb;
+        d/dt[vb] = 0.3;
+  jump: x &lt; 80 =&gt; (and (a' = true) (b' = false) 
+                       (pb' = pb) 
+                       (x' = x) (vb' = vb));
 }
-
-{ mode: on0 = 0;	on1 = 0;
-  inv:  x0 &gt; 10;	x1 &gt; 10;
-  flow: 
-    d/dt[x0] = - k0 * (c0 * x0 - d0 * x1);
-    d/dt[x1] = - k1 * (c1 * x1 - d1 * x0);
-  jump:
-    x0 &lt;= 17 =&gt; (and (on0' = 1) (on1' = on1)
-                     (x0' = x0) (x1' = x1));
-    x1 &lt;= 16 =&gt; (and (on1' = 1) (on0' = on0)
-                     (x0' = x0) (x1' = x1));
+# close
+{ mode: a = true; b = false;
+  inv:  x &gt; 10;
+  flow: d/dt[x] = -5; 
+        d/dt[pb] = vb;
+        d/dt[vb] = 0.5;
+  jump: x &lt; 20 =&gt; (and (a' = a) (b' = true)
+                       (pb' = pb) 
+                       (x' = x) (vb' = -4));
 }
+# past
+{ mode: a = true; b = true;
+  inv:  x &gt; -10;
+  flow: d/dt[x] = -5; 
+        d/dt[pb] = vb;
+        d/dt[vb] = -1;
+  jump: (x &lt; 0) =&gt; (and (a' = false) 
+                        (b' = false) 
+                        (pb' = pb) (vb' = 0)
+                        (x' = 100 + x));
+}
+init: a = false; 89 &lt;= x; x &lt;= 90;
+      b = false; 0 &lt;= pb; pb &lt;= 0.5; 
+      vb = 0;
 
-init: on0 = 0;  18 &lt;= x0;  x0 &lt;= 22;
-      on1 = 0;  18 &lt;= x1;  x1 &lt;= 22;
-      
 proposition:
- [p1]: x0 - x1 &gt;= 4;    [p2]: x0 - x1 &lt;= -3;
-  
+
+# bound: 10, timebound 20, solver: yices
 goal:
- [f1]: &lt;&gt;[0, 3](x0 &gt;= 13 U[0, inf) x1 &lt;= 22);
- [f2]: [][2, 4](p1 -&gt; &lt;&gt;[3, 10] p2);
+  [f1]: &lt;&gt;[0, 5] ((pb &gt;= 40) U[1, 8] (x &lt; 40));	  # threshold: 1.0
+  [f2]: &lt;&gt;[0, 4](x &lt; 50 -&gt; [][2,10] pb &gt; 40);	  # threshold: 5.0
+  [f3]: [][0.0,5.0) ((x &lt; 50) U[2, 10] (pb &gt; 5)); # threshold: 4.0
 </pre>
 
 <h4 id="run">Run</h4>
 <hr />
 
-<p>For the input model, the following command found a counterexample
-of an STL formula $\square_{[2, 4}((x_0 - x_1 \geq 4) \rightarrow \lozenge_{[3, 10]} (x_0 - x_1 \leq -3))$ at bound 2 with respect to $\epsilon=2$ in $83$ seconds using dReal.</p>
+<p>For the <a href="#an-stlmc-input-model">input model</a>, we use a time bound $\tau = 20$ and a discrete bound $N = 10$ as input parameters.
+Because the model has nonlinear polynomial dynamics, we use $\textsf{yices}$ for an underlying solver with the default algorithm $\textsf{1-step}$.
+For the formulas $\textsf{f1}$, $\textsf{f2}$, and $\textsf{f3}$, we choose thresholds $\epsilon_1 = 1.0$, $\epsilon_2 = 5.0$, and $\epsilon_3 = 4.0$, respectively.</p>
+
+<p>STLmc finds counterexamples for $\textsf{f1}$ and $\textsf{f3}$, while $\textsf{f2}$ is safe.
+The following shows the command finding a counterexample for the STL formula $\textsf{f1}: \lozenge_{[0,5]} ((p_b \geq 40) \mathbf{U}_{[1,8]} (x &lt; 40))$ at bound $5$ with respect to $\epsilon_1=1.0$ in $4$ seconds using yices.</p>
 
 <pre>
-./stlmc ./therm.model -bound 5 -time-bound 30 -threshold 2 \
-        -goal f2 -solver dreal -two-step -parallel -visualize
+./stlmc ./railroad.model -bound 10 -time-bound 20 -threshold 1.0 \
+        -goal f1 -solver yices -visualize
 </pre>
+
+<table>
+  <thead>
+    <tr>
+      <th>Label</th>
+      <th>$\epsilon$</th>
+      <th>$| \Psi |$</th>
+      <th>Time</th>
+      <th>Result</th>
+      <th>$k$</th>
+      <th>Alg.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$\textsf{f1}$</td>
+      <td>$1.0$</td>
+      <td>$2.3$</td>
+      <td>$3.43$</td>
+      <td>$\bot$</td>
+      <td>$5$</td>
+      <td>$\textsf{1-step}$</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f2}$</td>
+      <td>$5.0$</td>
+      <td>$3.8$</td>
+      <td>$0.86$</td>
+      <td>$\top$</td>
+      <td>-</td>
+      <td>$\textsf{1-step}$</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f3}$</td>
+      <td>$4.0$</td>
+      <td>$1.9$</td>
+      <td>$2.83$</td>
+      <td>$\bot$</td>
+      <td>$4$</td>
+      <td>$\textsf{1-step}$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="center">
+    <em>Table.2: Verification results of the STL properties for the railroad gate controller</em>
+</p>
 
 <h4 id="visualization">Visualization</h4>
 <hr />
@@ -205,6 +301,10 @@ of an STL formula $\square_{[2, 4}((x_0 - x_1 \geq 4) \rightarrow \lozenge_{[3, 
 
 <div class="bk-root" id="c6017a4a-9e55-4830-82a0-3e598741a5be" data-root-id="1327"></div>
 
+<h4 id="reference">Reference</h4>
+<hr />
+
+<p id="ref1">[1]. Henzinger T.A. (2000) The Theory of Hybrid Automata. In: Inan M.K., Kurshan R.P. (eds) Verification of Digital and Hybrid Systems. NATO ASI Series (Series F: Computer and Systems Sciences), vol 170. Springer, Berlin, Heidelberg. <a href="https://doi.org/10.1007/978-3-642-59615-5_13" target="_blank">https://doi.org/10.1007/978-3-642-59615-5_13</a></p>
 
   </div>
 
