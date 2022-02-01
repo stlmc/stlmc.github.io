@@ -63,39 +63,27 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
         <div class="front">
 
   <div class="post-content justify">
-    <h4 id="documentation">Documentation</h4>
+    <h4 id="technical-report">Technical Report</h4>
 <hr />
 
 <ul>
-  <li><a href="/assets/files/stlmc-techrep.pdf">Technical report</a> contains detailed explanations for <a href="#benchmark-models">benchmark models</a> and experimental results 
-(<a href="#experimental-results-rq1">RQ1</a>, <a href="#experimental-results-rq2">RQ2</a>).</li>
+  <li>Technical report contains detailed explanations for <a href="#benchmark-models">benchmark models</a> and experimental results.</li>
+  <li><a href="/assets/files/stlmc-techrep.pdf">stlmc-techrep.pdf</a></li>
 </ul>
 
 <h4 id="benchmark-models">Benchmark Models</h4>
 <hr />
 
 <ul>
-  <li>Linear:
-    <ul>
-      <li>load management for two batteries ($\textsf{Bat}$) <a href="/benchmarks/battery.html">[here]</a>,</li>
-      <li>two networked watertank systems ($\textsf{Wat}$) <a href="/benchmarks/water.html">[here]</a>.</li>
-    </ul>
-  </li>
-  <li>Polynomial:
-    <ul>
-      <li>autonomous driving of two cars ($\textsf{Car}$) <a href="/benchmarks/car.html">[here]</a>.</li>
-      <li>a railroad gate controller ($\textsf{Rail}$) <a href="/benchmarks/railroad.html">[here]</a>.</li>
-    </ul>
-  </li>
-  <li>ODE:
-    <ul>
-      <li>two networked thermostats ($\textsf{Thm}$) <a href="/benchmarks/therm.html">[here]</a>,</li>
-      <li>a filtered oscillator ($\textsf{Oscil}$) <a href="/benchmarks/oscillator.html">[here]</a>.</li>
-    </ul>
-  </li>
+  <li><a href="/benchmarks/battery.html">Load Management for Two Batteries</a>,</li>
+  <li><a href="/benchmarks/water.html">Two Networked Water Tank Systems</a>.</li>
+  <li><a href="/benchmarks/car.html">Autonomous Driving of Two Cars</a>.</li>
+  <li><a href="/benchmarks/railroad.html">A Railroad Gate Controller</a>.</li>
+  <li><a href="/benchmarks/therm.html">Two Networked Thermostats</a>,</li>
+  <li><a href="/benchmarks/oscillator.html">A Filtered Oscillator</a>.</li>
 </ul>
 
-<h4 id="experimental-results-rq1">Experimental Results (RQ1)</h4>
+<h4 id="experimental-results">Experimental Results</h4>
 <hr />
 
 <p>We evaluate the effectiveness of the STLmc model checker using a number of hybrid system <a href="#benchmark-models">benchmarks</a>
@@ -304,40 +292,6 @@ and nontrivial STL properties.</p>
     </tr>
   </tbody>
 
-</table>
-
-<h4 id="experimental-results-rq2">Experimental Results (RQ2)</h4>
-<hr />
-
-<p>We evaluate the effectiveness of the parallelization by comparing 
-the non-parallelized to the parallelized $\textsf{2-step}$ algorithm, 
-applied on the same <a href="#benchmark-models">benchmarks</a>: $\textsf{Thm}$, $\textsf{Oscil}$, $\textsf{Robot}$, $\textsf{Card}$, and $\textsf{Space}$.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Label</th>
-      <th>$\epsilon$</th>
-      <th>$|\Psi|$</th>
-      <th>Time</th>
-      <th>Result</th>
-      <th>$k$</th>
-      <th>Alg.</th>
-      <th>#$\pi$</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="/benchmarks/battery.html#stl-battery-auto">$\textsf{f1}$</a></td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-  </tbody>
 </table>
 
 
