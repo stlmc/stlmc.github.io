@@ -288,6 +288,12 @@ table td { border: 1px solid #e8e8e8; }
 
 .front-wrapper { margin-left: 0; margin-right: 0; }
 
+.navbar_wrapper { max-width: -webkit-calc(800px - (30px)); max-width: calc(800px - (30px)); float: none; display: block; text-align: center; margin: 0 auto; }
+
+.navbar_wrapper ul { text-align: left; }
+
+@media (min-width: calc(800px + 400px)) { .navbar_wrapper { width: 200px; left: calc((100vw - 800px) / 2 - 200px); left: -webkit-calc((100vw - 800px) / 2 - 200px); top: calc((30px * 1.865) + (30px * 2)); top: -webkit-calc((30px * 1.865) + (30px * 2)); height: auto; position: fixed; } .navbar_wrapper ul { list-style-type: none; text-align: left; } }
+
 @media (min-width: 800px) { .front-wrapper { margin-left: -webkit-calc((100vw - 800px) / 2); margin-left: calc((100vw - 800px) / 2); margin-right: -webkit-calc((100vw - 800px) / 2); margin-right: calc((100vw - 800px) / 2); } }
 
 .banner-wrapper { max-width: -webkit-calc(800px - (30px)); max-width: calc(800px - (30px)); float: none; display: block; text-align: center; margin: 0 auto; }

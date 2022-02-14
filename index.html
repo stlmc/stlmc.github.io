@@ -30,7 +30,7 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/benchmarks/">Benchmarks</a></div>
+        <div class="trigger"><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -48,16 +48,8 @@
 v 1.0.0
 </pre>
 
-<p><strong>STLmc</strong> is a bounded model checking tool for signal temporal logic (STL) of hybrid system. The algorithm of the tool is refutationally complete for STL properties of bounded signal. It encodes STL bounded model checking problems as the reductions into the satisfiability of a first-order logic formula over the real numbers. The satisfiability of the resulting formula can be determined using <strong>Z3</strong> or <strong>Yices</strong> SMT solvers. STLmc supports language to describe hybrid automata and STL formulas. It searched a concrete counterexample that falsifies the given STL formula and if a counterexample is exist, it generates a graph of the counterexample.</p>
+<p><strong>STLmc</strong> is a bounded model checker for signal temporal logic (STL) of hybrid systems. The algorithm of the tool is refutationally complete for STL properties of bounded signals. It reduces bounded STL model checking problems into the satisfiability of a first-order logic formula over the reals. The satisfiability of the formula can be determined using SMT solvers (<strong>Z3</strong>, <strong>Yices2</strong>, or <strong>dReal3</strong>). STLmc supports an input modelling language to describe hybrid automata and STL properties. The tool searches for counterexample trajectories that falsify the given STL formulas and if counterexamples exist, the tool generates counterexample graphs.</p>
 
-<h4 id="quick-installation">Quick Installation</h4>
-
-<p>An easy way to install STLmc is to use a python package manager.</p>
-<pre>
-pip install -i https://test.pypi.org/simple/ stlmc==0.1.0.dev4
-</pre>
-
-<p>The latest stable version of the tool is available at <a href="https://github.com/stlmc/stlmc/tree/ase2021">here</a>.</p>
 
   </div>
 
