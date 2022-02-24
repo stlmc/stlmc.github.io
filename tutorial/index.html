@@ -81,7 +81,6 @@ The tutorial consists of the following sections:</p>
   <li><a href="#prerequisite">Prerequisite</a></li>
   <li><a href="#two-networked-thermostat-systems">Two Networked Thermostat Systems</a></li>
   <li><a href="#stlmc-input-model">STLmc Input Model</a></li>
-  <li><a href="#command-line-options">Command Line Options</a></li>
   <li><a href="#running-the-stlmc-tool">Running the STLmc Tool</a></li>
   <li><a href="#analyzing-the-counterexample">Analyzing the Counterexample</a></li>
 </ol>
@@ -89,54 +88,40 @@ The tutorial consists of the following sections:</p>
 <h4 id="prerequisite">Prerequisite</h4>
 <hr />
 
-<ul>
-  <li>Download the STLmc tool, following <a href="/download/">the instructions</a>.
+<p>Before the tutorial, please download the STLmc tool, following <a href="/download/">the instructions</a>.
 The tool is available for Linux (64-bit) and macOS (64-bit). 
-<br /></li>
-</ul>
+<br /></p>
 
 <h4 id="two-networked-thermostat-systems">Two Networked Thermostat Systems</h4>
 <hr />
 
-<p>Consider two rooms interconnected by an open door.
-The temperature $x_i$ of each room, $i = 0, 1$, changes
-depending on the heater’s mode $q_i \in \{\textsf{On}, \textsf{Off}\}$
-and the temperature of the other room.</p>
-
-<p>Figure <a href="#therm-automata">[1]</a> shows a hybrid automaton of thermostat controllers.
-Initially, both heaters are off and the temperatures are between $18$ and $22$.
-The jumps between modes then define a control logic to keep the temperatures within a certain range with only one heater on.</p>
+<p>We consider the following hybrid automaton (Figure <a href="#therm-automata">[1]</a>) with three STL properties (Table <a href="#stl-thermo-auto">[1]</a>).
+To see detailed explanation of the model and properties, please refer to <a href="/benchmarks/therm.html">this page</a>.</p>
 
 <p id="therm-automata"><img src="/assets/img/thermo-auto.svg" alt="model" /></p>
 <p class="center">
     <em>Fig.1: A hybrid automaton of thermostat controllers</em>
 </p>
 
-<p>We use three STL properties of Table <a href="#stl-thermo-auto">[1]</a>.</p>
-
 <table id="stl-thermo-auto">
   <thead>
     <tr>
       <th>Label</th>
       <th>STL formula</th>
-      <th>Description</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>$\textsf{f1}$</td>
       <td>$\lozenge_{[0,3]} ((x_0 \geq 13) \mathbf{U}_{[1,\infty)} (x_1 &lt; 22))$</td>
-      <td>For some time point in interval $[0,3]$, $x_0$ is greater than or equal to $13$, until $x_1$ is less than $22$ during time interval $[1, \infty)$.</td>
     </tr>
     <tr>
       <td>$\textsf{f2}$</td>
       <td>$\square_{[2,4]} ((x_0 - x_1 \geq 4) \to \lozenge_{[3,10]} (x_0 - x_1 \leq -3))$</td>
-      <td>During time interval $[2, 4]$, if $x_0 - x_1$ is greater than or equal to $4$ then $x_0 - x_1$ is less than or equal to $-3$ for some time point in time interval $[3, 10]$.</td>
     </tr>
     <tr>
       <td>$\textsf{f3}$</td>
       <td>$\square_{[0,10)} ((x_0 - x_1 \geq 4) \mathbf{R}_{[0,\infty)} (x_0 - x_1 \leq -3))$</td>
-      <td>For the first $5$ time units, $x_0 - x_1$ is less than or equal to $-3$ until $x_0 - x_1$ is greater than or equal to $4$ within time interval $[0, \infty)$.</td>
     </tr>
   </tbody>
 </table>
@@ -147,105 +132,8 @@ The jumps between modes then define a control logic to keep the temperatures wit
 <h4 id="stlmc-input-model">STLmc Input Model</h4>
 <hr />
 
-<p>The input format of STLmc consists of five sections:
-(i) <a href="#variable-declarations">variable declarations</a>, (ii) <a href="#mode-definitions">mode definitions</a>, 
-(iii) <a href="#initial-conditions">initial conditions</a>, (iv) <a href="#state-propositions">state propositions</a>, and (v) <a href="#stl-properties">STL properties</a>. 
-Mode and continuous variables specify discrete and continuous
-states of hybrid automata. Mode definitions specify flow, jump, and invariant
-conditions. STL formulas can also include user-defined state propositions.</p>
+<p>The following code shows the STLmc input model of the above <a href="#two-networked-thermostat-systems">two thermostat controllers</a>:</p>
 
-<p><strong id="variable-declarations">Variable Declarations.</strong>
-STLmc uses mode and continuous variables to specify
-discrete and continuous states of a hybrid automaton. Mode variables define a
-set of discrete modes $Q$, and continuous variables define a set of real-valued
-variables $X$. We can also declare named constants whose values do not change.
-Mode variables are declared with one of three types: $\textsf{bool}$ variables with $\textsf{true}$
-and $\textsf{false}$ values, $\textsf{int}$ variables with integer values, and $\textsf{real}$ variables with real
-values. For example, in the <a href="#two-networked-thermostat-systems">thermostat model</a>, the following declares two $\textsf{int}$ variables $\textsf{on0}$ and $\textsf{on1}$ and two $\textsf{real}$ variables $\textsf{x0}$ and $\textsf{x1}$.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int on0;         int on1;
-[10, 35] x0; [10, 35] x1;
-</code></pre></div></div>
-
-<p><strong id="mode-definitions">Mode Definitions.</strong>
-In STLmc, mode blocks define mode, jump, invariant, and
-flow conditions for a group of modes in a hybrid automaton. Multiple model
-blocks can be declared, and each mode block consists of four components:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ mode: ...
-  inv:  ...
-  flow: ...
-  jump: ...
-}
-</code></pre></div></div>
-<ul>
-  <li>A mode component contains a semicolon-separated set of Boolean conditions over mode variables.</li>
-  <li>An inv component contains a semicolon-separated set of Boolean formulas over continuous variables.</li>
-  <li>
-    <p>A flow component contains either a system of ordinary differential equations
-(ODEs) or a closed-form solution of ODEs. In STLmc, a system of ODEs over
-continuous variables $x_1$, $…$ , $x_n$ is written as a semicolon-separated equation of
-the following form, where $e_i$ denotes an expression over $x_1$, $…$ , $x_n$:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>d/dt[x1] = e1(x1,...,xn) ;
-...
-d/dt[xn] = en(x1,...,xn) ;
-</code></pre></div>    </div>
-    <p>A closed-form solution of ODEs is written as a set of continuous functions,
-parameterized by a time variable $\textsf{t}$ and the initial values $x_1(0)$, $…$, $x_n(0)$:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x1(t) = e1(t, x1(0),...,xn(0)) ;
-...
-xn(t) = en(t, x1(0),...,xn(0)) ;
-</code></pre></div>    </div>
-  </li>
-  <li>A jump component contains a set of jump conditions <em>guard</em> =&gt; <em>reset</em>, where 
-guard and reset are Boolean conditions over mode and continuous variables.
-We use “primed” variables to denote states after jumps have occurred</li>
-</ul>
-
-<p>For example, the $\textsf{Off}_{\textsf{0}}\textsf{On}_{\textsf{1}}$ mode is defined as follows:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ mode: on0 = 0; on1 = 1;
-  inv: 10 &lt; x0; x1 &lt; 30;
-  flow: d/dt[x0] = - k0 * (c0 * x0 - d0 * x1);
-        d/dt[x1] = k1 * (h1 - (c1 * x1 - d1 * x0));
-  jump: x0 &lt;= 17 =&gt; (and (on0' = 1) (on1' = 0)
-                    (x0' = x0) (x1' = x1));
-        x1 &gt;= 26 =&gt; (and (on1' = 0) (on0' = on0)
-                    (x0' = x0) (x1' = x1));
-}
-</code></pre></div></div>
-
-<p><strong id="initial-conditions">Initial Conditions.</strong>
-In the init section, an initial condition is declared as a
-set of Boolean formulas over mode and continuous variables.
-For example, the initial conditions $18 \leq x_0 \, , \, x_1 \leq 22$ with 
-$\textsf{on0} = 0$ and $\textsf{on1} = 0$ are defined as follows:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>init: on0 = 0;  18 &lt;= x0;  x0 &lt;= 22;
-      on1 = 0;  18 &lt;= x1;  x1 &lt;= 22;
-</code></pre></div></div>
-
-<p><strong id="stl-properties">STL properties.</strong>
-In the goal section, STL properties are declared with labels.
-State propositions are arithmetic and relational expressions over mode and continuous variables, 
-and labels can be omitted.<br />
-For example, the following declares an STL formula 
-$\square_{[2,4]} ((x_0 - x_1 \geq 4) \to \lozenge_{[3,10]} (x_0 - x_1 \leq -3))$ with label $\textsf{f2}$:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f2: [][2, 4]((x0 - x1 &gt;= 4) -&gt; &lt;&gt;[3, 10] (x0 - x1 &lt;= -3));
-</code></pre></div></div>
-
-<p><strong id="state-propositions">State Propositions.</strong>
-To make it easy to write repeated propositions, “named” state propositions
-can be declared in the proposition section. For example, the above STL formula
-can be rewritten using two propositions $\textsf{p1}$ and $\textsf{p2}$ as follows:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>proposition:
-[p1]: x0 - x1 &gt;= 4;
-[p2]: x0 - x1 &lt;= -3;
-
-goal:
-[f2]: [][2, 4](p1 -&gt; &lt;&gt;[3, 10] p2);
-</code></pre></div></div>
-
-<p>The full input model with <a href="#stl-thermo-auto">three STL properites</a> are defined as follows:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int on0;		int on1;
 [10, 35] x0;		[10, 35] x1;
 const k0 = 0.015;	const k1 = 0.045;
@@ -297,98 +185,16 @@ goal:
   [f3]: [][0,10] (x0 &gt; 23 R[0,inf) p1);		# threshold: 2.0
 </code></pre></div></div>
 
-<h4 id="command-line-options">Command Line Options</h4>
-<hr />
-
-<p>The STLmc tool provides a command-line interface with various command line options,
-summarized in Table [<a href="#cmds">2</a>].</p>
-
-<table id="cmds">
-  <thead>
-    <tr>
-      <th>Option</th>
-      <th>Explanation</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>$\textsf{-bound}&lt;N&gt;$</td>
-      <td>a discrete bound $N$</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td>$\textsf{-time-bound}&lt;\tau&gt;$</td>
-      <td>a time bound $\tau$</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td>$\textsf{-time-horizon}&lt;T&gt;$</td>
-      <td>a mode duration bound $T$</td>
-      <td>$\tau$</td>
-    </tr>
-    <tr>
-      <td>$\textsf{-threshold}&lt;\epsilon&gt;$</td>
-      <td>a robustness threshold $\epsilon$</td>
-      <td>$0.01$</td>
-    </tr>
-    <tr>
-      <td>$\textsf{-goal}&lt;N&gt;$</td>
-      <td>the list of STL goals to be analyzed</td>
-      <td>all</td>
-    </tr>
-    <tr>
-      <td>$\textsf{-two-step}$</td>
-      <td>use the two-phase optimization</td>
-      <td>disabled</td>
-    </tr>
-    <tr>
-      <td>$\textsf{-parallel}$</td>
-      <td>parallelize the two-phase optimization</td>
-      <td>disabled</td>
-    </tr>
-    <tr>
-      <td>$\textsf{-visualization}$</td>
-      <td>generate extra visualization data</td>
-      <td>disabled</td>
-    </tr>
-    <tr>
-      <td>$\textsf{-solver}&lt;\textsf{Solver}&gt;$</td>
-      <td>an SMT solver to be used ($\textsf{z3}$/$\textsf{yices}$/$\textsf{dreal}$)</td>
-      <td>$\textsf{z3}$</td>
-    </tr>
-    <tr>
-      <td>$\textsf{-precision}&lt;\delta&gt;$</td>
-      <td>a precision parameter for $\textsf{dreal}$</td>
-      <td>$0.001$</td>
-    </tr>
-  </tbody>
-</table>
-<p class="center">
-    <em>Table.2: The command line options of STLmc</em>
-</p>
-
-<p>A discrete bound $N$ limits the number of mode changes and
-the number of <em>variable points</em>-at which the truth value of some STL subformula changes-in trajectories.
-A time horizon $T$ limits the maximum time duration of single modes in trajectories.
-The options $\textsf{-two-step}$ and $\textsf{-parallel}$ enable the (parallelized) two-phase optimization.
-When the option $\textsf{-visualize}$ is set, extra data for visualization is generated. 
-Among the STL formulas specified in the input model file, formulas to be analyzed are chosen using the $\textsf{-goal}$.</p>
-
-<p>We can choose different SMT solvers using the $\textsf{-solver}$ option.
-The STLmc tool currently supports three SMT solvers: Z3, Yices2 and dReal.
-The underlying solver is chosen depending on the flow conditions of a hybrid automaton.
-Z3 and Yices2 can deal with linear and polynomial functions, and dReal
-can deal with nonlinear ODEs-which is undecidable in general for hybrid automata-approximately up to a given precision 
-$\delta &gt; 0$.</p>
+<p>We use the STLmc modelling language 
+to specify <a href="#thermo-automata">the model</a> and its <a href="#stl-thermo-auto">properties</a>. 
+To see more detailed explanation of the langauge, 
+please refer to our <a href="/assets/files/stlmc-techrep.pdf">technical report</a> or
+<a href="/stlmc-language/">this page</a>.</p>
 
 <h4 id="running-the-stlmc-tool">Running the STLmc Tool</h4>
 <hr />
 
-<p>We can run the STLmc tool using the following command:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./stlmc [model file] [option1] [option2] ...
-</code></pre></div></div>
-<p>For example, we can run the STLmc tool for the $\textsf{f2}$ formula of the <a href="#two-networked-thermostat-systems">thermostat model</a> with a time bound $\tau = 30$, a discrete bound $N = 5$, and a threshold $\epsilon_2 = 2.0$ as input parameters as follows:</p>
+<p>We can run the STLmc tool for the $\textsf{f2}$ formula of the <a href="#two-networked-thermostat-systems">thermostat model</a> with a time bound $\tau = 30$, a discrete bound $N = 5$, and a threshold $\epsilon_2 = 2.0$ as input parameters as follows:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./stlmc ./therm.model -bound 5 -time-bound 30 -threshold 2 \
         -goal f2 -solver dreal -two-step -parallel -visualize
 </code></pre></div></div>
@@ -398,6 +204,11 @@ $\textsf{2-step}$.
 For efficient model checking, we use the $\textsf{parallel}$ option.
 For the formulas $\textsf{f1}$ and $\textsf{f3}$, 
 we choose thresholds $\epsilon_1 = 1.0$ and $\epsilon_3 = 2.0$, respectively.</p>
+
+<p>We can run the STLmc tool using the following command:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./stlmc [model file] [option1] [option2] ...
+</code></pre></div></div>
+<p>To see more command line options, use <em>./stlmc -h</em> or refer to <a href="/stlmc-cmds/">this page</a></p>
 
 <h4 id="analyzing-the-counterexample">Analyzing the Counterexample</h4>
 <hr />
