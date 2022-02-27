@@ -96,7 +96,7 @@ The tool is available for Linux (64-bit) and macOS (64-bit).
 <hr />
 
 <p>We consider the following hybrid automaton (Figure <a href="#therm-automata">[1]</a>) with three STL properties (Table <a href="#stl-thermo-auto">[1]</a>).
-To see detailed explanation of the model and properties, please refer to <a href="/benchmarks/therm.html">this page</a>.</p>
+To see the detailed explanation of the model and properties, please refer to <a href="/benchmarks/therm.html">this page</a>.</p>
 
 <p id="therm-automata"><img src="/assets/img/thermo-auto.svg" alt="model" /></p>
 <p class="center">
@@ -176,17 +176,17 @@ const d0 = 0.01;	const d1 = 0.03;
 }
 init: on0 = 0;  18 &lt;= x0;  x0 &lt;= 22;
       on1 = 0;  18 &lt;= x1;  x1 &lt;= 22;
-propositions:
+proposition:
   [p1]: x0 - x1 &gt;= 4;    [p2]: x0 - x1 &lt;= -3;
 goal:
   # bound: 5, timebound: 30, solver: dreal
-  [f1]: &lt;&gt;[0, 3](x0 &gt;= 13 U[0, inf) x1 &lt;= 22);  # threshold: 1.0 
-  [f2]: [][2, 4](p1 -&gt; &lt;&gt;[3, 10] p2);		# threshold: 2.0
-  [f3]: [][0,10] (x0 &gt; 23 R[0,inf) p1);		# threshold: 2.0
+  [f1]: &lt;&gt;[0, 3](x0 &gt;= 13 U[0, inf) x1 &lt;= 22);  # threshold: 1.0, time-horizon: 7 
+  [f2]: [][2, 4](p1 -&gt; &lt;&gt;[3, 10] p2);		# threshold: 2.0, time-horizon: 30
+  [f3]: [][0,10] (x0 &gt; 23 R[0,inf) p1);		# threshold: 2.0, time-horizon: 7
 </code></pre></div></div>
 
 <p>We use the STLmc modelling language 
-to specify <a href="#thermo-automata">the model</a> and its <a href="#stl-thermo-auto">properties</a>. 
+to specify <a href="#therm-automata">the model</a> and its <a href="#stl-thermo-auto">properties</a>. 
 To see more detailed explanation of the langauge, 
 please refer to our <a href="/assets/files/stlmc-techrep.pdf">technical report</a> or
 <a href="/stlmc-language/">this page</a>.</p>
@@ -196,7 +196,7 @@ please refer to our <a href="/assets/files/stlmc-techrep.pdf">technical report</
 
 <p>We can run the STLmc tool for the $\textsf{f2}$ formula of the <a href="#two-networked-thermostat-systems">thermostat model</a> with a time bound $\tau = 30$, a discrete bound $N = 5$, and a threshold $\epsilon_2 = 2.0$ as input parameters as follows:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./stlmc ./therm.model -bound 5 -time-bound 30 -threshold 2 \
-        -goal f2 -solver dreal -two-step -parallel -visualize
+        -goal f2 -solver dreal -two-step -parallel -time-horizon 30 -visualize
 </code></pre></div></div>
 
 <p>Because the model has nonlinear dynamics, we use $\textsf{dReal}$ for an underlying solver with the algorithm 

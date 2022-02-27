@@ -13,11 +13,11 @@
 <meta property="og:url" content="https://stlmc.github.io/benchmarks/oscillator.html" />
 <meta property="og:site_name" content="STLMC" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2022-02-25T03:53:22+09:00" />
+<meta property="article:published_time" content="2022-02-28T06:29:32+09:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="A Filtered Oscillator" />
 <script type="application/ld+json">
-{"headline":"A Filtered Oscillator","dateModified":"2022-02-25T03:53:22+09:00","datePublished":"2022-02-25T03:53:22+09:00","description":"A Filtered Oscillator","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://stlmc.github.io/benchmarks/oscillator.html"},"url":"https://stlmc.github.io/benchmarks/oscillator.html","@context":"https://schema.org"}</script>
+{"headline":"A Filtered Oscillator","dateModified":"2022-02-28T06:29:32+09:00","datePublished":"2022-02-28T06:29:32+09:00","description":"A Filtered Oscillator","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://stlmc.github.io/benchmarks/oscillator.html"},"url":"https://stlmc.github.io/benchmarks/oscillator.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
     <script type="text/x-mathjax-config">
@@ -204,9 +204,9 @@ proposition:
 
 # bound: 5, timebound: 8, solver: dreal
 goal:
-  [f1]: &lt;&gt;[0,3]((x3 &gt;= 1) R[0, inf) (y &lt;= 10)); # threshold: 0.1
-  [f2]: &lt;&gt;[2, 5] ([][0, 3] (x2 &lt; 4));		# threshold: 1.0
-  [f3]: ([][1, 3] (x &lt;= 2)) R[2, 5] (x3 &gt; 2); 	# threshold: 0.1
+  [f1]: &lt;&gt;[0,3]((x3 &gt;= 1) R[0, inf) (y &lt;= 10)); # threshold: 0.1, time-horizon: 2
+  [f2]: &lt;&gt;[2, 5] ([][0, 3] (x2 &lt; 4));		# threshold: 1.0, time-horizon: 2
+  [f3]: ([][1, 3] (x &lt;= 2)) R[2, 5] (x3 &gt; 2); 	# threshold: 0.1, time-horizon: 2
 </pre>
 
 <h4 id="run">Run</h4>
@@ -222,7 +222,7 @@ The following shows the command finding a counterexample for the STL formula $\t
 
 <pre>
 ./stlmc ./oscillator.model -bound 5 -time-bound 8 -threshold 1.0 \
-        -goal f2 -solver dreal -two-step -parallel -visualize
+        -goal f2 -solver dreal -two-step -parallel -time-horizon 2 -visualize
 </pre>
 
 <table>
