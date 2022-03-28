@@ -13,7 +13,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="CAV2022" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"CAV2022","url":"https://stlmc.github.io/cav2022/","@context":"https://schema.org"}</script>
+{"headline":"CAV2022","@type":"WebPage","url":"https://stlmc.github.io/cav2022/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
     <script type="text/x-mathjax-config">
@@ -182,26 +182,114 @@ Please install our tool first, if not already done (see the <a href="/download/"
 
 <p>We consider five hybrid automata models, each with three STL formulas. See Section A of the <a href="/assets/files/stlmc-techrep.pdf">technical report</a> for more details. The models and formulas are declared in the following files:</p>
 
-<ul>
-  <li>benchmarks/linear/battery.model</li>
-  <li>benchmarks/linear/car.model</li>
-  <li>benchmarks/linear/rail.model</li>
-  <li>benchmarks/linear/therm.model</li>
-  <li>benchmarks/linear/water.model</li>
-  <li>benchmarks/poly/battery.model</li>
-  <li>benchmarks/poly/car.model</li>
-  <li>benchmarks/poly/rail.model</li>
-  <li>benchmarks/poly/therm.model</li>
-  <li>benchmarks/poly/water.model</li>
-  <li>benchmarks/ode/battery.model</li>
-  <li>benchmarks/ode/car.model</li>
-  <li>benchmarks/ode/nav.model</li>
-  <li>benchmarks/ode/oscil.model</li>
-  <li>benchmarks/ode/rail.model</li>
-  <li>benchmarks/ode/space.model</li>
-  <li>benchmarks/ode/therm.model</li>
-  <li>benchmarks/ode/water.model</li>
-</ul>
+<!-- * benchmarks/linear/battery.model
+* benchmarks/linear/car.model
+* benchmarks/linear/rail.model
+* benchmarks/linear/therm.model
+* benchmarks/linear/water.model
+* benchmarks/poly/battery.model
+* benchmarks/poly/car.model
+* benchmarks/poly/rail.model
+* benchmarks/poly/therm.model
+* benchmarks/poly/water.model
+* benchmarks/ode/battery.model
+* benchmarks/ode/car.model
+* benchmarks/ode/nav.model
+* benchmarks/ode/oscil.model
+* benchmarks/ode/rail.model
+* benchmarks/ode/space.model
+* benchmarks/ode/therm.model
+* benchmarks/ode/water.model -->
+
+<table>
+<tbody>
+  <tr>
+    <th>Model</th>
+    <th>Dynamic</th>
+    <th>Directory</th>
+  </tr>
+  <tr>
+    <td rowspan="3">Bat</td>
+    <td>Linear</td>
+    <td>benchmarks/linear/battery.model</td>
+  </tr>
+  <tr>
+    <td>Poly</td>
+    <td>benchmarks/poly/battery.model</td>
+  </tr>
+  <tr>
+    <td>ODE</td>
+    <td>benchmarks/ode/battery.model</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Wat</td>
+    <td>Linear</td>
+    <td>benchmarks/linear/water.model</td>
+  </tr>
+  <tr>
+    <td>Poly</td>
+    <td>benchmarks/poly/water.model</td>
+  </tr>
+  <tr>
+    <td>ODE</td>
+    <td>benchmarks/ode/water.model</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Car</td>
+    <td>Linear</td>
+    <td>benchmarks/linear/car.model</td>
+  </tr>
+  <tr>
+    <td>Poly</td>
+    <td>benchmarks/poly/car.model</td>
+  </tr>
+  <tr>
+    <td>ODE</td>
+    <td>benchmarks/ode/car.model</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Rail</td>
+    <td>Linear</td>
+    <td>benchmarks/linear/rail.model</td>
+  </tr>
+  <tr>
+    <td>Poly</td>
+    <td>benchmarks/poly/rail.model</td>
+  </tr>
+  <tr>
+    <td>ODE</td>
+    <td>benchmarks/ode/rail.model</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Therm</td>
+    <td>Linear</td>
+    <td>benchmarks/linear/battery.model</td>
+  </tr>
+  <tr>
+    <td>Poly</td>
+    <td>benchmarks/poly/battery.model</td>
+  </tr>
+  <tr>
+    <td>ODE</td>
+    <td>benchmarks/ode/battery.model</td>
+  </tr>
+  <tr>
+    <td>Nav</td>
+    <td>ODE</td>
+    <td>benchmarks/ode/nav.model</td>
+  </tr>
+  <tr>
+    <td>Space</td>
+    <td>ODE</td>
+    <td>benchmarks/ode/space.model</td>
+  </tr>
+  <tr>
+    <td>Oscil</td>
+    <td>ODE</td>
+    <td>benchmarks/ode/oscil.model</td>
+  </tr>
+</tbody>
+</table>
 
 <p>We provide a script to automate the experiments: <em>run</em> in the top directory. The following command runs all 18 cases for this experiment (6 models, 3 formulas) with a 30-minute timeout:</p>
 
@@ -223,25 +311,26 @@ placed in the <em>data</em> directory with a name <em>table2.html</em> (i.e., <e
 <p>The <em>run</em> script provides several options to run a subset of the experiments and generate reports. There are five (optional) command-line arguments as follows:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$./run -m &lt;MODEL&gt; \ 
+       -d &lt;DYNAMICS&gt; \
        -t &lt;TIMEOUT&gt; \
        -f &lt;FORMULA&gt; \
        -gen-csv \
        -gen-tb
 </code></pre></div></div>
 
-<p>If the directory <em>data/log</em> exists in the top directory, the csv report <em>exp-result.csv</em> can be obtained with the following command:</p>
+<p>If the directory <em>data/log</em> exists in the top directory, the csv report <em>exp1-result.csv</em> can be obtained with the following command:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./run -gen-csv
 </code></pre></div></div>
 
 <p>Other options (<em>-m</em>, <em>-t</em>, and <em>-f</em>) restricts the cases to be executed. Run <em>./run -h</em> for more details about the options.</p>
 
-<p>For example, the following command runs the experiment using the oscilator and car model with formula f1 and f2 with a timeout of 10 minutes:</p>
+<p>For example, the following command runs the experiment using the oscilator and polynomial car model with formula f1 and f2 with a timeout of 10 minutes:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./run -m rail oscil -f f1 f2 -t 10
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./run -m rail -d p oscil -f f1 f2 -t 10
 </code></pre></div></div>
 
-<p>Note that for the nonlinear dynamics models (i.e., $\textsf{Thm}$ and $\textsf{Oscil}$), the script <em>run</em> uses the algorithm $\textsf{2-step}$. For efficient parallelism, the script automatically detects the number of CPU cores in the computing environment.</p>
+<p>Note that for the nonlinear dynamics models, the script <em>run</em> uses the algorithm $\textsf{2-step}$. For efficient parallelism, the script automatically detects the number of CPU cores in the computing environment.</p>
 
   </div>
 
