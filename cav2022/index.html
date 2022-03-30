@@ -180,26 +180,12 @@ Table 2 of the paper can also be obtained by using the *exp1-result-paper.csv*. 
 <p>We explain how to run the paper’s experiment and to analyze the results of each execution.
 Please install our tool first, if not already done (see the <a href="/download/">installation instruction</a>)</p>
 
-<p>We consider five hybrid automata models, each with three STL formulas. See Section A of the <a href="/assets/files/stlmc-techrep.pdf">technical report</a> for more details. The models and formulas are declared in the following files:</p>
+<p>We consider 8 hybrid automata models for the experiments. See Section A of the <a href="/assets/files/stlmc-techrep.pdf">technical report</a> for more details. 
+For STL bounded model checking, each model has three STL formulas. The models and formulas are declared in the following files:</p>
 
-<!-- * benchmarks/linear/battery.model
-* benchmarks/linear/car.model
-* benchmarks/linear/rail.model
-* benchmarks/linear/therm.model
-* benchmarks/linear/water.model
-* benchmarks/poly/battery.model
-* benchmarks/poly/car.model
-* benchmarks/poly/rail.model
-* benchmarks/poly/therm.model
-* benchmarks/poly/water.model
-* benchmarks/ode/battery.model
-* benchmarks/ode/car.model
-* benchmarks/ode/nav.model
-* benchmarks/ode/oscil.model
-* benchmarks/ode/rail.model
-* benchmarks/ode/space.model
-* benchmarks/ode/therm.model
-* benchmarks/ode/water.model -->
+<ul>
+  <li><a href="/assets/files/benchmarks.zip">benchmarks.zip</a></li>
+</ul>
 
 <table>
 <tbody>
@@ -290,6 +276,105 @@ Please install our tool first, if not already done (see the <a href="/download/"
   </tr>
 </tbody>
 </table>
+
+<p>For reachability analysis, we provide HyComp, Flow*, SpaceEx, and dReal models along with STLmc models.
+Each model for the tools are placed under the [tool-name] directories with corresponding tool model extensions [ext]:</p>
+
+<ul>
+  <li><a href="/assets/files/reach-benchmarks.zip">reach-benchmarks.zip</a></li>
+</ul>
+
+<table>
+<tbody>
+  <tr>
+    <th>Model</th>
+    <th>Dynamic</th>
+    <th>Directory</th>
+  </tr>
+  <tr>
+    <td rowspan="3">Bat</td>
+    <td>Linear</td>
+    <td>reach-benchmarks/linear/[tool-name]/reach-battery.[ext]</td>
+  </tr>
+  <tr>
+    <td>Poly</td>
+    <td>reach-benchmarks/poly/[tool-name]/battery.[ext]</td>
+  </tr>
+  <tr>
+    <td>ODE</td>
+    <td>reach-benchmarks/ode/[tool-name]/battery.[ext]</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Wat</td>
+    <td>Linear</td>
+    <td>reach-benchmarks/linear/[tool-name]/water.[ext]</td>
+  </tr>
+  <tr>
+    <td>Poly</td>
+    <td>reach-benchmarks/poly/[tool-name]/water.[ext]</td>
+  </tr>
+  <tr>
+    <td>ODE</td>
+    <td>reach-benchmarks/ode/[tool-name]/water.[ext]</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Car</td>
+    <td>Linear</td>
+    <td>reach-benchmarks/linear/[tool-name]/car.[ext]</td>
+  </tr>
+  <tr>
+    <td>Poly</td>
+    <td>reach-benchmarks/poly/[tool-name]/car.[ext]</td>
+  </tr>
+  <tr>
+    <td>ODE</td>
+    <td>reach-benchmarks/ode/[tool-name]/car.[ext]</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Rail</td>
+    <td>Linear</td>
+    <td>reach-benchmarks/linear/[tool-name]/rail.[ext]</td>
+  </tr>
+  <tr>
+    <td>Poly</td>
+    <td>reach-benchmarks/poly/[tool-name]/rail.[ext]</td>
+  </tr>
+  <tr>
+    <td>ODE</td>
+    <td>reach-benchmarks/ode/[tool-name]/rail.[ext]</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Therm</td>
+    <td>Linear</td>
+    <td>reach-benchmarks/linear/[tool-name]/battery.[ext]</td>
+  </tr>
+  <tr>
+    <td>Poly</td>
+    <td>reach-benchmarks/poly/[tool-name]/battery.[ext]</td>
+  </tr>
+  <tr>
+    <td>ODE</td>
+    <td>reach-benchmarks/ode/[tool-name]/battery.[ext]</td>
+  </tr>
+  <tr>
+    <td>Nav</td>
+    <td>ODE</td>
+    <td>reach-benchmarks/ode/[tool-name]/nav.[ext]</td>
+  </tr>
+  <tr>
+    <td>Space</td>
+    <td>ODE</td>
+    <td>reach-benchmarks/ode/[tool-name]/space.[ext]</td>
+  </tr>
+  <tr>
+    <td>Oscil</td>
+    <td>ODE</td>
+    <td>reach-benchmarks/ode/[tool-name]/oscil.[ext]</td>
+  </tr>
+</tbody>
+</table>
+
+<p>Because HyComp only supports linear dynamics, there are no HyComp diretories under the <em>poly</em> and <em>ode</em> directories.</p>
 
 <p>We provide a script to automate the experiments: <em>run</em> in the top directory. The following command runs all 18 cases for this experiment (6 models, 3 formulas) with a 30-minute timeout:</p>
 
