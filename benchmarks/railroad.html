@@ -13,11 +13,11 @@
 <meta property="og:url" content="https://stlmc.github.io/benchmarks/railroad.html" />
 <meta property="og:site_name" content="STLMC" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2022-05-02T14:34:48+09:00" />
+<meta property="article:published_time" content="2022-05-06T15:09:06+09:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="A Railroad Gate Controller" />
 <script type="application/ld+json">
-{"headline":"A Railroad Gate Controller","dateModified":"2022-05-02T14:34:48+09:00","datePublished":"2022-05-02T14:34:48+09:00","description":"A Railroad Gate Controller","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://stlmc.github.io/benchmarks/railroad.html"},"url":"https://stlmc.github.io/benchmarks/railroad.html","@context":"https://schema.org"}</script>
+{"headline":"A Railroad Gate Controller","dateModified":"2022-05-06T15:09:06+09:00","datePublished":"2022-05-06T15:09:06+09:00","description":"A Railroad Gate Controller","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://stlmc.github.io/benchmarks/railroad.html"},"url":"https://stlmc.github.io/benchmarks/railroad.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
     <script type="text/x-mathjax-config">
@@ -71,7 +71,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a></div>
+        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Documentation</a><a class="page-link" href="/cav2022-artifact/">Artifact</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -80,7 +80,6 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 
   <div class="post-content justify">
     <h4 id="a-railroad-gate-controller">A Railroad Gate Controller</h4>
-<hr />
 
 <p>There are a gate and a gate controller with a crossing bar on a circular railroad track and a train moves on the track. 
 The gate controller opens (or closes) the crossing bar when the train approaches to (or leaves from) the gate (adapted from <a href="#ref1">[1]</a>). 
@@ -133,8 +132,9 @@ shows the STL properties.</p>
     <em>Table.1: STL properties for the railroad gate controller</em>
 </p>
 
-<h4 id="an-stlmc-input-model">An STLmc Input Model</h4>
 <hr />
+
+<h4 id="an-stlmc-input-model">An STLmc Input Model</h4>
 
 <p>We use the STLmc language to describe the railroad model (<a href="/assets/files/benchmarks/railroad.model">railroad.model</a>) as follows:</p>
 <pre>
@@ -197,8 +197,9 @@ goal:
   [f3]: [][0.0,5.0) ((x &lt; 50) U[2, 10] (pb &gt; 5)); # threshold: 4.0
 </pre>
 
-<h4 id="run">Run</h4>
 <hr />
+
+<h4 id="run">Run</h4>
 
 <p>For the <a href="#an-stlmc-input-model">input model</a>, we use a time bound $\tau = 20$ and a discrete bound $N = 10$ as input parameters.
 Because the model has nonlinear polynomial dynamics, we use $\textsf{yices}$ for an underlying solver with the default algorithm $\textsf{1-step}$.
@@ -259,8 +260,9 @@ The following shows the command finding a counterexample for the STL formula $\t
     <em>Table.2: Verification results of the STL properties for the railroad gate controller</em>
 </p>
 
-<h4 id="visualization">Visualization</h4>
 <hr />
+
+<h4 id="visualization">Visualization</h4>
 
 <script type="text/javascript">
     (function() {
@@ -313,8 +315,9 @@ The following shows the command finding a counterexample for the STL formula $\t
 <p>The robustness degree of $\textsf{f1}$ is less than $\epsilon$ at time $0$, since the robustness degrees of $\textsf{f1}_{\textsf{1}}$ is always less than $\epsilon$ in the interval $[0, 5]$,
 which is because the degree of $\textsf{f1}_{\textsf{2}}$ is less than $\epsilon$ from the starting time $1$ of the interval $[1, 13] = [0, 5] + [1, 8]$.</p>
 
-<h4 id="reference">Reference</h4>
 <hr />
+
+<h4 id="reference">Reference</h4>
 
 <p id="ref1">[1]. Henzinger T.A. (2000) The Theory of Hybrid Automata. In: Inan M.K., Kurshan R.P. (eds) Verification of Digital and Hybrid Systems. NATO ASI Series (Series F: Computer and Systems Sciences), vol 170. Springer, Berlin, Heidelberg. <a href="https://doi.org/10.1007/978-3-642-59615-5_13" target="_blank">https://doi.org/10.1007/978-3-642-59615-5_13</a></p>
 

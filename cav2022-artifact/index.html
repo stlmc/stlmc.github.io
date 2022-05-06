@@ -3,17 +3,17 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>CAV2022 Artifact | STLMC</title>
+<title>Artifact | STLMC</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="CAV2022 Artifact" />
+<meta property="og:title" content="Artifact" />
 <meta property="og:locale" content="en_US" />
 <link rel="canonical" href="https://stlmc.github.io/cav2022-artifact/" />
 <meta property="og:url" content="https://stlmc.github.io/cav2022-artifact/" />
 <meta property="og:site_name" content="STLMC" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="CAV2022 Artifact" />
+<meta property="twitter:title" content="Artifact" />
 <script type="application/ld+json">
-{"headline":"CAV2022 Artifact","@type":"WebPage","url":"https://stlmc.github.io/cav2022-artifact/","@context":"https://schema.org"}</script>
+{"headline":"Artifact","@type":"WebPage","url":"https://stlmc.github.io/cav2022-artifact/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
   
@@ -30,7 +30,7 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a></div>
+        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Documentation</a><a class="page-link" href="/cav2022-artifact/">Artifact</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -38,11 +38,121 @@
         <div class="front">
 
   <div class="post-content justify">
-    <h4 id="stlmc-artifact">STLmc Artifact</h4>
+    <h4 id="artifact">Artifact</h4>
+
+<p>This page explains the artifact for our paper: “STLmc: Robust STL Model Checking of Hybrid
+Systems using SMT” by G. Yu, J. Lee, and K. Bae. The artifact includes the STLmc tool and scripts for running the experiments of the paper.</p>
+
+<p>The VirtualBox image for our artifact is available at <a href="">http://doi.org/10.5281/zenodo.4699760</a>. In the virtual machine, the artifact is located under the directory "home/user/CAV2022-AeC". See <a href="">Readme.txt</a> in the artifact top directory for more information about the tool, experiments, and our artifact.</p>
+
 <ul>
-  <li><a href="">cav2022-stlmc.zip</a></li>
-  <li><a href="">checksum</a></li>
+  <li><a href="">CAV2022-AeC.zip</a></li>
+  <li><a href="">SHA256 checksum</a></li>
+  <li><a href="">http://doi.org/10.5281/zenodo.4699760</a></li>
 </ul>
+
+<hr />
+
+<h4 id="running-the-artifact-in-a-non-vm-environment">Running the Artifact in a non-VM Environment</h4>
+
+<p>We explain how to install and run the artifact in a non-VM environment. The artifact requires the following libraries for prerequisites:</p>
+
+<ul>
+  <li>Python3 (3.8.6) or newer: <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></li>
+  <li>Java8 or newer: <a href="https://openjdk.java.net/install/">https://openjdk.java.net/install/</a></li>
+  <li>
+    <p>Python3-pip: <a href="https://pypi.org/">https://pypi.org/</a></p>
+
+    <p>Please make sure that pip is up-to-date. Otherwise some Python libraries STLmc used, such as numpy, may fail to be installed.</p>
+  </li>
+  <li>
+    <p>Yices2: <a href="https://github.com/SRI-CSL/yices2/">https://github.com/SRI-CSL/yices2/</a></p>
+
+    <p>Our artifact needs MCSAT-enabled version of Yices2. Please follow the below installation steps to get this specific version of Yices2:</p>
+
+    <p><strong>MacOS</strong></p>
+
+    <p>To install on Darwin, use homebrew:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew install SRI-CSL/sri-csl/yices2
+</code></pre></div>    </div>
+
+    <p><strong>Ubuntu or Debian</strong></p>
+
+    <p>To install Yices on Ubuntu or Debian, do the following:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  sudo apt install software-properties-common
+  sudo add-apt-repository ppa:sri-csl/formal-methods
+  sudo apt-get update
+  sudo apt-get install yices2-dev
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>To install our artifact, follow the below instruction steps:</p>
+
+<ol>
+  <li>Download and unzip the archive file (<a href="">CAV2022-AeC.zip</a>) to some directory (e.g., /home/&lt;USER&gt;/).</li>
+  <li>
+    <p>Install the following python packages:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> pip3 install termcolor yices z3-solver \
+              antlr4-python3-runtime==4.9.1 \
+              sympy numpy bokeh scipy
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Run the following command:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd CAV2022-AeC &amp;&amp; make
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Use the following command to run smoke tests for our installation:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd CAV2022-AeC &amp;&amp; make test
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>If the tests succeed, you will see the following messages:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>start smoke test ...
+[exec] Python: pass
+[exec] Yices: pass
+[exec] dReal: pass
+[exec] Z3: pass
+[exec] Java: pass
+[file] Config: pass
+[smt] dReal
+  ./tests/smt2/dreal/01.smt2: pass
+  ./tests/smt2/dreal/02.smt2: pass
+[smt] Z3
+  ./tests/smt2/z3/01.smt2: pass
+  ./tests/smt2/z3/02.smt2: pass
+[smt] Yices
+  ./tests/smt2/yices2/01.smt2: pass
+  ./tests/smt2/yices2/02.smt2: pass
+[tool] STLmc
+  ./tests/stlmc/01.model: pass
+  ./tests/stlmc/02.model: pass
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ol>
+
+<p>STLmc uses the following SMT solvers as its underlying SMT solvers:</p>
+
+<ul>
+  <li>Z3: <a href="https://github.com/Z3Prover/z3/">https://github.com/Z3Prover/z3/</a></li>
+  <li>Yices2: <a href="https://github.com/SRI-CSL/yices2/">https://github.com/SRI-CSL/yices2/</a></li>
+  <li>dReal: <a href="https://github.com/dreal/dreal3/">https://github.com/dreal/dreal3/</a></li>
+</ul>
+
+<p>The archive file already contains dReal under the directory “CAV2022-AeC/3rd_party”.</p>
+
+<p>Note that, we also use the above installation instructions to create our Zenodo VirtualBox image (<a href="">http://doi.org/10.5281/zenodo.4699760</a>). You can create a new VirtualBox image using Ubuntu by following the step 1 ~ 5, starting from downloading and unzipping the <a href="">CAV2022-AeC.zip</a> on the virtual machine.</p>
 
   </div>
 

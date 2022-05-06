@@ -13,11 +13,11 @@
 <meta property="og:url" content="https://stlmc.github.io/benchmarks/therm.html" />
 <meta property="og:site_name" content="STLMC" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2022-05-02T14:34:48+09:00" />
+<meta property="article:published_time" content="2022-05-06T15:09:06+09:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Two Networked Thermostats" />
 <script type="application/ld+json">
-{"headline":"Two Networked Thermostats","dateModified":"2022-05-02T14:34:48+09:00","datePublished":"2022-05-02T14:34:48+09:00","description":"Two Networked Thermostats","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://stlmc.github.io/benchmarks/therm.html"},"url":"https://stlmc.github.io/benchmarks/therm.html","@context":"https://schema.org"}</script>
+{"headline":"Two Networked Thermostats","dateModified":"2022-05-06T15:09:06+09:00","datePublished":"2022-05-06T15:09:06+09:00","description":"Two Networked Thermostats","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://stlmc.github.io/benchmarks/therm.html"},"url":"https://stlmc.github.io/benchmarks/therm.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
     <script type="text/x-mathjax-config">
@@ -71,7 +71,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a></div>
+        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Documentation</a><a class="page-link" href="/cav2022-artifact/">Artifact</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -80,7 +80,6 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 
   <div class="post-content justify">
     <h4 id="two-networked-thermostats">Two Networked Thermostats</h4>
-<hr />
 
 <p>Consider two rooms interconnected by an open door. 
 The temperature $x_i$ of each room, $i = 0, 1$, changes 
@@ -136,8 +135,9 @@ shows the STL properties.</p>
     <em>Table.1: STL properties for thermostat</em>
 </p>
 
-<h4 id="an-stlmc-input-model">An STLmc Input Model</h4>
 <hr />
+
+<h4 id="an-stlmc-input-model">An STLmc Input Model</h4>
 
 <p>We use the STLmc language to describe the thermostat model (<a href="/assets/files/benchmarks/therm.model">therm.model</a>) as follows:</p>
 <pre>
@@ -192,8 +192,9 @@ goal:
   [f3]: [][0,10] (x0 &gt; 23 R[0,inf) p1);		# threshold: 2.0, time-horizon: 7
 </pre>
 
-<h4 id="run">Run</h4>
 <hr />
+
+<h4 id="run">Run</h4>
 
 <p>For the <a href="#an-stlmc-input-model">input model</a>, we use a time bound $\tau = 30$ and a discrete bound $N = 5$ as input parameters.
 Because the model has nonlinear dynamics, we use $\textsf{dReal}$ for an underlying solver with the algorithm $\textsf{2-step}$.
@@ -259,8 +260,9 @@ The following shows the command finding a counterexample for the STL formula $\t
     <em>Table.2: Verification results of the STL properties for thermostat</em>
 </p>
 
-<h4 id="visualization">Visualization</h4>
 <hr />
+
+<h4 id="visualization">Visualization</h4>
 
 <script type="text/javascript">
     (function() {
@@ -315,8 +317,9 @@ The following shows the command finding a counterexample for the STL formula $\t
 which is because both the degrees of $\textsf{f2}_{\textsf{2}}$ and $\textsf{f2}_{\textsf{3}}$ are less than $\epsilon$ in $[2, 4]$. 
 The robustness degree of $\textsf{f2}_{\textsf{3}}$ is less than $\epsilon$ in $[2, 4]$, since the robustness degree of $\textsf{f2}_{\textsf{4}}$ is less than $\epsilon$ in $[5, 14] = [2, 4] + [3, 10]$.</p>
 
-<h4 id="reference">Reference</h4>
 <hr />
+
+<h4 id="reference">Reference</h4>
 
 <p id="ref1">[1]. K. Bae and S. Gao, “Modular SMT-based analysis of nonlinear hybrid systems,” 2017 Formal Methods in Computer Aided Design (FMCAD), 2017, pp. 180-187, doi: <a href="http://doi.org/10.23919/FMCAD.2017.8102258" target="_blank">10.23919/FMCAD.2017.8102258</a>.</p>
 

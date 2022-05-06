@@ -11,11 +11,11 @@
 <meta property="og:url" content="https://stlmc.github.io/benchmarks/battery.html" />
 <meta property="og:site_name" content="STLMC" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2022-05-02T14:34:48+09:00" />
+<meta property="article:published_time" content="2022-05-06T15:09:06+09:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Load Management for Two Batteries" />
 <script type="application/ld+json">
-{"headline":"Load Management for Two Batteries","dateModified":"2022-05-02T14:34:48+09:00","datePublished":"2022-05-02T14:34:48+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://stlmc.github.io/benchmarks/battery.html"},"url":"https://stlmc.github.io/benchmarks/battery.html","@context":"https://schema.org"}</script>
+{"headline":"Load Management for Two Batteries","dateModified":"2022-05-06T15:09:06+09:00","datePublished":"2022-05-06T15:09:06+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://stlmc.github.io/benchmarks/battery.html"},"url":"https://stlmc.github.io/benchmarks/battery.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
     <script type="text/x-mathjax-config">
@@ -69,7 +69,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a></div>
+        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Documentation</a><a class="page-link" href="/cav2022-artifact/">Artifact</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -89,7 +89,6 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 </nav>-->
 
 <h4 id="load-management-for-two-batteries">Load Management for Two Batteries</h4>
-<hr />
 
 <p>There are two fully charged batteries and a control system balancing the load between these batteries 
 to achieve longer lifetime (adapted from <a href="#ref1">[1]</a>).
@@ -164,8 +163,9 @@ at least one battery until both of them become dead.</p>
     <em>Table.1: STL properties for the battery system</em>
 </p>
 
-<h4 id="an-stlmc-input-model">An STLmc Input Model</h4>
 <hr />
+
+<h4 id="an-stlmc-input-model">An STLmc Input Model</h4>
 
 <p>We use the STLmc language to describe the battery model (<a href="/assets/files/benchmarks/battery.model">battery.model</a>) as follows:</p>
 <pre>
@@ -261,8 +261,9 @@ goal:
 
 </pre>
 
-<h4 id="run">Run</h4>
 <hr />
+
+<h4 id="run">Run</h4>
 
 <p>For the <a href="#an-stlmc-input-model">input model</a>, we use a time bound $\tau = 30$ and a discrete bound $N = 20$ as input parameters.
 Because the model has linear dynamics, we use $\textsf{yices}$ for an underlying solver with the default algorithm $\textsf{1-step}$.
@@ -324,8 +325,9 @@ at bound $5$ with respect to $\epsilon_2=3.5$ in $6$ seconds using yices.</p>
     <em>Table.2: Verification results of the STL properties for the battery system</em>
 </p>
 
-<h4 id="visualization">Visualization</h4>
 <hr />
+
+<h4 id="visualization">Visualization</h4>
 
 <script type="text/javascript">
     (function() {
@@ -377,8 +379,9 @@ at bound $5$ with respect to $\epsilon_2=3.5$ in $6$ seconds using yices.</p>
 
 <p>The robustness degree of $\textsf{f2}$ is less than $\epsilon$ at time $0$, since the robustness degrees of $\textsf{f2}_{\textsf{2}}$ is always less than $\epsilon$ in the interval $[5, 20]$.</p>
 
-<h4 id="reference">Reference</h4>
 <hr />
+
+<h4 id="reference">Reference</h4>
 
 <p id="ref1">[1]. Fox, M., Long, D., &amp; Magazzeni, D. (2012). Plan-based Policies for Efficient Multiple Battery Load Management. J. Artif. Intell. Res., 44, 335-382 
 (<a href="https://arxiv.org/pdf/1401.5859.pdf" target="_blank">arXiv</a>).</p>
