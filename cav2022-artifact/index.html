@@ -53,6 +53,41 @@ Systems using SMT” by G. Yu, J. Lee, and K. Bae. The artifact includes the STL
 
 <hr />
 
+<h4 id="running-the-artifact-in-vm-environment">Running the Artifact in VM Environment</h4>
+
+<p>We provide a VirtualBox image 'STLmc.ova' that contains our tool and experiments. 
+The VM image uses Ubuntu 18.04.6 with STLmc installed. The size of the image is about 3.1GB.</p>
+
+<p>A minimum system requirement for the artifact evaluation is a quad-core virtual CPUs with 4096MB memory.
+You can run the image using VirtualBox (<a href="https://www.virtualbox.org">https://www.virtualbox.org</a>) as follows:</p>
+
+<ul>
+  <li>Click ‘File/Import Appliance’ in the top menu.</li>
+  <li>Choose ‘STLmc.ova’, and click ‘Continue’.</li>
+  <li>Set the number of CPU cores (&gt;= 4) and the size of memory (&gt;= 4096 MB).</li>
+  <li>Click ‘Import’ (which will take a few minutes).</li>
+  <li>Click the green right arrow to run the imported image.</li>
+</ul>
+
+<p>For those who don’t have enough storage spaces, we also provide a vagrant file 'STLmc.vagrantfile'.
+You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.com">https://www.vagrantup.com</a>) as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir STLmc-VM
+cd STLmc-VM &amp;&amp; vagrant up
+</code></pre></div></div>
+<p>Vagrant automatically creates a VM image for our artifact.
+To use the generated VM image, use ssh connect as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd STLmc-VM &amp;&amp; vagrant ssh user
+</code></pre></div></div>
+
+<p>If succeed, you can see the artifact directory 'CAV2022-AeC' as follows:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@VB:~$ ls
+    CAV2022-AeC ...
+</code></pre></div></div>
+
+<hr />
+
 <h4 id="running-the-artifact-in-a-non-vm-environment">Running the Artifact in a non-VM Environment</h4>
 
 <p>We explain how to install and run the artifact in a non-VM environment. The artifact requires the following libraries for prerequisites:</p>
