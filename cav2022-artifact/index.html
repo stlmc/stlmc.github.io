@@ -58,7 +58,7 @@ Systems using SMT” by G. Yu, J. Lee, and K. Bae. The artifact includes the STL
 <p><strong>Zenodo</strong></p>
 
 <p>We provide a VirtualBox image 'STLmc.ova' that contains our tool and experiments. 
-The VM image uses Ubuntu 18.04.6 with STLmc installed. The size of the image is about 3.1GB.</p>
+The VM image uses Ubuntu 18.04.6 with STLmc installed. The size of the image is about 4.1GB.</p>
 
 <p>A minimum system requirement for the artifact evaluation is a quad-core virtual CPUs with 4096MB memory.
 You can run the image using VirtualBox (<a href="https://www.virtualbox.org">https://www.virtualbox.org</a>) as follows:</p>
@@ -109,6 +109,11 @@ You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.
 <p>We explain how to install and run the artifact in a non-VM environment. The artifact requires the following libraries for prerequisites:</p>
 
 <ul>
+  <li>
+    <p>Ubuntu 18.04 <a href="https://ubuntu.com/download">https://ubuntu.com/download</a></p>
+
+    <p>We made this restriction because one of our underlying SMT solvers, Yices2, does not support Ubuntu 20.04 on Ubuntu PPA.</p>
+  </li>
   <li>Python3 (3.8.6) or newer: <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></li>
   <li>Java8 or newer: <a href="https://openjdk.java.net/install/">https://openjdk.java.net/install/</a></li>
   <li>
@@ -121,13 +126,6 @@ You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.
 
     <p>Our artifact needs MCSAT-enabled version of Yices2. Please follow the below installation steps to get this specific version of Yices2:</p>
 
-    <p><strong>MacOS</strong></p>
-
-    <p>To install on Darwin, use homebrew:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew install SRI-CSL/sri-csl/yices2
-</code></pre></div>    </div>
-
     <p><strong>Ubuntu or Debian</strong></p>
 
     <p>To install Yices on Ubuntu or Debian, do the following:</p>
@@ -136,6 +134,27 @@ You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.
   sudo add-apt-repository ppa:sri-csl/formal-methods
   sudo apt-get update
   sudo apt-get install yices2-dev
+</code></pre></div>    </div>
+
+    <p><strong>MacOS</strong></p>
+
+    <p>To install on Darwin, use homebrew:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew install SRI-CSL/sri-csl/yices2
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Z3: <a href="https://github.com/Z3Prover/z3/">https://github.com/Z3Prover/z3/</a></p>
+
+    <p><strong>Ubuntu or Debian</strong></p>
+
+    <p>Normally, Z3 solver is automatically installed when downloading its Python3 package (i.e., using pip3 install z3-solver).</p>
+
+    <p><strong>MacOS</strong></p>
+
+    <p>Normally, Z3 solver is automatically installed as in Linux environment. But for some cases, we found that one may need to install Z3 binaries manually. This can be done using the following command:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew install z3
 </code></pre></div>    </div>
   </li>
   <li>Gnuplot: <a href="http://www.gnuplot.info/">http://www.gnuplot.info/</a></li>
