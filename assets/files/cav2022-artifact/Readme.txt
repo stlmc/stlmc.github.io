@@ -55,15 +55,15 @@ how to run the artifact without VM.
 =======================================
 
 
-We provide a Zenodo url for the VM image 'STLmc.ova' via 
+We provide a Zenodo url for the VM image 'STLmc.ova' via our tool webpage:
 
- http://doi.org/10.5281/zenodo.4699760) 
+  https://stlmc.github.io/cav2022-artifact
 
-This image contains our tool and experiments (with Ubuntu 18.04.6 installed). The size 
+This VM image contains our tool and experiments (with Ubuntu 18.04.6 installed). The size 
 of the image is about 3.1GB. A minimum system requirement is a quad-core machine with 
 4096MB memory. You can run the image using VirtualBox (https://www.virtualbox.org) as follows:
 
-- Download 'STLmc.ova' from http://doi.org/10.5281/zenodo.4699760
+- Download 'STLmc.ova' from our webpage (https://stlmc.github.io/cav2022-artifact)
 - Click 'File/Import Appliance' in the top menu.
 - Choose 'STLmc.ova', and click 'Continue'.
 - Set the number of CPU cores (>= 4) and the size of memory (>= 4096 MB).
@@ -109,16 +109,23 @@ and generates graphs of counterexamples. For example, the counterexample graphs
 for the property 'f2' of the thermostat can be generated using the following command:
 
 user@VB:~/CAV2022-AeC/src$./stlmc-vis ./therm_b5_f2_dreal.counterexample \
-                                      -cfg ./therm_b5_f2_dreal.cfg
+                                      -cfg ./therm_b5_f2_dreal.cfg -output pdf
 
 The default visualization configuration makes two graphs: (1) a graph of continuous 
 variables and (2) a graph of STL subformulas. User can determine grouping which variables
 or STL subformulas for drawing graphs. This can be done by changing the visualization 
 configuration file. For example, we can generate Figure 3 of our paper by modifying 
-the group attributes in 'therm_b5_f2_dreal.cfg' as follows:
+the group attributes in 'therm_b5_f2_dreal.cfg' as follows and re-running the above command:
 
-     group { (x0, x1), (f2, f2_1), (f2_2, f2_3), (p_1, p_2)}
+      group { (x0, x1), (f2_0, f2_1), (f2_2, f2_3), (f2_4, f2_5)}
+    
+Using the group information, the 'stlmc-vis' script generates four pdf files, where each 
+pdf file corresponding to each group. For example, using the above group information, 
+'stlmc-vis' generates the following four pdf files:
 
+  { 'state_x0_x1.pdf' , 'rob_f2_5_f2_4.pdf' , 'rob_f2_3_f2_2.pdf' , 'rob_f2_0_f2_1.pdf' }
+
+The name of pdf files may differ because the ordering of elements in each group is not fixed.
 See our tool manual 'STLmc-manual.pdf' for more details. 
 
 
@@ -136,7 +143,7 @@ dynamics (i.e., 20, 10, 5 for linear, polynomial, and ODE dynamics).
 
 
 The experimental results of Table 2 were obtained by running each analysis with a timeout 
-of 30 minutes. In VM, it will take about 1 hours on AMD Ryzen 9 3.3GHz with VM quad-core 
+of 30 minutes. In VM, it will take about 1 hour on AMD Ryzen 9 3.3GHz with VM quad-core 
 and 4096MB memory. 
 
 
@@ -145,34 +152,35 @@ of our experiments. The following command reproduces our papar experiment, expla
 (i.e., the script runs all 18 cases for this experiment including 6 models each with 3 formulas 
 under a 30-minute timeout): 
 
-user@VB:~/CAV2022-AeC/experiment$ ./run-exp ../benchmarks/paper/* -t 1800
+user@VB:~/CAV2022-AeC/experiment$ ./run-exp "../benchmarks/paper/*" -t 1800
+
+In order to support wildcard matching (i.e., "<DIR>*"), 'run-exp' takes a glob pattern as its
+argument (i.e., the argument of the script must be given within the two quotation marks: "<ARG>").
 
 The argument '-t 1800' sets a timeout in seconds. The script searches for STLmc model files under 
 all the subdirectories of '../benchmarks/paper'. The script produces raw log data files under 
-the 'logs-<GIVEN_INPUT_DIR>' subdirectory, placed in the same directory as the 'run-exp' script.
-For example, the above command produces raw log files in the 'logs-benchmarks-paper' subdirectory,
+the 'log-<ARG>' subdirectory, placed in the same directory as the 'run-exp' script.
+For example, the above command produces raw log files in the 'log-benchmarks-paper-*' subdirectory,
 placed at 'CAV2022-AeC/experiment'.  
 
 
 For easy reproduction, we provide a 'gen-report' script to generate a CSV file report 
-from the raw data. For example, the following command generates CSV report file 
-for our paper experiment:
+from the raw data. For example, the following command generates CSV report file for our paper experiment:
 
 user@VB:~/CAV2022-AeC/experiment$ ./gen-report
 
-For easy data comparison to our paper, we provide a 'gen-table' script to generate html tables 
-from the generated csv files. This script searches all csv files having names starting 
-with 'logs-*' and generates html tables with the layout of Table2 of our paper. 
-For example, suppose we already have 'logs-benchmarks-paper.csv' by running (a).
-The following command generates a html version of Table 2 of our paper named 
-'logs-benchmarks-paper.html':
+For easy data comparison to our paper, we provide a 'gen-paper-table' script to generate html tables from 
+raw log files. This script searches all csv files having names starting with 'log-*' and generates 
+html tables with the layout of Table2 of our paper. For example, suppose we already have 
+'log-benchmarks-paper-*' directories. The following command generates a html version of Table 2 of our paper 
+named 'logs-benchmarks-paper-*-paper-table2.html':
 
-user@VB:~/CAV2022-AeC/experiment$ ./gen-table
+user@VB:~/CAV2022-AeC/experiment$ ./gen-paper-table
 
 
 Remark: When solving a problem using the parallelized two-step algorithm, the bound (k) at which 
-a counterexample is found can differ by up to '1' because of the concurrency issue of the algorithm. 
-Thus, we run all experiments for five times and attach these results to the 'logs' directory.
+a counterexample is found may differ by up to '1' because of the concurrency and non-determinism of our algorithm. 
+Thus, we run all paper experiments for five times and attach the results in the 'logs' directory.
 
 
 
@@ -181,24 +189,23 @@ Thus, we run all experiments for five times and attach these results to the 'log
 =======================================
 
 
-We explain more usage of the STLmc tool using the load management for two batteries
-model file under the subdirectory 'benchmarks/paper/bat-linear'. We can select the property
-to be analyzed using the '-goal' option. The default argument for the option is 'all' 
-that runs all STL properties. The following command performs a robust STL model checking 
-all properties of the battery model at bound 20 and time bound 30 with respect to robustness 
-threshold 1 using direct STM solving and yices:
+We explain more detailed usages of the STLmc tool using the autonomous driving of two car model,
+placed under the subdirectory 'benchmarks/paper/car-poly'. We can select the property to be analyzed 
+using the '-goal' option. The default argument for the option is 'all'. This will run all STL properties
+specified in the model file. The following command performs a robust STL model checking 'f1' properties 
+of the car model at bound 10 and time bound 15 with respect to robustness threshold 0.5 using Yices2 solver:
 
-user@VB:~/CAV2022-AeC/src$./stlmc ../benchmarks/paper/bat-linear/battery.model \ 
-                                  -bound 20 -time-bound 30 -threshold 1 -solver yices
+user@VB:~/CAV2022-AeC/src$./stlmc ../benchmarks/paper/car-poly/car.model \ 
+                                  -bound 10 -time-bound 15 -threshold 0.5 -solver yices -goal f1
 
-<----The analyses in VM took 91 seconds on AMD Ryzen 9 3.3GHz with VM quad-core and 4096MB of memory. ---->
+The analyses in VM took 10 seconds on AMD Ryzen 9 3.3GHz with VM quad-core and 4096MB of memory.
 
 
-The STLmc tool supports some error handling. For example, consider the STL property 
-'f1: []_(5, 2] x > 3' in which the interval of the temporal operator is wrong.
-Then, our tool raises the following error message:
+The STLmc tool supports some error handling. For example, consider the STL property in the same model
+'[f1]: [][0,inf] (vx < -2 -> <>[2,5] rx <= -2);' in which the interval is infeasible. Then, our tool raises 
+the following error message:
 
-<---'''''''' ---->
+    syntax error: in "../benchmarks/paper/car-poly/car.model" line 91:16 mismatched input ']' expecting ')'
 
 
 
@@ -211,19 +218,22 @@ Then, our tool raises the following error message:
 We consider the following additional benchmark models: bat-poly, bat-ode, wat-poly, wat-ode, 
 car-linear, car-ode, rail-linear, rail-ode, thm-linear, the-poly, nav-ode, space-ode.
 See the STLmc technical report (https://stlmc.github.io/documents) for more details.
-These models and formulas are declared in the "benchmark/additional" directory.
+These models and formulas are declared in the 'benchmarks/additional' directory.
 
 
-Using the script 'run-exp', we can run all additional benchmark models with a 1-hour timeout, 
-e.g., by the following command:
+Using the script 'run-exp', we can run all additional benchmark models with a 1-hour timeout as follows:
 
-user@VB:~/CAV2022-AeC/experiment$ ./run-exp ../benchmarks/additional/* -t 3600
+user@VB:~/CAV2022-AeC/experiment$ ./run-exp "../benchmarks/additional/" -t 3600
 
-The script produces raw log data files in the 'logs-benchmarks-additional' subdirectory,
-explained above. The following command generates Table 2 and Table 3 of the technical report 
-named 'logs-benchmarks-additional.html':
+In VM, it will take about 3 hours on AMD Ryzen 9 3.3GHz with VM quad-core and 4096MB memory. 
 
-user@VB:~/CAV2022-AeC/experiment$ ./gen-table
+The script produces raw log data files in the 'log-benchmarks-additional' subdirectory, explained above. 
+We also provide a 'gen-tech-table' script, similar to the 'gen-paper-table' script, for generating 
+Table 2 and 3 of our technical report. The following command generates Table 2 and Table 3 of the technical 
+report, named 'log-benchmarks-additional-tech-table2.html' and 'log-benchmarks-additional-tech-table3.html', 
+respectively:
+
+user@VB:~/CAV2022-AeC/experiment$ ./gen-tech-table
 
 
 
@@ -243,12 +253,12 @@ The 'logs' directory contains the following (the raw log files are compressed in
 - paper/trial-<N>.zip: the raw log files of N-th trial of experiments of our paper (Table 2)
 - paper/trial-<N>.csv: the csv report of N-th trial
 - paper/paper-result.csv: the csv report of averaging the data of all N trials
-- paper/paper-result-table2.html: the html table generating from paper-result.csv, matching the Table 2 of our paper
+- paper/paper-result-table.pdf: the html table generating from paper-result.csv, matching the Table 2 of our paper
 
-- additional/trial-<N>.zip: the raw log files of the extended experiments of the STLmc technical report (Table 2 and Table 3)
-- additional/trial-<N>.csv: the csv report of N-th trial
-- additional/additional-result.csv: the csv report of averaging the data of all N trials
-- additional/additional-result-table2.html: the html table generating from additional-result.csv, matching the Table 2 and Table 3
+- additional/raw.zip: the raw log files of the extended experiments of the STLmc technical report (Table 2 and Table 3)
+- additional/result.csv: the csv report of averaging the data of all N trials
+- additional/result-table2.html: the html table generating from additional-result.csv, matching the Table 2
+- additional/result-table3.html: the html table generating from additional-result.csv, matching the Table 3
 
 
 
@@ -264,10 +274,13 @@ The 'run-exp' script provides options to run a subset of the experiments.
 The command './run-exp -h' shows more details about arguments.
 There are two (optional) command line arguments as follows: 
 
-user@VB:~/CAV2021-AeC/experiment$ ./run-exp "<PATH TO MODELS>" \
+user@VB:~/CAV2022-AeC/experiment$ ./run-exp "<PATH TO MODELS>" \
                                             [-t <TIMEOUT>] 
 
 The script takes a path to directories of a model file to be analyzed and a timeout in seconds.
+As mentioned, in order to support wildcard matching (i.e., "<DIR>*"), 'run-exp' takes a glob pattern as its
+argument (i.e., the argument of the script must be given within the two quotation marks: "<ARG>").
+
 E.g, the following command runs all thermostat models in additional experiments 
 with a 1-hour timeout.
 
@@ -298,7 +311,7 @@ for the property 'f2' of the thermostat to 5 by modifying the threshold paramete
 'therm-f1.cfg' as follows:
 
   common { 
-    goal = f1  
+    goal = "f1"  
     threshold = 5 
   }
 
@@ -315,7 +328,7 @@ and the 'therm-f1.cfg' is given as follows:
 
   common { 
     time-bound = 10 
-    goal = f1
+    goal = "f1"
     threshold = 5 
 }
 
@@ -331,14 +344,14 @@ The 'stlmc-vis' script provides several options to generate counterexample witne
 The command './stlmc-vis -h' shows more details about arguments.
 There are three command line arguments as follows: 
 
-user@VB:~/CAV2021-AeC/src$ ./stlmc-vis [-output <FORMAT>] \
+user@VB:~/CAV2022-AeC/src$ ./stlmc-vis [-output <FORMAT>] \
                                        -cfg <CONF_FILE> \
                                        <FILE>
 
 The 'stlmc' generates a counterexample file and a visualization configuration file 
 when '-visualize' option is set. The visualization configuration file contains 
 grouping information for drawing counterexample witnesses. For example, we can draw two graphs 
-in html format, where each graph containing continuous variables 'x0' and 'x1', respectively, 
+in pdf format, where each graph containing continuous variables 'x0' and 'x1', respectively, 
 by modifying the group attributes in 'therm_b5_f2_dreal.cfg' as follows: 
 
 	group { (x0), (x1) } 
@@ -347,8 +360,9 @@ and run the following command:
 
 user@VB:~/CAV2022-AeC/src$./stlmc-vis ./therm_b5_f2_dreal.counterexample \
                                       -cfg ./therm_b5_f2_dreal.cfg \
-                                      -output html
+                                      -output pdf
 
+When '-output' is not specified, the script generates counterexample graphs in html format.
 See our tool manual 'STLmc-manual.pdf' for more details. 
 
 
@@ -356,9 +370,9 @@ See our tool manual 'STLmc-manual.pdf' for more details.
 (3) The 'gen-report' script
 
 
-The 'gen-report' script finds directories having names starting with 'logs-*' and 
-generates a csv report file with the same name. E.g., the above command generates 
-'logs-benchmarks-paper.csv' file in the current directory.
+The 'gen-report' script finds directories having names starting with 'log-*' and 
+generates a csv report file with the same name. E.g., for the 'log-benchmarks-paper' directory 
+the script generates 'log-benchmarks-paper.csv' file in the same directory.
 
 
 The csv file contains the following columns for each case of the experiment 
@@ -388,12 +402,12 @@ csv files corresponding to each log directory. For example, suppose we use 'run-
 to reproduce the whole paper experiment and the subset of the paper experiment 
 (i.e., polynomial cases) as follows:
 
-- (a) user@VB:~/CAV2022-AeC/experiment$ ./run-exp ../benchmarks/paper/* -t 1800 
-- (b) user@VB:~/CAV2022-AeC/experiment$ ./run-exp ../benchmarks/paper/*-poly -t 1800
+- (a) user@VB:~/CAV2022-AeC/experiment$ ./run-exp "../benchmarks/paper/" -t 1800 
+- (b) user@VB:~/CAV2022-AeC/experiment$ ./run-exp "../benchmarks/paper/*-poly" -t 1800
 
-The above commands generates two log directories (i.e., logs-benchmarks-paper and 
-logs-benchmarks-paper-poly) in the current directory. Then, 'gen-report' generates 
-two csv files: logs-benchmarks-paper.csv and logs-benchmarks-paper-poly.csv 
+The above commands generates two log directories (i.e., log-benchmarks-paper and 
+log-benchmarks-paper-*-poly) in the current directory. Then, 'gen-report' generates 
+two csv files: logs-benchmarks-paper.csv and logs-benchmarks-paper-*-poly.csv 
 for (a) and (b), respectively.
 
 
@@ -414,15 +428,15 @@ and <LABEL> is one of {f1,f2,f3}:
   * <MODEL>.cfg: basic model configuration
   * <MODEL>-<LABEL>.cfg: configuration considering the goal '<LABEL>'
 
-For example, the Thermostat controller with ODE dynamics of our paper is placed under the directory 
-'benchmarks/paper/thm-ode' as follows:
+For example, the autonomous car model with polynomial dynamics of our paper is placed under the directory 
+'benchmarks/paper/car-poly' as follows:
 
-- benchmarks/paper/thm-ode
-  * thm.model: a thermostat controller model
-  * thm.cfg: basic model configuration
-  * thm-f1.cfg: configuration considering the goal 'f1'
-  * thm-f2.cfg: configuration considering the goal 'f2'
-  * thm-f3.cfg: configuration considering the goal 'f3'
+- benchmarks/paper/car-poly
+  * car.model: a model of an autonomus driving of two cars
+  * car.cfg: basic model configuration
+  * car-f1.cfg: configuration considering the goal 'f1'
+  * car-f2.cfg: configuration considering the goal 'f2'
+  * car-f3.cfg: configuration considering the goal 'f3'
 
 
 Additional models and configuration files are placed under the directory 'benchmarks/additional/'
@@ -519,11 +533,13 @@ the followings are required:
       $sudo apt-get update
       $sudo apt-get install yices2-dev
 
+  - Gnuplot: http://www.gnuplot.info/
+
 
 
 To install our artifact, follow the below instruction steps:
 
-1. Download and unzip the archive file (CAV2022-AeC.zip) to some directory (e.g., /home/\<USER\>/).
+1. Download and unzip the archive file (CAV2022-AeC.zip).
 2. Install the following python packages:
     
   - pip3 install termcolor yices z3-solver \
@@ -537,11 +553,9 @@ To install our artifact, follow the below instruction steps:
   
 4. Use the following command to run smoke tests for our installation:
   
-  - cd CAV2022-AeC && make test
+  - make test
 
-  This command tests if all neccessary executables exist and are set to right permissions.
-  Also, it tests underlying SMT solvers (i.e., Z3, Yices2, and dReal) using several smt2 
-  test cases for integrity. Then, it tests STLmc using test STLmc models in 'tests' subdirectory.
+  This command requires sudo permission.
 
 5. If the tests succeed, you will see the following messages:
 
@@ -551,6 +565,7 @@ To install our artifact, follow the below instruction steps:
   [exec] dReal: pass
   [exec] Z3: pass
   [exec] Java: pass
+  [exec] Gnuplot: pass
   [file] Config: pass
   [smt] dReal
     ./tests/smt2/dreal/01.smt2: pass
@@ -573,6 +588,7 @@ STLmc uses the following SMT solvers as its underlying SMT solvers:
 
 The archive file already contains dReal under the directory 'CAV2022-AeC/3rd_party'.
 Note that, we also use the above installation instructions to create our Zenodo 
-VirtualBox image (http://doi.org/10.5281/zenodo.4699760). You can create a new 
-VM image using Ubuntu by following the step 1 ~ 5, starting from downloading and 
-unzipping the 'CAV2022-AeC.zip' on the virtual machine.
+VirtualBox image. You can create a new VM image using Ubuntu by following the step 
+1 ~ 5, starting from downloading and unzipping the 'CAV2022-AeC.zip' on the virtual machine.
+
+See our webpage https://stlmc.github.io/cav2022-artifact/ for more details
