@@ -60,7 +60,7 @@ We provide a Zenodo url for the VM image 'STLmc.ova' via our tool webpage:
   https://stlmc.github.io/cav2022-artifact
 
 This VM image contains our tool and experiments (with Ubuntu 18.04.6 installed). The size 
-of the image is about 3.1GB. A minimum system requirement is a quad-core machine with 
+of the image is about 4GB. A minimum system requirement is a quad-core machine with 
 4096MB memory. You can run the image using VirtualBox (https://www.virtualbox.org) as follows:
 
 - Download 'STLmc.ova' from our webpage (https://stlmc.github.io/cav2022-artifact)
@@ -189,21 +189,24 @@ Thus, we run all paper experiments for five times and attach the results in the 
 =======================================
 
 
-We explain more detailed usages of the STLmc tool using the autonomous driving of two car model,
-placed under the subdirectory 'benchmarks/paper/car-poly'. We can select the property to be analyzed 
-using the '-goal' option. The default argument for the option is 'all'. This will run all STL properties
-specified in the model file. The following command performs a robust STL model checking 'f1' properties 
-of the car model at bound 10 and time bound 15 with respect to robustness threshold 0.5 using Yices2 solver:
+We explain more usages of the STLmc tool using the load management for two batteries
+model file under the subdirectory 'benchmarks/paper/bat-linear'. We can select the property
+to be analyzed using the '-goal' option. The default argument for the option is 'all' that runs 
+all STL properties. STLmc chooses an optimal SMT solver when the '-solver' option is not given.  
+The following command performs a robust STL model checking all properties of the battery 
+model at bound 5 and time bound 30 with respect to robustness threshold 1:
 
-user@VB:~/CAV2022-AeC/src$./stlmc ../benchmarks/paper/car-poly/car.model \ 
-                                  -bound 10 -time-bound 15 -threshold 0.5 -solver yices -goal f1
+user@VB:~/CAV2022-AeC/src$./stlmc ../benchmarks/paper/bat-linear/battery.model \
+                                  -bound 20 -time-bound 30 -threshold 1
 
-The analyses in VM took 10 seconds on AMD Ryzen 9 3.3GHz with VM quad-core and 4096MB of memory.
+Since the model has linear dynamics, STLmc chooses Yices2 as an underlying SMT solver. 
+The analyses in VM took 10 seconds on AMD Ryzen 9 3.3GHz with VM quad-core and 4096MB 
+of memory.
 
-
-The STLmc tool supports some error handling. For example, consider the STL property in the same model
-'[f1]: [][0,inf] (vx < -2 -> <>[2,5] rx <= -2);' in which the interval is infeasible. Then, our tool raises 
-the following error message:
+The STLmc tool raises exceptions for basic mistakes made by users when writing or editing the STLmc
+input model. For example, consider the STL property in the same model with 
+'[f1]: [][0,inf] (vx < -2 -> <>[2,5] rx <= -2);'. The formula has a closed interval with infinity on its right
+hand side. The tool raises error at syntax to level to avoid apparently infeasible cases:
 
     syntax error: in "../benchmarks/paper/car-poly/car.model" line 91:16 mismatched input ']' expecting ')'
 
@@ -252,8 +255,9 @@ The 'logs' directory contains the following (the raw log files are compressed in
 
 - paper/trial-<N>.zip: the raw log files of N-th trial of experiments of our paper (Table 2)
 - paper/trial-<N>.csv: the csv report of N-th trial
+- paper/trial-<N>-table2.csv: the html N-th trial Table 2 of our paper
 - paper/paper-result.csv: the csv report of averaging the data of all N trials
-- paper/paper-result-table.pdf: the html table generating from paper-result.csv, matching the Table 2 of our paper
+- paper/paper-result-table2.pdf: the html table generating from paper-result.csv, matching the Table 2 of our paper
 
 - additional/raw.zip: the raw log files of the extended experiments of the STLmc technical report (Table 2 and Table 3)
 - additional/result.csv: the csv report of averaging the data of all N trials
@@ -372,7 +376,7 @@ See our tool manual 'STLmc-manual.pdf' for more details.
 
 The 'gen-report' script finds directories having names starting with 'log-*' and 
 generates a csv report file with the same name. E.g., for the 'log-benchmarks-paper' directory 
-the script generates 'log-benchmarks-paper.csv' file in the same directory.
+the script generates 'log-benchmarks-paper-report.csv' file in the same directory.
 
 
 The csv file contains the following columns for each case of the experiment 
@@ -407,7 +411,7 @@ to reproduce the whole paper experiment and the subset of the paper experiment
 
 The above commands generates two log directories (i.e., log-benchmarks-paper and 
 log-benchmarks-paper-*-poly) in the current directory. Then, 'gen-report' generates 
-two csv files: logs-benchmarks-paper.csv and logs-benchmarks-paper-*-poly.csv 
+two csv files: logs-benchmarks-paper-report.csv and logs-benchmarks-paper-*-poly-report.csv 
 for (a) and (b), respectively.
 
 
@@ -517,13 +521,6 @@ the followings are required:
     Our artifact needs MCSAT-enabled version of Yices2. Please follow the below installation steps to get 
     this specific version of Yices2:
 
-    * MacOS
-
-      To install on macOS, use homebrew:
-
-      $brew install SRI-CSL/sri-csl/yices2
-  
-
     * Ubuntu
 
       To install Yices on Ubuntu, do the following:
@@ -533,7 +530,39 @@ the followings are required:
       $sudo apt-get update
       $sudo apt-get install yices2-dev
 
-  - Gnuplot: http://www.gnuplot.info/
+
+    * MacOS
+
+      To install on macOS, use homebrew:
+
+      $brew install SRI-CSL/sri-csl/yices2
+
+
+- Z3: https://github.com/Z3Prover/z3/
+
+    * Ubuntu
+
+      Normally, Z3 solver is automatically installed when downloading its Python3 package (i.e., using pip3 install z3-solver).
+
+    * MacOS 
+
+      Normally, Z3 solver is automatically installed as in Linux environment. But for some cases, we found that one may need 
+      to install Z3 binaries manually. This can be done using the following command:
+
+      $brew install z3
+
+
+- Gnuplot: http://www.gnuplot.info/
+
+    STLmc uses Gnuplot for counterexample generation.
+    
+    * Ubuntu
+    
+      $sudo apt install gnuplot
+    
+    * MacOS
+   
+      $brew install gnuplot
 
 
 
@@ -587,8 +616,5 @@ STLmc uses the following SMT solvers as its underlying SMT solvers:
 * dReal: https://github.com/dreal/dreal3/
 
 The archive file already contains dReal under the directory 'CAV2022-AeC/3rd_party'.
-Note that, we also use the above installation instructions to create our Zenodo 
-VirtualBox image. You can create a new VM image using Ubuntu by following the step 
-1 ~ 5, starting from downloading and unzipping the 'CAV2022-AeC.zip' on the virtual machine.
 
 See our webpage https://stlmc.github.io/cav2022-artifact/ for more details
