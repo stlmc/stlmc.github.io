@@ -229,7 +229,9 @@ You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> make test
 </code></pre></div>    </div>
 
-    <p>This command requires sudo permission.</p>
+    <p>This command requires sudo permission. The command tests if all neccessary executables exist and are set to right permissions.
+  Also, it tests underlying SMT solvers (i.e., Z3, Yices2, and dReal) using several smt2 
+  test cases for integrity. Then, it tests STLmc using test STLmc models in ‘tests’ subdirectory.</p>
   </li>
   <li>
     <p>If the tests succeed, you will see the following messages:</p>
