@@ -43,17 +43,19 @@
 <p>This page explains the artifact for our paper: “STLmc: Robust STL Model Checking of Hybrid
 Systems using SMT” by G. Yu, J. Lee, and K. Bae. The artifact includes the STLmc tool and scripts for running the experiments of the paper.</p>
 
-<p>The VirtualBox image for our artifact is available at <a href="">http://doi.org/10.5281/zenodo.4699760</a>. In the virtual machine, the artifact is located under the directory "home/user/CAV2022-AeC". See <a href="">Readme.txt</a> in the artifact top directory for more information about the tool, experiments, and our artifact.</p>
+<p>The VirtualBox image for our artifact is available at <a href="">http://doi.org/10.5281/zenodo.4699760</a>. In the virtual machine, the artifact is located under the directory "home/user/CAV2022-AeC". See <a href="/assets/files/cav2022-artifact/Readme.txt">Readme.txt</a> in the artifact top directory for more information about the tool, experiments, and our artifact.</p>
 
 <ul>
-  <li><a href="">CAV2022-AeC.zip</a></li>
-  <li><a href="">SHA256 checksum</a></li>
+  <li><a href="https://tinyurl.com/3edyh4zs">CAV2022-AeC.zip</a></li>
+  <li><a href="/assets/files/cav2022-artifact/Readme.txt">SHA256 checksum</a></li>
   <li><a href="">http://doi.org/10.5281/zenodo.4699760</a></li>
 </ul>
 
 <hr />
 
 <h4 id="running-the-artifact-in-vm-environment">Running the Artifact in VM Environment</h4>
+
+<p><strong>Zenodo</strong></p>
 
 <p>We provide a VirtualBox image 'STLmc.ova' that contains our tool and experiments. 
 The VM image uses Ubuntu 18.04.6 with STLmc installed. The size of the image is about 3.1GB.</p>
@@ -69,26 +71,40 @@ You can run the image using VirtualBox (<a href="https://www.virtualbox.org">htt
   <li>Click the green right arrow to run the imported image.</li>
 </ul>
 
-<p>For those who don’t have enough storage spaces, we also provide a vagrant file 'STLmc.vagrantfile'.
+<p><strong>Vagrant</strong></p>
+
+<p>For those who don’t have enough storage spaces, we also provide a vagrant set-ups '<a href="">STLmc-Vagrant.zip</a>'.
 You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.com">https://www.vagrantup.com</a>) as follows:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir STLmc-VM
-cd STLmc-VM &amp;&amp; vagrant up
-</code></pre></div></div>
-<p>Vagrant automatically creates a VM image for our artifact.
-To use the generated VM image, use ssh connect as follows:</p>
+<ol>
+  <li>Download and unzip archive file (<a href="">STLmc-Vagrant.zip</a>)</li>
+  <li>
+    <p>Use following command to initialize Vagrant.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd STLmc-VM &amp;&amp; vagrant ssh user
-</code></pre></div></div>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd STLmc-VM &amp;&amp; vagrant up
+</code></pre></div>    </div>
+    <p>Vagrant automatically creates a VM image for our artifact.</p>
+  </li>
+  <li>
+    <p>To use the generated VM image, use ssh connect as follows:</p>
 
-<p>If succeed, you can see the artifact directory 'CAV2022-AeC' as follows:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@VB:~$ ls
-    CAV2022-AeC ...
-</code></pre></div></div>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> vagrant ssh user
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>If succeed, you can see the artifact directory 'CAV2022-AeC' as follows:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> user@VB:~$ ls
+     CAV2022-AeC ...
+</code></pre></div>    </div>
+  </li>
+</ol>
 
 <hr />
 
 <h4 id="running-the-artifact-in-a-non-vm-environment">Running the Artifact in a non-VM Environment</h4>
+
+<p><strong>1. Prerequisites</strong></p>
 
 <p>We explain how to install and run the artifact in a non-VM environment. The artifact requires the following libraries for prerequisites:</p>
 
@@ -126,10 +142,12 @@ To use the generated VM image, use ssh connect as follows:</p>
 
 <p><br /></p>
 
+<p><strong>2. Installation</strong></p>
+
 <p>To install our artifact, follow the below instruction steps:</p>
 
 <ol>
-  <li>Download and unzip the archive file (<a href="">CAV2022-AeC.zip</a>) to some directory (e.g., /home/&lt;USER&gt;/).</li>
+  <li>Download and unzip the archive file (<a href="https://tinyurl.com/3edyh4zs">CAV2022-AeC.zip</a>).</li>
   <li>
     <p>Install the following python packages:</p>
 
@@ -147,8 +165,10 @@ To use the generated VM image, use ssh connect as follows:</p>
   <li>
     <p>Use the following command to run smoke tests for our installation:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd CAV2022-AeC &amp;&amp; make test
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> make test
 </code></pre></div>    </div>
+
+    <p>This command requires sudo permission.</p>
   </li>
   <li>
     <p>If the tests succeed, you will see the following messages:</p>
@@ -187,7 +207,7 @@ To use the generated VM image, use ssh connect as follows:</p>
 
 <p>The archive file already contains dReal under the directory “CAV2022-AeC/3rd_party”.</p>
 
-<p>Note that, we also use the above installation instructions to create our Zenodo VirtualBox image (<a href="">http://doi.org/10.5281/zenodo.4699760</a>). You can create a new VirtualBox image using Ubuntu by following the step 1 ~ 5, starting from downloading and unzipping the <a href="">CAV2022-AeC.zip</a> on the virtual machine.</p>
+<p>Note that, we also use the above installation instructions to create our Zenodo VirtualBox image (<a href="">http://doi.org/10.5281/zenodo.4699760</a>). You can create a new VirtualBox image using Ubuntu by following the step 1 ~ 5, starting from downloading and unzipping the <a href="https://tinyurl.com/3edyh4zs">CAV2022-AeC.zip</a> on the virtual machine.</p>
 
   </div>
 
