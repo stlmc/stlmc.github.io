@@ -16,6 +16,31 @@
 {"headline":"Artifact","@type":"WebPage","url":"https://stlmc.github.io/cav2022-artifact/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+    inlineMath: [ ['$', '$'] ],
+    displayMath: [ ['$$', '$$'] ],
+    processEscapes: true,
+  }
+});
+MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
+	  alert("Math Processing Error: "+message[1]);
+	});
+MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
+	  alert("Math Processing Error: "+message[1]);
+	});
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+  
   
 </head>
 <body><header class="site-header" role="banner">
@@ -68,7 +93,7 @@ You can run the image using VirtualBox (<a href="https://www.virtualbox.org">htt
 <ul>
   <li>Click ‘File/Import Appliance’ in the top menu.</li>
   <li>Choose ‘STLmc.ova’, and click ‘Continue’.</li>
-  <li>Set the number of CPU cores (&gt;= 4) and the size of memory (&gt;= 4096 MB).</li>
+  <li>Set the number of CPU cores ($\geq$ 4) and the size of memory ($\geq$ 4096 MB).</li>
   <li>Click ‘Import’ (which will take a few minutes).</li>
   <li>Click the green right arrow to run the imported image.</li>
 </ul>
