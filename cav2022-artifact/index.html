@@ -43,12 +43,12 @@
 <p>This page explains the artifact for our paper: “STLmc: Robust STL Model Checking of Hybrid
 Systems using SMT” by G. Yu, J. Lee, and K. Bae. The artifact includes the STLmc tool and scripts for running the experiments of the paper.</p>
 
-<p>The VirtualBox image for our artifact is available at <a href="">http://doi.org/10.5281/zenodo</a>. In the virtual machine, the artifact is located under the directory "home/user/CAV2022-AeC". See <a href="/assets/files/cav2022-artifact/Readme.txt">Readme.txt</a> in the artifact top directory for more information about the tool, experiments, and our artifact.</p>
+<p>The VirtualBox image for our artifact is available at <a href="https://doi.org/10.5281/zenodo.6526951">https://doi.org/10.5281/zenodo.6526951</a>. In the virtual machine, the artifact is located under the directory "home/user/CAV2022-AeC". See <a href="/assets/files/cav2022-artifact/Readme.txt">Readme.txt</a> in the artifact top directory for more information about the tool, experiments, and our artifact.</p>
 
 <ul>
   <li><a href="https://tinyurl.com/3edyh4zs">CAV2022-AeC.zip</a></li>
   <li><a href="/assets/files/cav2022-artifact/Readme.txt">SHA256 checksum</a></li>
-  <li><a href="">http://doi.org/10.5281/zenodo</a></li>
+  <li><a href="https://doi.org/10.5281/zenodo.6526951">STLmc.ova</a></li>
 </ul>
 
 <hr />
@@ -57,7 +57,7 @@ Systems using SMT” by G. Yu, J. Lee, and K. Bae. The artifact includes the STL
 
 <p><strong>Zenodo</strong></p>
 
-<p>We provide a VirtualBox image 'STLmc.ova' that contains our tool and experiments. 
+<p>We provide a VirtualBox image '<a href="https://doi.org/10.5281/zenodo.6526951">STLmc.ova</a>' that contains our tool and experiments. 
 The VM image uses Ubuntu 18.04.6 with STLmc installed. The size of the image is about 4.1GB.</p>
 
 <p>A minimum system requirement for the artifact evaluation is a quad-core virtual CPUs with 4096MB memory.
@@ -157,7 +157,21 @@ You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew install z3
 </code></pre></div>    </div>
   </li>
-  <li>Gnuplot: <a href="http://www.gnuplot.info/">http://www.gnuplot.info/</a></li>
+  <li>
+    <p>Gnuplot: <a href="http://www.gnuplot.info/">http://www.gnuplot.info/</a></p>
+
+    <p>STLmc uses ‘Gnuplot’ to visualize counterexample graphs. You can install Gnuplot using the following command:</p>
+
+    <p><strong>Ubuntu or Debian</strong></p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  sudo apt install gnuplot
+</code></pre></div>    </div>
+
+    <p><strong>MacOS</strong></p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew install gnuplot
+</code></pre></div>    </div>
+  </li>
 </ul>
 
 <p><br /></p>
@@ -199,6 +213,7 @@ You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.
 [exec] dReal: pass
 [exec] Z3: pass
 [exec] Java: pass
+[exec] Gnuplot: pass
 [file] Config: pass
 [smt] dReal
   ./tests/smt2/dreal/01.smt2: pass
@@ -226,8 +241,6 @@ You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.
 </ul>
 
 <p>The archive file already contains dReal under the directory “CAV2022-AeC/3rd_party”.</p>
-
-<p>Note that, we also use the above installation instructions to create our Zenodo VirtualBox image (<a href="">http://doi.org/10.5281/zenodo</a>). You can create a new VirtualBox image using Ubuntu by following the step 1 ~ 5, starting from downloading and unzipping the <a href="https://tinyurl.com/3edyh4zs">CAV2022-AeC.zip</a> on the virtual machine.</p>
 
   </div>
 
