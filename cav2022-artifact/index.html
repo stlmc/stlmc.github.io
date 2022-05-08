@@ -72,8 +72,9 @@ Systems using SMT” by G. Yu, J. Lee, and K. Bae. The artifact includes the STL
 
 <ul>
   <li><a href="https://tinyurl.com/3edyh4zs">CAV2022-AeC.zip</a></li>
-  <li><a href="/assets/files/cav2022-artifact/SHA256SUMS">SHA256 checksum</a></li>
+  <li>Checksums: [<a href="/assets/files/cav2022-artifact/SHA256SUMS">SHA256</a>, <a href="/assets/files/cav2022-artifact/MD5SUMS">MD5</a>]</li>
   <li>STLmc.ova: <a href="https://doi.org/10.5281/zenodo.6527363">https://doi.org/10.5281/zenodo.6527363</a></li>
+  <li><a href="https://tinyurl.com/w574su7x">STLmc-Vagrant.zip</a></li>
 </ul>
 
 <hr />
@@ -98,13 +99,18 @@ You can run the image using VirtualBox (<a href="https://www.virtualbox.org">htt
   <li>Click the green right arrow to run the imported image.</li>
 </ul>
 
+<p>You can login to the VM with a username ‘user’ without any password.</p>
+
+<p>Generally, we don’t need any sudo permission to use/reproduce our artifact. 
+But for your information, the password of ‘user’ is ‘user’.</p>
+
 <p><strong>Vagrant</strong></p>
 
-<p>For those who don’t have enough storage spaces, we also provide a vagrant set-up '<a href="">STLmc-Vagrant.zip</a>'.
+<p>For those who don’t have enough storage spaces, we also provide a vagrant set-up '<a href="https://tinyurl.com/w574su7x">STLmc-Vagrant.zip</a>'.
 You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.com">https://www.vagrantup.com</a>) as follows:</p>
 
 <ol>
-  <li>Download and unzip archive file (<a href="">STLmc-Vagrant.zip</a>)</li>
+  <li>Download and unzip archive file (<a href="https://tinyurl.com/w574su7x">STLmc-Vagrant.zip</a>)</li>
   <li>
     <p>Use following command to initialize Vagrant.</p>
 
@@ -115,15 +121,20 @@ You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.
   <li>
     <p>To use the generated VM image, use ssh connect as follows:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> vagrant ssh user
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> vagrant ssh
 </code></pre></div>    </div>
   </li>
   <li>
     <p>If succeed, you can see the artifact directory 'CAV2022-AeC' as follows:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> user@VB:~$ ls
-     CAV2022-AeC ...
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> vagrant@ubuntu-bionic:~$ ls
+ CAV2022-AeC
 </code></pre></div>    </div>
+
+    <p>Vagrant generates VM with a name ‘ubuntu-bionic’ and username ‘vagrant’.</p>
+
+    <p>In general, we don’t need any sudo permission to use/reproduce our artifact. 
+ But for your information, the password of user ‘vagrant’ is ‘vagrant’.</p>
   </li>
 </ol>
 
