@@ -40,12 +40,11 @@ The STLmc artifact includes the following files and directories:
 The rest of 'README' is organized as follows. Section 2 provides how to set up the artifact 
 using the virtual box image. Section 3 describes a short demo of the STLmc tool in Sec. 3 
 of the paper. Section 4 explains how to reproduce the experiments in Sec. 5 of the paper.
-For "reusable" badge, more usage of the STLmc tool and additional experiments are described
-in Section 5 and 6, respectively. Section 7 explains the structure of the log files 
-for the experiments. Section 8 describes more details on our scripts. Section 9 explains 
-the structure of the model and configuration files for the experiments. Section 10 explains 
-the most relevant parts of the source code. Finally, Section 11 provides guidance on 
-how to run the artifact without VM.
+Section 5 explains the structure of the log files for the experiments. Section 6 explains 
+the structure of the benchmark model directories. The rest of the sections explain why our artifact
+is reusable as follows. Section 7 and 8 explain more usage of the STLmc tool and additional experiments 
+Section 9 describes more details on our scripts. Section 10 explains the most relevant parts of the 
+source code. Finally, Section 11 provides guidance on how to run the artifact without VM.
 
  
 
@@ -61,14 +60,17 @@ We provide a Zenodo url for the VM image 'STLmc.ova' via our tool webpage:
 
 This VM image contains our tool and experiments (with Ubuntu 18.04.6 installed). The size 
 of the image is about 4GB. A minimum system requirement is a quad-core machine with 
-4096MB memory. You can run the image using VirtualBox (https://www.virtualbox.org) as follows:
+4GB memory. You can run the image using VirtualBox (https://www.virtualbox.org) as follows:
 
 - Download 'STLmc.ova' from our webpage (https://stlmc.github.io/cav2022-artifact)
 - Click 'File/Import Appliance' in the top menu.
 - Choose 'STLmc.ova', and click 'Continue'.
-- Set the number of CPU cores (>= 4) and the size of memory (>= 4096 MB).
+- Set the number of CPU cores (>= 4) and the size of memory (>= 4GB).
 - Click 'Import' (which will take a few minutes).
 - Click the green right arrow to run the imported image.
+
+Remark: Some experiments may not run properly on the following architectures:
+- Apple MacBook Pro 2015 or earlier: Yices 2.6 with QF-NRA is not working
 
 
 
@@ -81,7 +83,7 @@ of the image is about 4GB. A minimum system requirement is a quad-core machine w
 The directory '/home/user/CAV2022-AeC' (i.e., $HOME/CAV2022-AeC) in the virtual
 machine contains the STLmc tool and experiments. To start the STLmc tool, run 'stlmc' 
 in the subdirectory 'src', using the command line. You can find the model file 
-'therm.model', explained in Sec. 3 of our paper, under the subdirectory 
+'therm.model', explained in Sec. 3 of our paper, in the subdirectory 
 'benchmarks/paper/thm-ode'.
 
 
@@ -95,7 +97,7 @@ user@VB:~/CAV2022-AeC/src$./stlmc ../benchmarks/paper/thm-ode/therm.model \
 		 		                          -visualize
 
 The analyses in VM took 91 seconds for 'f2' (found counterexample) on AMD Ryzen 9 
-3.3GHz with VM quad-core and 4096MB of memory. 
+3.3GHz with VM quad-core and 4GB of memory. 
 
 The command generates a counterexample file, named 'therm_b5_f2_dreal.counterexample',
 and a visualization configuration file, named 'therm_b5_f2_dreal.cfg', in the current 
@@ -136,61 +138,184 @@ See our tool manual 'STLmc-manual.pdf' for more details.
 =======================================
 
 
-In Sec. 5 of our paper, we evaluate the effectiveness of STLmc using a number of 
-hybrid system benchmarks. We analyze three STL properties for each benchmark as 
-indicated in Table 2 of our paper, with various discrete bounds considering model 
-dynamics (i.e., 20, 10, 5 for linear, polynomial, and ODE dynamics).
+In this section, we explain how to reproduce the experiment of the paper, using the 'run-exp' 
+and 'gen-paper-table' script. The 'run-exp' script runs 18 cases, in total (i.e., 6 models each 
+with 3 formulas) with a 30-minute timeout, and generating the log files. The 'gen-paper-table'
+generates html table, having the same form as the Table 2 of our paper.
+
+When follwing the instructions, explained in this section, it will take about 1 hour to get the 
+reproduction results, on AMD Ryzen 9 3.3GHz using our virtual machine image which is set to have 
+a quad-core and 4GB memory (i.e., satisfying minimum system requirement). The reproduction steps 
+are as follows:
+
+- Experiment Reproduction Steps
+
+  (1) Go to the script subdirectory 'experiment' of the top directory 'CAV2022-AeC':
+
+      user@VB:~/CAV2022-AeC$ cd experiment
+
+  (2) Use the following command to start reproduction:
+
+      user@VB:~/CAV2022-AeC/experiment$ ./run-exp "../benchmarks/paper/*" -t 1800
+
+      The argument '-t 1800' sets a timeout in 1800 seconds. The script searches for STLmc model files 
+      in all the subdirectories of '../benchmarks/paper'. Note that the path argument is given within 
+      two quotation marks (i.e., "<GIVEN_PATH>").
+
+      You can see the following messages:
+
+      user@VB:~/CAV2022-AeC/experiment$ ./run-exp "../benchmarks/paper/*" -t 1800
+      [run]
+        model dir: ../benchmarks/paper/car-poly/car.model
+        goal: f1
+        write log: log-benchmarks-paper-*/benchmarks/paper/car-poly/car-f1.log
+        done.
+      [run]
+        model dir: ../benchmarks/paper/car-poly/car.model
+        goal: f3
+        write log: log-benchmarks-paper-*/benchmarks/paper/car-poly/car-f3.log
+        done.
+      [run]
+        model dir: ../benchmarks/paper/car-poly/car.model
+        goal: f2
+        write log: log-benchmarks-paper-*/benchmarks/paper/car-poly/car-f2.log
+        done.
+      ...
+
+    (3) The log files are generated in the directory '"log-benchmarks-paper-*"' 
+    
+        user@VB:~/CAV2022-AeC/experiment$ ls
+        'log-benchmarks-paper-*'
+
+        The script produces log files in the '"log-<GIVEN_PATH>"' subdirectory, placed in the same 
+        directory as the 'run-exp' script.
+
+    (4) Run the 'gen-paper-table' to get the Table 2 of our paper:
+
+        user@VB:~/CAV2022-AeC/experiment$ ./gen-paper-table
+
+        The 'gen-paper-table' script searches the current directory to find all log directories 
+        (i.e., the directories starting with a word "log") and generates the html table for each directory
+        as follows:
+
+        user@VB:~/CAV2022-AeC/experiment$ ls
+        'log-benchmarks-paper-*-paper-table2.html'
 
 
-The experimental results of Table 2 were obtained by running each analysis with a timeout 
-of 30 minutes. In VM, it will take about 1 hour on AMD Ryzen 9 3.3GHz with VM quad-core 
-and 4096MB memory. 
+- Optional Step
+
+  We also provide a 'gen-report' script to generate a csv report from the log files. This script searches 
+  all log directories and generates the csv report for each log directory:
+
+  user@VB:~/CAV2022-AeC/experiment$ ./gen-report
+
+  You can see the generated the csv file as follows:
+
+  user@VB:~/CAV2022-AeC/experiment$ ls
+  'log-benchmarks-paper-*-report.csv'
 
 
-We provide the script 'run-exp' in the 'experiment' subdirectory to automate the reproduction 
-of our experiments. The following command reproduces our papar experiment, explained in Sec. 5
-(i.e., the script runs all 18 cases for this experiment including 6 models each with 3 formulas 
-under a 30-minute timeout): 
-
-user@VB:~/CAV2022-AeC/experiment$ ./run-exp "../benchmarks/paper/*" -t 1800
-
-In order to support wildcard matching (i.e., "<DIR>*"), 'run-exp' takes a glob pattern as its
-argument (i.e., the argument of the script must be given within the two quotation marks: "<ARG>").
-
-The argument '-t 1800' sets a timeout in seconds. The script searches for STLmc model files under 
-all the subdirectories of '../benchmarks/paper'. The script produces raw log data files under 
-the 'log-<ARG>' subdirectory, placed in the same directory as the 'run-exp' script.
-For example, the above command produces raw log files in the 'log-benchmarks-paper-*' subdirectory,
-placed at 'CAV2022-AeC/experiment'.  
 
 
-For easy reproduction, we provide a 'gen-report' script to generate a CSV file report 
-from the raw data. For example, the following command generates CSV report file for our paper experiment:
-
-user@VB:~/CAV2022-AeC/experiment$ ./gen-report
-
-For easy data comparison to our paper, we provide a 'gen-paper-table' script to generate html tables from 
-raw log files. This script searches all csv files having names starting with 'log-*' and generates 
-html tables with the layout of Table2 of our paper. For example, suppose we already have 
-'log-benchmarks-paper-*' directories. The following command generates a html version of Table 2 of our paper 
-named 'logs-benchmarks-paper-*-paper-table2.html':
-
-user@VB:~/CAV2022-AeC/experiment$ ./gen-paper-table
+==============================================================
+5. Log Files, CSV Reports, and Tables for the Experiments
+==============================================================
 
 
-Remark: When solving a problem using the parallelized two-step algorithm, the bound (k) at which 
-a counterexample is found may differ by up to '1' because of the concurrency and non-determinism of our algorithm. 
-Thus, we run all paper experiments for five times and attach the results in the 'logs' directory.
+In this section, we explain the log files, csv reports, and html tables for our experiments, included in 
+the artifact. Our artifact contains all the log files obtained by running the experiment of the paper and 
+our technical report on two different environments: 
+
+- one on our cluster machine, and 
+- the other on our VM (i.e., STLmc.ova).
+
+We use the cluster machine of Intel Xeon 2.8GHz with 256GB memory and our VM having a quad-core and 4GB memory 
+on host machine of AMD Ryzen 9 3.3GHz.
+
+We place these files in the 'logs' subdirectory of the top directory 'CAV2022-AeC'.
+
+Note that due to concurrency and non-determinism of parallelization algorithm, the bound (k) at which 
+a counterexample is found may differ by up to '1'. Thus, we run five times for the reproduction of the 
+experiment of the paper.
+
+There are two subdirectories 'vm' and 'cluster' in the 'logs' directory, where each subdirectory has subdirectories
+'paper' and 'additional'. The 'vm' subdirectory has the following files, where 'N' is one of {1, 2, 3, 4, 5}:
+
+- paper/trial-<N>.zip: the zip file of the log files of N-th trial of the experiment of our paper (i.e., Table 2)
+- paper/trial-<N>.csv: the csv report of the N-th trial log files
+- paper/trial-<N>-table2.csv: the html table (Table 2 of our paper) obtained from the N-th trial log files
+- paper/paper-result.csv: the csv report of averaging the data of all N trials
+- paper/paper-result-table2.pdf: the pdf table (Table 2 of our paper) obtained from all N trials log files
+
+- additional/raw.zip: the zip file of the log files of the extended experiments of the STLmc technical report (Table 2 and Table 3)
+- additional/result.csv: the csv report of averaging the data of all N trials
+- additional/result-table2.html: the html table generating from the log files in the raw.zip, matching the Table 2
+- additional/result-table3.html: the html table generating from the log files in the raw.zip, matching the Table 3
+
+The included html tables may contain empty cells "-" for some rows. This is because 'gen-paper-table' and 'gen-tech-table' 
+scripts generate html tables having fixed forms (Table 2 of the paper, Table 2 and 3 of our technical report). 
+Since we provide disjoint sets of benchmarks in the 'benchmarks/paper' and 'benchmarks/additional' directories, there can be 
+no log files for some model. For example, the 'benchmarks/additional' directory does not include 'bat-linear'. When reproducing 
+the additional experiment using the 'run-exp' as follows, there are no log files generated for the linear battery model:
+
+user@VB:~/CAV2022-AeC/experiment$ ./run-exp "../benchmarks/additional" -t 3600
+
+Thus, generating the html table using the 'gen-paper-table' script results empty cells "-" for the first three rows.
+
+
+The 'cluster' subdirectory has the same structure.
+
+
+
+
+=========================================================
+6. The Structure of the Benchmark Model Directories
+=========================================================
+
+
+In this section, we explain the structure of the benchmarks model directories of our artifact. 
+We provide benchmark models and its configurations in the subdirectory 'benchmarks/', placed at the top 
+directory 'CAV2022-AeC'. There are two subdirectories in the 'benchmarks': one for the benchmarks 
+of the paper (i.e., 'benchmarks/paper') and the other for the additional benchmarks (i.e., 'benchmarks/additional).
+
+Each model is placed in the directory of the same name, with four configuration files. For the benchmarks of our paper, 
+the benchmark models and corresponding configuration files are placed in the directory, named '<MODEL>-<DYNAMICS>' 
+where it is one of {bat-linear, wat-linear, car-poly, rail-poly, thm-ode, oscil-ode} and <LABEL> is one of {f1,f2,f3}:
+
+- benchmarks/paper/<MODEL>-<DYNAMICS>/
+  * <MODEL>.model: the STLmc model <MODEL>
+  * <MODEL>.cfg: basic model configuration
+  * <MODEL>-<LABEL>.cfg: configuration considering the goal '<LABEL>'
+
+For example, the autonomous car model with polynomial dynamics of our paper is placed in the directory 
+'benchmarks/paper/car-poly' as follows:
+
+- benchmarks/paper/car-poly
+  * car.model: a model of an autonomus driving of two cars
+  * car.cfg: basic model configuration
+  * car-f1.cfg: configuration considering the goal 'f1'
+  * car-f2.cfg: configuration considering the goal 'f2'
+  * car-f3.cfg: configuration considering the goal 'f3'
+
+
+Additional models and configuration files are placed in the directory 'benchmarks/additional/', following 
+the same structure (i.e., the benchmark models and configuration files are included in the <MODEL>-<DYNAMICS> 
+directory which is one of {bat-poly, bat-ode, wat-poly, wat-ode, car-linear, car-ode, rail-linear, rail-ode, 
+thm-linear, the-poly, nav-ode, space-ode} and <LABEL> is one of {f1,f2,f3}).
+
 
 
 
 =======================================
-5. More usage of the STLmc Tool
+7. More usage of the STLmc Tool
 =======================================
 
 
-We explain more usages of the STLmc tool using the load management for two batteries
-model file under the subdirectory 'benchmarks/paper/bat-linear'. We can select the property
+In this section, we explain more usages of the STLmc tool. We demonstrate how to analyze the load 
+management for two batteries model, placed in the subdirectory 'benchmarks/paper/bat-linear'. 
+We also explain how to use our visualization feature of our tool.
+
+We can select the property
 to be analyzed using the '-goal' option. The default argument for the option is 'all' that runs 
 all STL properties. STLmc chooses an optimal SMT solver when the '-solver' option is not given.  
 The following command performs a robust STL model checking all properties of the battery 
@@ -200,21 +325,39 @@ user@VB:~/CAV2022-AeC/src$./stlmc ../benchmarks/paper/bat-linear/battery.model \
                                   -bound 20 -time-bound 30 -threshold 1
 
 Since the model has linear dynamics, STLmc chooses Yices2 as an underlying SMT solver. 
-The analyses in VM took 10 seconds on AMD Ryzen 9 3.3GHz with VM quad-core and 4096MB 
-of memory.
+The analyses in VM took 10 seconds on AMD Ryzen 9 3.3GHz with VM quad-core and 4GB of memory.
 
-The STLmc tool raises exceptions for basic mistakes made by users when writing or editing the STLmc
-input model. For example, consider the STL property in the same model with 
-'[f1]: [][0,inf] (vx < -2 -> <>[2,5] rx <= -2);'. The formula has a closed interval with infinity on its right
-hand side. The tool raises error at syntax to level to avoid apparently infeasible cases:
+The 'stlmc-vis' script provides several options to generate counterexample witnesses. 
+The command './stlmc-vis -h' shows more details about arguments.
+There are three command line arguments as follows: 
 
-    syntax error: in "../benchmarks/paper/car-poly/car.model" line 91:16 mismatched input ']' expecting ')'
+user@VB:~/CAV2022-AeC/src$ ./stlmc-vis [-output <FORMAT>] \
+                                       -cfg <CONF_FILE> \
+                                       <FILE>
+
+The 'stlmc' generates a counterexample file and a visualization configuration file 
+when '-visualize' option is set. The visualization configuration file contains 
+grouping information for drawing counterexample witnesses. For example, we can draw two graphs 
+in pdf format, where each graph containing continuous variables 'x0' and 'x1', respectively, 
+by modifying the group attributes in 'therm_b5_f2_dreal.cfg' as follows: 
+
+	group { (x0), (x1) } 
+
+and run the following command:
+
+user@VB:~/CAV2022-AeC/src$./stlmc-vis ./therm_b5_f2_dreal.counterexample \
+                                      -cfg ./therm_b5_f2_dreal.cfg \
+                                      -output pdf
+
+When '-output' is not specified, the script generates counterexample graphs in html format.
+See our tool manual 'STLmc-manual.pdf' for more details. 
+
 
 
 
 
 =======================================
-6. Running the Additional Experiments 
+8. Running the Additional Experiments 
 =======================================
 
 
@@ -228,7 +371,7 @@ Using the script 'run-exp', we can run all additional benchmark models with a 1-
 
 user@VB:~/CAV2022-AeC/experiment$ ./run-exp "../benchmarks/additional/" -t 3600
 
-In VM, it will take about 3 hours on AMD Ryzen 9 3.3GHz with VM quad-core and 4096MB memory. 
+In VM, it will take about 3 hours on AMD Ryzen 9 3.3GHz with VM quad-core and 4GB memory. 
 
 The script produces raw log data files in the 'log-benchmarks-additional' subdirectory, explained above. 
 We also provide a 'gen-tech-table' script, similar to the 'gen-paper-table' script, for generating 
@@ -242,33 +385,7 @@ user@VB:~/CAV2022-AeC/experiment$ ./gen-tech-table
 
 
 =======================================
-7. Log Files for the Experiments
-=======================================
-
-
-The subdirectory 'logs' of the top artifact directory 'CAV2022-AeC' contains the raw log data
-and CSV reports and corresponding html tables for the experiments. Note that due to concurrency 
-and non-determinism of parallelization algorithm, we run five times for all reproductions. 
-Each result of experiments is saved under the directory, named 'trial-<N>', where 'N' is one of 
-{1, 2, 3, 4, 5}. We also provide summarized csv report file averaging the data of all trials. 
-The 'logs' directory contains the following (the raw log files are compressed in trial-<N>.zip):
-
-- paper/trial-<N>.zip: the raw log files of N-th trial of experiments of our paper (Table 2)
-- paper/trial-<N>.csv: the csv report of N-th trial
-- paper/trial-<N>-table2.csv: the html N-th trial Table 2 of our paper
-- paper/paper-result.csv: the csv report of averaging the data of all N trials
-- paper/paper-result-table2.pdf: the html table generating from paper-result.csv, matching the Table 2 of our paper
-
-- additional/raw.zip: the raw log files of the extended experiments of the STLmc technical report (Table 2 and Table 3)
-- additional/result.csv: the csv report of averaging the data of all N trials
-- additional/result-table2.html: the html table generating from additional-result.csv, matching the Table 2
-- additional/result-table3.html: the html table generating from additional-result.csv, matching the Table 3
-
-
-
-
-=======================================
-8. More Details on Our Scripts 
+9. More Details on Our Scripts 
 =======================================
 
 
@@ -341,37 +458,7 @@ to the threshold 5. See our tool manual 'STLmc-manual.pdf' for more details.
 
 
 
-(2) The 'stlmc-vis' script
-
-
-The 'stlmc-vis' script provides several options to generate counterexample witnesses. 
-The command './stlmc-vis -h' shows more details about arguments.
-There are three command line arguments as follows: 
-
-user@VB:~/CAV2022-AeC/src$ ./stlmc-vis [-output <FORMAT>] \
-                                       -cfg <CONF_FILE> \
-                                       <FILE>
-
-The 'stlmc' generates a counterexample file and a visualization configuration file 
-when '-visualize' option is set. The visualization configuration file contains 
-grouping information for drawing counterexample witnesses. For example, we can draw two graphs 
-in pdf format, where each graph containing continuous variables 'x0' and 'x1', respectively, 
-by modifying the group attributes in 'therm_b5_f2_dreal.cfg' as follows: 
-
-	group { (x0), (x1) } 
-
-and run the following command:
-
-user@VB:~/CAV2022-AeC/src$./stlmc-vis ./therm_b5_f2_dreal.counterexample \
-                                      -cfg ./therm_b5_f2_dreal.cfg \
-                                      -output pdf
-
-When '-output' is not specified, the script generates counterexample graphs in html format.
-See our tool manual 'STLmc-manual.pdf' for more details. 
-
-
-
-(3) The 'gen-report' script
+(2) The 'gen-report' script
 
 
 The 'gen-report' script finds directories having names starting with 'log-*' and 
@@ -414,50 +501,6 @@ log-benchmarks-paper-*-poly) in the current directory. Then, 'gen-report' genera
 two csv files: logs-benchmarks-paper-report.csv and logs-benchmarks-paper-*-poly-report.csv 
 for (a) and (b), respectively.
 
-
-
-
-=======================================
-9. Model and Configuration Files
-=======================================
-
-
-The benchmark models and configuration files of our paper are included in the subdirectory 
-'benchmarks/paper/' of the top directory 'CAV2022-AeC'. The files are in the following, 
-where <MODEL>-<DYNAMICS> is one of {bat-linear, wat-linear, car-poly, rail-poly, thm-ode, oscil-ode}
-and <LABEL> is one of {f1,f2,f3}:
-
-- benchmarks/paper/<MODEL>-<DYNAMICS>/
-  * <MODEL>.model: the STLmc model <MODEL>
-  * <MODEL>.cfg: basic model configuration
-  * <MODEL>-<LABEL>.cfg: configuration considering the goal '<LABEL>'
-
-For example, the autonomous car model with polynomial dynamics of our paper is placed under the directory 
-'benchmarks/paper/car-poly' as follows:
-
-- benchmarks/paper/car-poly
-  * car.model: a model of an autonomus driving of two cars
-  * car.cfg: basic model configuration
-  * car-f1.cfg: configuration considering the goal 'f1'
-  * car-f2.cfg: configuration considering the goal 'f2'
-  * car-f3.cfg: configuration considering the goal 'f3'
-
-
-Additional models and configuration files are placed under the directory 'benchmarks/additional/'
-in the same structure above. The files are in the following, where <MODEL>-<DYNAMICS> is one of 
-{bat-poly, bat-ode, wat-poly, wat-ode, car-linear, car-ode, rail-linear, rail-ode, thm-linear, 
-the-poly, nav-ode, space-ode} and <LABEL> is one of {f1,f2,f3}:
-
-
-For example, the Spacecraft with ODE dynamics of our technical report
-is placed under the directory 'benchmarks/additional/space-ode' as follows:
-
-- benchmarks/additional/space-ode
-  * space.model: a docking of spacecraft model
-  * space.cfg: basic model configuration
-  * space-f1.cfg: configuration considering the goal 'f1'
-  * space-f2.cfg: configuration considering the goal 'f2'
-  * space-f3.cfg: configuration considering the goal 'f3'
 
 
 
@@ -615,6 +658,6 @@ STLmc uses the following SMT solvers as its underlying SMT solvers:
 * Yices2: https://github.com/SRI-CSL/yices2/
 * dReal: https://github.com/dreal/dreal3/
 
-The archive file already contains dReal under the directory 'CAV2022-AeC/3rd_party'.
+The archive file already contains dReal in the directory 'CAV2022-AeC/3rd_party'.
 
 See our webpage https://stlmc.github.io/cav2022-artifact/ for more details
