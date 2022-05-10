@@ -12,8 +12,9 @@ The STLmc tool is available on our tool webpage:
 1. Artifact Overview
 =======================================
 
-The artifact can be downloaded from https://stlmc.github.io/cav2022-artifact.
-The artifact includes the following things: 
+
+In this section, we explain the overview of our STLmc tool artifact. The artifact includes 
+the following things: 
 
   (1) a short demo of the STLmc tool,
   (2) a script to run the experiments in the paper, and
@@ -41,10 +42,20 @@ The rest of 'README' is organized as follows. Section 2 provides how to set up t
 using the virtual box image. Section 3 describes a short demo of the STLmc tool in Sec. 3 
 of the paper. Section 4 explains how to reproduce the experiments in Sec. 5 of the paper.
 Section 5 explains the structure of the log files for the experiments. Section 6 explains 
-the structure of the benchmark model directories. The rest of the sections explain why our artifact
-is reusable as follows. Section 7 and 8 explain more usage of the STLmc tool and additional experiments 
-Section 9 describes more details on our scripts. Section 10 explains the most relevant parts of the 
-source code. Finally, Section 11 provides guidance on how to run the artifact without VM.
+the structure of the benchmark model directories. Section 7 and 8 explain more usage of the STLmc 
+tool and additional experiments. Section 9 describes more details on our scripts. Section 10 explains 
+the most relevant parts of the source code. Finally, Section 11 provides guidance on how to run the 
+artifact without VM. 
+
+For 'reusable' badge, our artifact satisfies the followings:
+
+- the artifact contains the GNU GPL license which allows reuse, repurposing, and easy to use,
+- the artifact has Readme.txt specifying dependencies and used libraries in an organized way (Sec. 11),
+- the artifact has Readme.txt explaining how the artifact can be used beyond the paper in sufficient details (Sec. 7),
+- the artifact is provided as an open source project, and 
+- the artifact can be used other than VM, including MacOS, Ubunt or Debian.
+
+The artifact can be downloaded from https://stlmc.github.io/cav2022-artifact.
 
  
 
@@ -80,21 +91,21 @@ Remark: Some experiments may not run properly on the following architectures:
 =======================================
 
 
-The directory '/home/user/CAV2022-AeC' (i.e., $HOME/CAV2022-AeC) in the virtual
-machine contains the STLmc tool and experiments. To start the STLmc tool, run 'stlmc' 
-in the subdirectory 'src', using the command line. You can find the model file 
-'therm.model', explained in Sec. 3 of our paper, in the subdirectory 
-'benchmarks/paper/thm-ode'.
+In this section, we shortly demonstrate the usage of the STLmc tool on our VM (i.e., STLmc.ova)
+using the two networked thermostat controller model, explained in Sec. 3 of our paper.
 
+We start our demo by login to the VM and going to the source directory of our tool: 
 
-The following command performs a robust STL model checking the property
-labeled 'f2' of the thermostat model at bound 5 and time bound 30 with respect to
+  user@VB:~: cd '/home/user/CAV2022-AeC/src' 
+
+We can use 'stlmc' in the 'src' directory to start the STLmc tool. The following command found 
+a counterexample of the formula 'f2' of the thermostat model at bound 2 with respect to 
 robustness threshold 2 using parallelized 2-step algorithm and dReal:
 
 user@VB:~/CAV2022-AeC/src$./stlmc ../benchmarks/paper/thm-ode/therm.model \ 
                                   -bound 5 -time-bound 30 -threshold 2 \
                                   -goal f2 -solver dreal -two-step -parallel \
-		 		                          -visualize
+		 	  	                        -visualize
 
 The analyses in VM took 91 seconds for 'f2' (found counterexample) on AMD Ryzen 9 
 3.3GHz with VM quad-core and 4GB of memory. 
@@ -102,33 +113,53 @@ The analyses in VM took 91 seconds for 'f2' (found counterexample) on AMD Ryzen 
 The command generates a counterexample file, named 'therm_b5_f2_dreal.counterexample',
 and a visualization configuration file, named 'therm_b5_f2_dreal.cfg', in the current 
 directory because the '-visualize' option is set. These files are used to draw graphs 
-of counterexamples. 
+for counterexamples. 
 
 
-We provide a script 'stlmc-vis' to draw counterexample signals and robustness
-degrees. The script takes a counterexample file and a visualization configuration 
-and generates graphs of counterexamples. For example, the counterexample graphs 
-for the property 'f2' of the thermostat can be generated using the following command:
+STLmc provides 'stlmc-vis' to draw counterexample signals and robustness degrees. 
+For example, the counterexample graphs for the property 'f2' of the thermostat can be generated 
+using the following command:
 
 user@VB:~/CAV2022-AeC/src$./stlmc-vis ./therm_b5_f2_dreal.counterexample \
                                       -cfg ./therm_b5_f2_dreal.cfg -output pdf
 
-The default visualization configuration makes two graphs: (1) a graph of continuous 
-variables and (2) a graph of STL subformulas. User can determine grouping which variables
-or STL subformulas for drawing graphs. This can be done by changing the visualization 
-configuration file. For example, we can generate Figure 3 of our paper by modifying 
-the group attributes in 'therm_b5_f2_dreal.cfg' as follows and re-running the above command:
+The default visualization configuration creates two graphs: (1) a graph for continuous state
+variables and (2) a graph for robustness degrees of STL subformulas. 
 
-      group { (x0, x1), (f2_0, f2_1), (f2_2, f2_3), (f2_4, f2_5)}
+'stlmc-vis' creates these graphs according to the grouping information, specified in a configuration 
+file (i.e., variables in the same group will be drawn in the same graph). For example, we can generate 
+Figure 3 of our paper by modifying the group attributes in 'therm_b5_f2_dreal.cfg' as follows:
+
+  (a) the initial configuration file:
+
+      { # state variables: x0 , x1
+        # f2_1 ---> (((x0 - x1) >= 4) -> (<>[3.0,10.0] ((x0 - x1) <= -3)))
+        # f2_0 ---> ([][2.0,4.0] (((x0 - x1) >= 4) -> (<>[3.0,10.0] ((x0 - x1) <= -3))))
+        # f2_4 ---> ((x0 - x1) >= 4)
+        # f2_2 ---> (not ((x0 - x1) >= 4))
+        # f2_3 ---> (<>[3.0,10.0] ((x0 - x1) <= -3))
+        # f2_5 ---> ((x0 - x1) <= -3)
+        output = html # pdf
+        group {}
+      }
+
+  (b) changed configuration file:
+  
+      { # state variables: x0 , x1
+        # f2_1 ---> (((x0 - x1) >= 4) -> (<>[3.0,10.0] ((x0 - x1) <= -3)))
+        # f2_0 ---> ([][2.0,4.0] (((x0 - x1) >= 4) -> (<>[3.0,10.0] ((x0 - x1) <= -3))))
+        # f2_4 ---> ((x0 - x1) >= 4)
+        # f2_2 ---> (not ((x0 - x1) >= 4))
+        # f2_3 ---> (<>[3.0,10.0] ((x0 - x1) <= -3))
+        # f2_5 ---> ((x0 - x1) <= -3)
+        output = html # pdf
+        group {
+          (x0, x1), (f2_0, f2_1), (f2_2, f2_3), (f2_4, f2_5)
+        }
+      }
     
-Using the group information, the 'stlmc-vis' script generates four pdf files, where each 
-pdf file corresponding to each group. For example, using the above group information, 
-'stlmc-vis' generates the following four pdf files:
-
-  { 'state_x0_x1.pdf' , 'rob_f2_5_f2_4.pdf' , 'rob_f2_3_f2_2.pdf' , 'rob_f2_0_f2_1.pdf' }
-
-The name of pdf files may differ because the ordering of elements in each group is not fixed.
-See our tool manual 'STLmc-manual.pdf' for more details. 
+Using the provided group information, 'stlmc-vis' generates four pdf files, where each 
+pdf file corresponding to each group.
 
 
 
@@ -352,6 +383,53 @@ user@VB:~/CAV2022-AeC/src$./stlmc-vis ./therm_b5_f2_dreal.counterexample \
 When '-output' is not specified, the script generates counterexample graphs in html format.
 See our tool manual 'STLmc-manual.pdf' for more details. 
 
+We can instantiate analysis parameters such as bound, time bound, etc. by modifying
+a model configuration file and a model-specific configuration file. 
+
+The configuration files are located in the same directory as the corresponding model.
+For example, a model configuration file 'therm.cfg' and a model specific configuration 
+'therm-f1.cfg' are in the subdirectory 'benchmarks/paper/thm-ode' together with the model 
+file 'therm.model'.
+
+We can change common analysis parameters of a model by editing the model configuration file.
+For example, we can change the time bound for the thermostat model to 5 by modifying 
+the time-bound parameter in 'therm.cfg' as follows:
+
+  common {
+    ...
+    time-bound = 5 # originally it was 20 ... 
+  }
+
+
+The analysis parameters for a specific formula, such as threshold, can be modified using 
+a model specification configuration file. For example, we can change the threshold 
+for the property 'f2' of the thermostat to 5 by modifying the threshold parameter 
+'therm-f1.cfg' as follows:
+
+  common { 
+    goal = "f1"  
+    threshold = 5 
+  }
+
+If some parameters are defined in a model configuration file and a model specific 
+configuration file at the same time, the values of the parameters in model specific 
+configuration file override the values in the model configuration file.
+For example, suppose the 'therm.cfg' given as follows:
+
+  common { 
+    time-bound = 20 
+  }
+
+and the 'therm-f1.cfg' is given as follows:
+
+  common { 
+    time-bound = 10 
+    goal = "f1"
+    threshold = 5 
+}
+
+Then, STLmc will analyze the 'therm.model' on STL property 'f1' upto time bound 10 with respect 
+to the threshold 5. See our tool manual 'STLmc-manual.pdf' for more details. 
 
 
 
@@ -406,55 +484,6 @@ E.g, the following command runs all thermostat models in additional experiments
 with a 1-hour timeout.
 
 user@VB:~/CAV2022-AeC/experiment$ ./run-expo "../benchmarks/additional/thm-*" -t 3600 
-
-We can instantiate analysis parameters such as bound, time bound, etc. by modifying
-a model configuration file and a model-specific configuration file. 
-
-The configuration files are located in the same directory as the corresponding model.
-For example, a model configuration file 'therm.cfg' and a model specific configuration 
-'therm-f1.cfg' are in the subdirectory 'benchmarks/paper/thm-ode' together with the model 
-file 'therm.model'.
-
-
-We can change common analysis parameters of a model by editing the model configuration file.
-For example, we can change the time bound for the thermostat model to 5 by modifying 
-the time-bound parameter in 'therm.cfg' as follows:
-
-  common {
-    ...
-    time-bound = 5 # originally it was 20 ... 
-  }
-
-
-The analysis parameters for a specific formula, such as threshold, can be modified using 
-a model specification configuration file. For example, we can change the threshold 
-for the property 'f2' of the thermostat to 5 by modifying the threshold parameter 
-'therm-f1.cfg' as follows:
-
-  common { 
-    goal = "f1"  
-    threshold = 5 
-  }
-
-If some parameters are defined in a model configuration file and a model specific 
-configuration file at the same time, the values of the parameters in model specific 
-configuration file override the values in the model configuration file.
-For example, suppose the 'therm.cfg' given as follows:
-
-  common { 
-    time-bound = 20 
-  }
-
-and the 'therm-f1.cfg' is given as follows:
-
-  common { 
-    time-bound = 10 
-    goal = "f1"
-    threshold = 5 
-}
-
-Then, STLmc will analyze the 'therm.model' on STL property 'f1' upto time bound 10 with respect 
-to the threshold 5. See our tool manual 'STLmc-manual.pdf' for more details. 
 
 
 
