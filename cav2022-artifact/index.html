@@ -73,9 +73,9 @@ We prepare our artifact to satisfy available, functional, and reusable evaluatio
 <a href="/assets/files/cav2022-artifact/LICENSE.md">LICENSE.md</a>  through Figshare (<a href="https://doi.org/10.6084/m9.figshare.19787263.v1">https://doi.org/10.6084/m9.figshare.19787263.v1</a>).</p>
 
 <ul>
-  <li>CAV2022-AeC.zip: <a href="https://doi.org/10.6084/m9.figshare.19787263.v1">https://doi.org/10.6084/m9.figshare.19787263.v1</a>
+  <li>CAV2022AeC.zip: <a href="https://doi.org/10.6084/m9.figshare.19787263.v1">https://doi.org/10.6084/m9.figshare.19787263.v1</a>
     <ul>
-      <li>Checksums: <a href="/assets/files/cav2022-artifact/CAV2022-AeC/SHA256SUMS">SHA256</a></li>
+      <li>Checksums: [<a href="/assets/files/cav2022-artifact/CAV2022-AeC/SHA256SUMS">SHA256</a>, <a href="/assets/files/cav2022-artifact/CAV2022-AeC/MD5SUMS">MD5</a>]</li>
     </ul>
   </li>
 </ul>
@@ -110,8 +110,10 @@ We prepare our artifact to satisfy available, functional, and reusable evaluatio
 
 <iframe src="https://widgets.figshare.com/articles/19787263/embed?show_title=1" width="568" height="351" allowfullscreen="" frameborder="0"></iframe>
 
-<p>We provide a VirtualBox image STLmc.ova that contains our tool and experiments. 
-The VM image uses Ubuntu 18.04.6 with STLmc installed. The size of the image is about 4GB.</p>
+<p>We provide the <a href="https://doi.org/10.6084/m9.figshare.19787263.v1">zip file</a> containing the VirtualBox image, <a href="/assets/files/cav2022-artifact/Readme.txt">Readme.txt</a>, and
+<a href="/assets/files/cav2022-artifact/LICENSE.md">LICENSE.md</a>.
+The VM image ‘STLmc.ova’ contains our tool and experiments. 
+The VM image uses Ubuntu 18.04.6 and STLmc is installed. The size of the image is about 4GB.</p>
 
 <p>A minimum system requirement for the artifact evaluation is a quad-core virtual CPUs with 4096MB memory.
 You can run the image using VirtualBox (<a href="https://www.virtualbox.org">https://www.virtualbox.org</a>) as follows:</p>
@@ -144,6 +146,8 @@ You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd STLmc-Vagrant &amp;&amp; vagrant up
 </code></pre></div>    </div>
     <p>Vagrant automatically creates a VM image for our artifact.</p>
+
+    <p><em>Remark: At the end of the creation, one may see ‘clock skew warning’. To resolve this, please refer to the step 5 below.</em></p>
   </li>
   <li>
     <p>To use the generated VM image, use ssh connect as follows:</p>
@@ -156,6 +160,12 @@ You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.
 
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> vagrant@ubuntu-bionic:~$ ls
  CAV2022-AeC
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>(Optional step) When the ‘clock skew warning’ occurred, use the following command in the ‘CAV2022-AeC’ directory:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> vagrant@ubuntu-bionic:~/CAV2022-AeC$ find . -exec touch {} \;
 </code></pre></div>    </div>
   </li>
 </ol>
@@ -209,6 +219,9 @@ But for your information, the password of ‘vagrant’ is ‘vagrant’.</p>
 
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew install SRI-CSL/sri-csl/yices2
 </code></pre></div>    </div>
+
+    <p><em>Remark: Some experiments may not run properly on the following architectures:
+  Apple MacBook Pro 2015 or earlier (Yices 2.6 with QF-NRA is not working).</em></p>
   </li>
   <li>
     <p>Z3: <a href="https://github.com/Z3Prover/z3/">https://github.com/Z3Prover/z3/</a></p>
@@ -272,6 +285,10 @@ But for your information, the password of ‘vagrant’ is ‘vagrant’.</p>
     <p>This command requires sudo permission. The command tests if all neccessary executables exist and are set to right permissions.
   Also, it tests underlying SMT solvers (i.e., Z3, Yices2, and dReal) using several smt2 
   test cases for integrity. Then, it tests STLmc using test STLmc models in ‘tests’ subdirectory.</p>
+
+    <p><em>Remark: One may see ‘clock skew warning’. To resolve this, use the following command in the ‘CAV2022-AeC-NoN-VM’ directory:</em></p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> find . -exec touch {} \;
+</code></pre></div>    </div>
   </li>
   <li>
     <p>If the tests succeed, you will see the following messages:</p>
