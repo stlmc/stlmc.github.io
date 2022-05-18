@@ -65,10 +65,41 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
   <div class="post-content justify">
     <h4 id="artifact">Artifact</h4>
 
-<p>This page explains the artifact for our paper: “STLmc: Robust STL Model Checking of Hybrid
-Systems using SMT” by G. Yu, J. Lee, and K. Bae. The artifact includes the STLmc tool and scripts for running the experiments of the paper.</p>
+<p>This page explains the CAV2022 artifact for our paper: “STLmc: Robust STL Model Checking of Hybrid
+Systems using SMT” by G. Yu, J. Lee, and K. Bae. The artifact includes the STLmc tool and scripts for running the experiments of the paper.
+We prepare our artifact to satisfy available, functional, and reusable evaluation criteria.</p>
 
-<p>The VirtualBox image for our artifact is available at <a href="https://doi.org/10.5281/zenodo.6527363">https://doi.org/10.5281/zenodo.6527363</a>. In the virtual machine, the artifact is located under the directory "home/user/CAV2022-AeC". See <a href="/assets/files/cav2022-artifact/Readme.txt">Readme.txt</a> in the artifact top directory for more information about the tool, experiments, and our artifact.</p>
+<p><strong>Available and Functional Badges</strong></p>
+
+<p>For available and functional badges, we provide the <a href="https://doi.org/10.5281/zenodo.6527363">zip file</a> containing the VirtualBox image and <a href="/assets/files/cav2022-artifact/Readme.txt">Readme.txt</a> of our artifact through Zenodo (<a href="https://doi.org/10.5281/zenodo.6527363">https://doi.org/10.5281/zenodo.6527363</a>). We also upload <a href="">SHA256 checksum</a> of the <a href="https://doi.org/10.5281/zenodo.6527363">zip file</a> to the same Zenodo url.</p>
+
+<ul>
+  <li>STLmc.zip: <a href="https://doi.org/10.5281/zenodo.6527363">https://doi.org/10.5281/zenodo.6527363</a>
+    <ul>
+      <li>Checksums: <a href="">SHA256</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>In the provided VM, we locate the artifact in the directory "/home/user/CAV2022-AeC". See <a href="/assets/files/cav2022-artifact/Readme.txt">Readme.txt</a> in the artifact’s top directory for more information about the tool, experiments, and our artifact.</p>
+
+<p>We also provide additional VM image through Vagrant.</p>
+
+<ul>
+  <li><a href="https://tinyurl.com/w574su7x">STLmc-Vagrant.zip</a>
+    <ul>
+      <li>Checksums: [<a href="/assets/files/cav2022-artifact/STLmc-Vagrant/SHA256SUMS">SHA256</a>, <a href="/assets/files/cav2022-artifact/STLmc-Vagrant/MD5SUMS">MD5</a>]</li>
+    </ul>
+  </li>
+</ul>
+
+<p>We explain how to run our artifact in VM at the following <a href="#running-the-artifact-in-vm-environment">section</a>.</p>
+
+<p><strong>Reusable Badge</strong></p>
+
+<p>For reusable badge, we address why our artifact is reusable in the <a href="/assets/files/cav2022-artifact/Readme.txt">Readme.txt</a>.
+To show that our artifact can be used in a different environment (e.g., built on another system, used outside of the VM or Docker image),
+we provide the source code of our tool:</p>
 
 <ul>
   <li><a href="https://tinyurl.com/3edyh4zs">CAV2022-AeC.zip</a>
@@ -76,13 +107,9 @@ Systems using SMT” by G. Yu, J. Lee, and K. Bae. The artifact includes the STL
       <li>Checksums: [<a href="/assets/files/cav2022-artifact/CAV2022-AeC/SHA256SUMS">SHA256</a>, <a href="/assets/files/cav2022-artifact/CAV2022-AeC/MD5SUMS">MD5</a>]</li>
     </ul>
   </li>
-  <li>STLmc.ova: <a href="https://doi.org/10.5281/zenodo.6527363">https://doi.org/10.5281/zenodo.6527363</a></li>
-  <li><a href="https://tinyurl.com/w574su7x">STLmc-Vagrant.zip</a>
-    <ul>
-      <li>Checksums: [<a href="/assets/files/cav2022-artifact/STLmc-Vagrant/SHA256SUMS">SHA256</a>, <a href="/assets/files/cav2022-artifact/STLmc-Vagrant/MD5SUMS">MD5</a>]</li>
-    </ul>
-  </li>
 </ul>
+
+<p>We explain how to run our artifact outside VM at the following <a href="#running-the-artifact-in-a-non-vm-environment">section</a>.</p>
 
 <hr />
 
