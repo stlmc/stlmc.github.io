@@ -602,6 +602,10 @@ the followings are required:
       $brew install SRI-CSL/sri-csl/yices2
 
 
+    Remark: Some experiments may not run properly on the following architectures: Apple MacBook Pro 2015 
+    or earlier (Yices 2.6 with QF-NRA is not working).
+
+
 - Z3: https://github.com/Z3Prover/z3/
 
     * Ubuntu
@@ -632,17 +636,14 @@ the followings are required:
 
 To install our artifact, follow the below instruction steps:
 
-1. Download and unzip the archive file (CAV2022-AeC.zip).
+1. Download and unzip the archive file (CAV2022-AeC-NoN-VM.zip).
 2. Install the following python packages:
     
-  - pip3 install termcolor yices z3-solver \
-                 antlr4-python3-runtime==4.9.1 \
-                 sympy numpy bokeh scipy
+  - pip3 install termcolor yices z3-solver antlr4-python3-runtime==4.9.1 sympy numpy bokeh scipy
     
-
 3. Run the following command:
 
-  - cd CAV2022-AeC && make
+  - cd CAV2022-AeC-NoN-VM && make
   
 4. Use the following command to run smoke tests for our installation:
   
@@ -679,6 +680,6 @@ STLmc uses the following SMT solvers as its underlying SMT solvers:
 * Yices2: https://github.com/SRI-CSL/yices2/
 * dReal: https://github.com/dreal/dreal3/
 
-The archive file already contains dReal in the directory 'CAV2022-AeC/stlmc/3rd_party'.
+The archive file already contains dReal in the directory 'CAV2022-AeC-NoN-VM/stlmc/3rd_party'.
 
-See our webpage https://stlmc.github.io/cav2022-artifact/ for more details
+See our webpage https://stlmc.github.io/cav2022-artifact/ for more details.
