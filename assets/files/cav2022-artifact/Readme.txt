@@ -33,7 +33,6 @@ The STLmc artifact includes the following files and directories:
 - benchmarks : benchmark models for our paper and additional experiments,
 - scripts: experiment reproduction scripts,
 - stlmc : the source codes and executables of STLmc,
-- paper.pdf : an accepted paper,
 - logs : the experimental results and raw log files of the experiments that run on provided VM.
 
 The rest of 'README' is organized as follows. Section 2 provides how to set up the artifact using 
@@ -136,7 +135,7 @@ We can use the script 'stlmc' in the 'stlmc/src' directory to start the STLmc to
 command finds a counterexample of the formula 'f2' of the thermostat model at bound 2 
 with respect to robustness threshold 2 using parallelized 2-step algorithm and dReal:
 
-user@VB:~/CAV2022-AeC/stlmc/src$./stlmc ../../benchmarks/paper/thm-ode/therm.model -bound 5 -time-bound 30 -threshold 2 -goal f2 -solver dreal -two-step -parallel -visualize
+user@VB:~/CAV2022-AeC/stlmc/src$./stlmc ../../benchmarks/paper/thm-ode/therm.model -bound 5 -time-bound 25 -threshold 2 -goal f2 -solver dreal -two-step -parallel -visualize
 
 The analysis in VM took 91 seconds on AMD Ryzen 9 3.3GHz with quad-core and 4GB of memory. 
 
@@ -205,20 +204,18 @@ user@VB:~/CAV2022-AeC/stlmc/src$./stlmc-vis therm_b5_f2_dreal.counterexample
 
 In this section, we explain how to reproduce the experiment of the paper in Section 5 
 In Section 5 of our paper, we evaluate the effectiveness of the STLmc tool using a number of
-hybrid system benchmarks and nontrivial STL properties. We consider a total of 18 cases 
-as indicated in Table 2 of our paper, taking into account six benchmark models and 
+hybrid system benchmarks and nontrivial STL properties. We consider a total of 30 cases 
+as indicated in Table 2 of our paper, taking into account ten benchmark models and 
 three STL formulas for each model.
 
 We provide the script 'run_exp' in the 'scripts' subdirectory to automate the experiments. 
 The models of the experiments are located in the 'benchmarks/paper' subdirectory.
-The following command run all these models (6 models, 3 formulas):
+The following command run all these models (10 models, 3 formulas):
 
-user@VB:~/CAV2022-AeC/scripts$ ./run-exp ../benchmarks/paper/ -t 1800
+user@VB:~/CAV2022-AeC/scripts$ ./run-exp ../benchmarks/paper/ -t 3600
 
-The command-line argument '-t 1800' denotes a 1800-second timeout. This command creates a 'log' 
+The command-line argument '-t 3600' denotes a 3600-second timeout. This command creates a 'log' 
 subdirectory in the current directory. The log files for each case are in the 'log' subdirectory.
-
-The above command in VM took about 1 hour on AMD Ryzen 9 3.3GHz with quad-core and 4GB of memory. 
 
 We provide the script 'gen-table' to generate a table summarizing results in the format of Table 2 
 in our paper. The script 'gen-table' uses the log files located in the 'log' subdirectory to generate 
@@ -244,20 +241,15 @@ with quad-core and 4GB of memory.
 
 The results of the experiment of the paper are placed in the 'paper' subdirectory and 
 the results of the additional experiment are placed in the 'additional' subdirectory. 
-These results are placed in the following directory, where <ENV> is one of {'non-vm', 'vm'} 
-and <N> is one of {1, 2, 3, 4, 5}:
+These results are placed in the following directory, where <ENV> is one of {'non-vm', 'vm'}:
 
-- logs/<ENV>/paper/trial-<N>.zip: a zip file of the log files of N-th trial of the experiment of the paper in Section 5
-- logs/<ENV>/paper/trial-<N>-report.csv: a CSV report of the N-th trial log files
-- logs/<ENV>/paper/trial-<N>-table.html: an html table corresponding to Table 2 of our paper 
+- logs/<ENV>/paper/raw.zip: a zip file of the log files of the experimenst of the paper in Section 5
+- logs/<ENV>/paper/raw-report.csv: a CSV report of the log files
+- logs/<ENV>/paper/raw-table.html: an html table corresponding to Table 2 of our paper 
 
 - logs/<ENV>/additional/raw.zip: a zip file of the log files of the extended experiments of the technical report in Section 5
 - logs/<ENV>/additional/raw-report.csv: a CSV report of raw.zip
 - logs/<ENV>/additional/raw-table.html: the html table corresponding to Table 2 and Table 3 of the technical report
-
-Note that due to concurrency and non-determinism of parallelization algorithm, 
-the bound (k) at which a counterexample is found may differ by up to '1'. 
-Thus, we run five times for the reproduction of the experiment of the paper.
 
 
 
@@ -306,7 +298,8 @@ benchmarks (i.e., 'benchmarks/additional).
 Each model is placed in the directory of the same name, with four configuration 
 files. For the benchmarks of our paper, the benchmark models and corresponding 
 configuration files are placed in the directory, named '<MODEL>-<DYNAMICS>' 
-where it is one of {bat-linear, wat-linear, car-poly, rail-poly, thm-ode, oscil-ode} 
+where it is one of {car-liner, wat-linear, bat-linear, thm-poly, car-poly, 
+rail-poly, thm-ode, space-ode, oscil-ode, nav-ode} 
 and <LABEL> is one of {f1,f2,f3}:
 
 - benchmarks/paper/<MODEL>-<DYNAMICS>/
@@ -328,8 +321,8 @@ is placed in the directory 'benchmarks/paper/car-poly' as follows:
 Additional models and configuration files are placed in the directory 
 'benchmarks/additional/', following the same structure (i.e., the benchmark models 
 and configuration files are included in the <MODEL>-<DYNAMICS> directory which is one of 
-{bat-poly, bat-ode, wat-poly, wat-ode, car-linear, car-ode, rail-linear, rail-ode, 
-thm-linear, the-poly, nav-ode, space-ode} and <LABEL> is one of {f1,f2,f3}).
+{bat-poly, bat-ode, wat-poly, wat-ode, car-ode, rail-linear, rail-ode, the-poly} and 
+<LABEL> is one of {f1,f2,f3}).
 
 
 
@@ -361,7 +354,7 @@ We can use the script 'stlmc' in the 'stlmc/src' directory to start the STLmc to
 following command finds a counterexample of the formula 'f3' of the thermostat model 
 at bound 4 with respect to robustness threshold 2 using parallelized 2-step algorithm and dReal:
 
-user@VB:~/CAV2022-AeC/stlmc/src$./stlmc ../../benchmarks/paper/thm-ode/therm.model -bound 5 -time-bound 30 -threshold 2 -goal f3 -two-step -parallel -visualize -time-horizon 7 -solver dreal
+user@VB:~/CAV2022-AeC/stlmc/src$./stlmc ../../benchmarks/paper/thm-ode/therm.model -bound 5 -time-bound 25 -threshold 2 -goal f3 -two-step -parallel -visualize -time-horizon 7 -solver dreal
 
 In VM, it will take about 90 seconds on AMD Ryzen 9 3.3GHz with quad-core and 4GB of memory.
 
@@ -381,7 +374,7 @@ The model configuration file for the thermostat controller is in
 'benchmarks/paper/thm-ode/therm.cfg'. The contents of the file are as follows:
 
 common {
-    time-bound = 30
+    time-bound = 25
     bound = 5
     solver = "dreal"
     verbose = "true"   # print verbose messages
@@ -464,8 +457,8 @@ See our tool manual for more details.
 
 
 In this section, we explain how to run additional experiments of our technical report. We consider 
-the following additional benchmark models: bat-poly, bat-ode, wat-poly, wat-ode, car-linear, car-ode, 
-rail-linear, rail-ode, thm-linear, thm-poly, nav-ode, space-ode. See the STLmc technical report 
+the following additional benchmark models: bat-poly, bat-ode, wat-poly, wat-ode, car-ode, 
+rail-linear, rail-ode, thm-linear. See the STLmc technical report 
 (https://stlmc.github.io/documents) for more details. 
 
 We can reproduce experiments for the additional benchmark models, using the script 'run-exp'
@@ -489,13 +482,11 @@ Thus, the following command runs all additional benchmark models with a timeout 
 
 user@VB:~/CAV2022-AeC/scripts$ ./run-exp ../benchmarks/additional/ -t 3600
 
-In VM, it will take about 3 hours on AMD Ryzen 9 3.3GHz with VM quad-core and 4GB memory. 
-
 Following the Unix standard, the <PATH TO MODELS> may contain paths, including the star (*) wildcard.
-For example, we can run the 'thm-linear' model and the 'thm-poly' model using 
+For example, we can run the 'bat-poly' model and the 'bat-ode' model using 
 the following command:
 
-user@VB:~/CAV2022-AeC/scripts$ ./run-exp ../benchmarks/additional/thm-* -t 3600 
+user@VB:~/CAV2022-AeC/scripts$ ./run-exp ../benchmarks/additional/bat-* -t 3600 
 
 To generate a table from the log files, we provide the script 'gen-table'. There is one (optional) 
 command-line arguments as follows: 
