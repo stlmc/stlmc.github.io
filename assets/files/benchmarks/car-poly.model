@@ -5,10 +5,8 @@ bool ix;        bool iy;
 { mode: ix = true; iy = true;
   inv:  rx < 20; ry < 20;
         vx < 8; vy < 8;
-  flow: d/dt[rx] = vx; 
-        d/dt[ry] = vy;
-        d/dt[vx] = 1.2; 
-        d/dt[vy] = 1.4;
+  flow: d/dt[rx] = vx;  d/dt[ry] = vy;
+        d/dt[vx] = 1.2; d/dt[vy] = 1.4;
   jump: (and (rx >= 3) (ry < 3)) =>
         (and (ix' = false) (iy' = true) 
 	           (rx' = rx) (ry' = ry) 
@@ -22,10 +20,8 @@ bool ix;        bool iy;
 { mode: ix = true; iy = false;
   inv:  rx < 20;  ry > -20;
         vx < 8;  vy > -8;
-  flow: d/dt[rx] = vx; 
-        d/dt[ry] = vy;
-        d/dt[vx] = 1.2; 
-        d/dt[vy] = -1.4;
+  flow: d/dt[rx] = vx;  d/dt[ry] = vy;
+        d/dt[vx] = 1.2; d/dt[vy] = -1.4;
   jump: (and (rx >= 3) (ry >= 3)) =>
         (and (ix' = false) (iy' = false) 
              (rx' = rx) (ry' = ry) 
@@ -39,10 +35,8 @@ bool ix;        bool iy;
 { mode: ix = false; iy = true;
   inv:  rx > -20; ry < 20;
         vx > -8; vy < 8;
-  flow: d/dt[rx] = vx; 
-        d/dt[ry] = vy;
-        d/dt[vx] = -1.2; 
-        d/dt[vy] = 1.4;
+  flow: d/dt[rx] = vx;   d/dt[ry] = vy;
+        d/dt[vx] = -1.2; d/dt[vy] = 1.4;
   jump: (and (rx < 3) (ry < 3)) =>
         (and (ix' = true) (iy' = true) 
              (rx' = rx) (ry' = ry) 
@@ -60,10 +54,8 @@ bool ix;        bool iy;
 { mode: ix = false; iy = false;
   inv:  rx > -20; ry > -20;
         vx > -8; vy > -8;
-  flow: d/dt[rx] = vx; 
-        d/dt[ry] = vy;
-        d/dt[vx] = -1.2; 
-        d/dt[vy] = -1.4;
+  flow: d/dt[rx] = vx;   d/dt[ry] = vy;
+        d/dt[vx] = -1.2; d/dt[vy] = -1.4;
   jump: (and (rx < 3) (ry < 3)) =>
         (and (ix' = true) (iy' = true) 
              (rx' = rx) (ry' = ry) 
@@ -77,10 +69,9 @@ bool ix;        bool iy;
              (rx' = rx) (ry' = ry) 
              (vx' = 0) (vy' = 0)); 
 }
-init: not(ix); 0 <= rx; rx <= 1;
-      not(iy); 0 <= ry; ry <= 1; 
-      -2.5 <= vx; vx <= -2; 
-      -2.5 <= vy; vy <= -2;
+init: not(ix); not(iy); 
+      0 <= rx; rx <= 1; -2.5 <= vx; vx <= -2; 
+      0 <= ry; ry <= 1; -2.5 <= vy; vy <= -2;
 
 proposition:
   [pix]: ix;
@@ -90,4 +81,3 @@ goal:
   [f1]: [][0,4] (vx < -2 -> <>[2,5] rx <= -2); # threshold: 0.5
   [f2]: (<>[0, 4] ry > 3) U [0, 5] (vy > 1.5); # threshold: 2.0
   [f3]: <>[0,3] (rx <= 5 U[0, 5] pix = false); # threshold: 0.1
-

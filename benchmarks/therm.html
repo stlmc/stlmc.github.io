@@ -13,11 +13,11 @@
 <meta property="og:url" content="https://stlmc.github.io/benchmarks/therm.html" />
 <meta property="og:site_name" content="STLMC" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2022-06-09T18:16:38+09:00" />
+<meta property="article:published_time" content="2022-06-30T15:09:18+09:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Two Networked Thermostats" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","description":"Two Networked Thermostats","headline":"Two Networked Thermostats","dateModified":"2022-06-09T18:16:38+09:00","datePublished":"2022-06-09T18:16:38+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://stlmc.github.io/benchmarks/therm.html"},"url":"https://stlmc.github.io/benchmarks/therm.html","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","description":"Two Networked Thermostats","headline":"Two Networked Thermostats","dateModified":"2022-06-30T15:09:18+09:00","datePublished":"2022-06-30T15:09:18+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://stlmc.github.io/benchmarks/therm.html"},"url":"https://stlmc.github.io/benchmarks/therm.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
     <script type="text/x-mathjax-config">
@@ -46,17 +46,34 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 
   
   
-    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.0.min.js"
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.1.min.js"
         crossorigin="anonymous"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.0.min.js"
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.1.min.js"
         crossorigin="anonymous"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.0.min.js"
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.1.min.js"
         crossorigin="anonymous"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.0.min.js"
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.1.min.js"
         crossorigin="anonymous"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.0.min.js"
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.1.min.js"
         crossorigin="anonymous"></script>
 
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+jQuery(document).ready(function(){
+var clipboard = new ClipboardJS('.btn');
+    clipboard.on('success', function(e) {
+        console.log("Success");
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+    });
+    clipboard.on('error', function(e) {
+        console.log("Fail");
+    });
+});
+</script>
   
 </head>
 <body><header class="site-header" role="banner">
@@ -84,10 +101,57 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 <p>Consider two rooms interconnected by an open door. 
 The temperature $x_i$ of each room, $i = 0, 1$, changes 
 depending on the heater’s mode $q_i \in \{\textsf{On}, \textsf{Off}\}$
-and the temperature of the other room (adapted from [<a href="#ref1">1</a>,<a href="#ref2">2</a>]).</p>
+and the temperature of the other room (adapted from [<a href="#ref1">1</a>,<a href="#ref2">2</a>]).
+We consider a nonlinear polynomial dynamics model and a nonlinear ODE dynamics model.</p>
 
-<p>The continuous dynamics of $x_i$ can be 
-specified as the ODEs:
+<p><strong>Nonlinear Polynomial Dynamics.</strong> The dynamics of $x_1$ and $x_2$ are given as follows:
+\begin{align*}
+  \dot{x}_1 &amp;= \begin{cases}
+  0.05 t^2 + 0.5t + x_1(0) &amp; \textsf{(On)} \\<br />
+  -0.0175t^2 - 0.35t + x_1(0) &amp; \textsf{(Off)}
+  \end{cases}\\<br />
+  \dot{x}_2 &amp;= \begin{cases}
+  0.06 t^2 + 0.6t + x_2(0) &amp; \textsf{(On)} \\<br />
+  -0.275t^2 - 0.55t + x_2(0) &amp; \textsf{(Off)}
+  \end{cases}
+\end{align*}
+where $t$ and $x_i(0)$ are time and initial value after a transition, respectively.</p>
+
+<p>Table <a href="#stl-thermo-poly-auto">[1]</a>
+shows the STL properties.</p>
+
+<table id="stl-thermo-poly-auto">
+  <thead>
+    <tr>
+      <th>Label</th>
+      <th>STL formula</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$\textsf{f1}$</td>
+      <td>$(\square_{[2,10]} x_2 &gt; 17) \mathbf{U}_{[1,4]} (x_1 \geq 22)$</td>
+      <td>During the time interval $[2,10]$, $x_2$ is greater than $17$, until $x_1$ is greater than or equal to $22$ for time interval $[1, 4]$.</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f2}$</td>
+      <td>$\lozenge_{[0,5]} (x_1 &gt; 22 \to \square_{[2,5)} x_1 &lt; 18)$</td>
+      <td>For some time point in interval $[0, 5]$, if $x_1$ is greater than $22$ then $x_1$ is always less than $18$ for time interval $[2, 5)$.</td>
+    </tr>
+    <tr>
+      <td>$\textsf{f3}$</td>
+      <td>$\lozenge_{[0,10]} (x_2 \leq 25) \mathbf{R}_{[0,\infty)} (x_0 - x_1 \leq -3))$</td>
+      <td>For the first $5$ time units, $x_0 - x_1$ is less than or equal to $-3$ until $x_0 - x_1$ is greater than or equal to $4$ within time interval $[0, \infty)$.</td>
+    </tr>
+  </tbody>
+</table>
+<p class="center">
+    <em>Table 1: STL properties for polynomial model</em>
+</p>
+
+<p><strong>Nonlinear ODE Dynamics.</strong>
+The continuous dynamics of $x_i$ for each mode can be specified as the ODEs:
 $\dot{x_i} =  K_i(h_i-(c_ix_i-d_ix_{1-i}))$
 for $\textsf{On}$, and $\dot{x_i} =  -K_i(c_ix_i-d_ix_{1-i})$
 for $\textsf{Off}$, where $K_i, h_i, c_i, d_i$ are determined by the size of the room, 
@@ -99,13 +163,13 @@ The jumps between modes then define a control logic to keep the temperatures wit
 
 <p id="therm-automata"><img src="/assets/img/thermo-auto.svg" alt="model" /></p>
 <p class="center">
-    <em>Fig.1: A hybrid automaton of thermostat controllers</em>
+    <em>Figure 1: A hybrid automaton of thermostat controllers</em>
 </p>
 
-<p>Table <a href="#stl-thermo-auto">[1]</a>
+<p>Table <a href="#stl-thermo-ode-auto">[1]</a>
 shows the STL properties.</p>
 
-<table id="stl-thermo-auto">
+<table id="stl-thermo-ode-auto">
   <thead>
     <tr>
       <th>Label</th>
@@ -132,14 +196,14 @@ shows the STL properties.</p>
   </tbody>
 </table>
 <p class="center">
-    <em>Table.1: STL properties for thermostat</em>
+    <em>Table 2: STL properties for nonlinear ODE model</em>
 </p>
 
 <hr />
 
 <h4 id="an-stlmc-input-model">An STLmc Input Model</h4>
 
-<p>We use the STLmc language to describe the thermostat model (<a href="/assets/files/benchmarks/therm.model">therm.model</a>) as follows:</p>
+<p>We use the STLmc language to describe the thermostat model (<a href="/assets/files/benchmarks/therm-ode.model">therm-ode.model</a>) as follows:</p>
 <pre>
 int on0;		int on1;
 [10, 35] x0;		[10, 35] x1;
@@ -204,9 +268,13 @@ For the formulas $\textsf{f1}$, $\textsf{f2}$, and $\textsf{f3}$, we choose thre
 <p>STLmc finds counterexamples for $\textsf{f2}$ and $\textsf{f3}$, while $\textsf{f1}$ is safe.
 The following shows the command finding a counterexample for the STL formula $\textsf{f2}: \square_{[2, 4]}((x_0 - x_1 \geq 4) \rightarrow \lozenge_{[3, 10]} (x_0 - x_1 \leq -3))$ at bound $2$ with respect to $\epsilon_2=2$ in $8$ seconds using dReal.</p>
 
-<pre>
-./stlmc ./therm.model -bound 5 -time-bound 30 -threshold 2 \
-        -goal f2 -solver dreal -two-step -parallel -time-horizon 30 -visualize
+<p><button class="btn" data-clipboard-target="#therm-ode-cmd">
+    <img src="/assets/icons/copy-16.svg" alt="Copy to clipboard" />
+    copy
+</button></p>
+
+<pre id="therm-ode-cmd">
+./stlmc ./therm-ode.model -bound 5 -time-bound 30 -threshold 2 -goal f2 -solver dreal -two-step -parallel -time-horizon 30 -visualize
 </pre>
 
 <table>
