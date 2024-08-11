@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Download | STLMC</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Download" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://stlmc.github.io/download/" />
+<meta property="og:url" content="https://stlmc.github.io/download/" />
+<meta property="og:site_name" content="STLMC" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Download" />
+<script type="application/ld+json">
+{"@type":"WebPage","headline":"Download","url":"https://stlmc.github.io/download/","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
+  
+  
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">STLMC</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <div class="post-content justify">
+    <h4 id="install-the-stlmc-tool">Install the STLmc Tool</h4>
+
+<p>The STLmc tool is written in Python. 
+The tool is available for Ubuntu 18.04 (64-bit) and macOS (64-bit). 
+You can download the tool using the following command:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>stlmc
+</code></pre></div></div>
+
+<!-- *Remark: Our tool can be run on [Ubuntu 18.04](https://ubuntu.com/download) only.
+We made this restriction because one of our underlying SMT solvers, Yices2, does not support Ubuntu 20.04 on Ubuntu PPA.* -->
+
+<hr />
+
+<h4 id="prerequisites">Prerequisites</h4>
+
+<p>The following libraries are prerequisites for our tool:</p>
+
+<ul>
+  <li>Python3 (3.8.6) or newer: <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></li>
+  <li>
+    <p>Python3-pip: <a href="https://pypi.org/">https://pypi.org/</a></p>
+
+    <p>Please make sure that pip is up-to-date. Otherwise some Python libraries STLmc used, such as numpy, may fail to be installed.</p>
+  </li>
+  <li>
+    <p>Gnuplot: <a href="http://www.gnuplot.info/">http://www.gnuplot.info/</a></p>
+
+    <p>STLmc uses ‘Gnuplot’ to visualize counterexample graphs. You can install Gnuplot using the following command:</p>
+
+    <p><strong>Ubuntu or Debian</strong></p>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">sudo </span>apt <span class="nb">install </span>gnuplot
+</code></pre></div>    </div>
+
+    <p><strong>MacOS</strong></p>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew <span class="nb">install </span>gnuplot
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main>
+  </body>
+
+</html>
