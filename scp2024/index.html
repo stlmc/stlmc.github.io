@@ -2,45 +2,21 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Artifact | STLMC</title>
-<meta name="generator" content="Jekyll v4.2.0" />
+<meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="Artifact" />
 <meta property="og:locale" content="en_US" />
 <link rel="canonical" href="https://stlmc.github.io/scp2024/" />
 <meta property="og:url" content="https://stlmc.github.io/scp2024/" />
 <meta property="og:site_name" content="STLMC" />
+<meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Artifact" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"https://stlmc.github.io/scp2024/","headline":"Artifact","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","headline":"Artifact","url":"https://stlmc.github.io/scp2024/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
-    <script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    TeX: {
-      equationNumbers: {
-        autoNumber: "AMS"
-      }
-    },
-    tex2jax: {
-    inlineMath: [ ['$', '$'] ],
-    displayMath: [ ['$$', '$$'] ],
-    processEscapes: true,
-  }
-});
-MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
-	  alert("Math Processing Error: "+message[1]);
-	});
-MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
-	  alert("Math Processing Error: "+message[1]);
-	});
-</script>
-<script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
-  
   
   
 </head>
@@ -66,7 +42,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
   <div class="post-content justify">
     <h4 id="artifact">Artifact</h4>
 
-<p>This page explains the SCP2024 artifact for our paper: “SMT-Based Model Checking for Signal Temporal Logic” by J. Lee, G. Yu, and K. Bae.</p>
+<p>This page explains the SCP2024 artifact for our paper: “SMT-Based Robust Model Checking for Signal Temporal Logic” by J. Lee, G. Yu, and K. Bae.</p>
 
 <p>The artifact includes the followings:</p>
 
@@ -75,7 +51,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
   <li>experimental results</li>
 </ul>
 
-<p><em>Remark: Our artifact can run <strong>only</strong> on Ubuntu because underlying reachability solvers (e.g., SpaceEx, Flow*) do not provide MacOS executables.</em></p>
+<p><em>Remark: Our artifact can <strong>only</strong> be run on Ubuntu because underlying reachability solvers (e.g., SpaceEx, Flow*) do not provide MacOS executables.</em></p>
 
 <hr />
 
@@ -84,8 +60,14 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 <p>To install our artifact, follow the below instruction steps:</p>
 
 <ul>
-  <li>Follow the instructions <a href="https://stlmc.github.io/download/">https://stlmc.github.io/download/</a> to install STLmc.</li>
-  <li>Download and unzip the artifact archive file (scp2024.zip).</li>
+  <li>Follow the instructions in <a href="https://stlmc.github.io/download/">https://stlmc.github.io/download/</a> to install prerequisites for STLmc.</li>
+  <li>
+    <p>Install the STLmc tool using the following command:</p>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~<span class="nv">$ </span>pip <span class="nb">install </span><span class="nv">stlmc</span><span class="o">==</span>1.0.0dev3
+</code></pre></div>    </div>
+  </li>
+  <li>Download and unzip the artifact archive file (<a href="/assets/files/scp2024-artifact/artifact.zip">artifact.zip</a>).</li>
 </ul>
 
 <hr />
@@ -98,76 +80,52 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 
 <ul>
   <li>
-    <p>To run the <u>first experiment</u> of the paper. Go to the ‘scripts’ directory and use the following command:</p>
+    <p>To run the <u>first experiment</u> of the paper. Go to the ‘scripts/exp1’ directory and use the following command:</p>
 
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~/scp2024/scripts<span class="nv">$ </span>./run-exp1 ../benchmarks/exp1 <span class="nt">-t</span> 3600
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~/scp2024/scripts/exp1<span class="nv">$ </span>./run-exp ../../benchmarks/exp1 <span class="nt">-t</span> 3600
 </code></pre></div>    </div>
 
-    <p>This command reproduces the first experiment with the time out 3600s using the benchmarks in the directory ‘../benchmarks/exp1’</p>
+    <p>This command reproduces the first experiment with a time out 3600s using the benchmarks in the directory ‘../../benchmarks/exp1’.</p>
   </li>
   <li>
-    <p>To run the <u>second experiment</u> of the paper. Go to the ‘scripts’ directory and use the following command:</p>
+    <p>To run the <u>second experiment</u> of the paper. Go to the ‘scripts/exp2’ directory and use the following command:</p>
 
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~/scp2024/scripts<span class="nv">$ </span>./run-exp2 ../benchmarks/exp2
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~/scp2024/scripts/exp2<span class="nv">$ </span>./run-exp ../../benchmarks/exp2 <span class="nt">-t</span> 3600
 </code></pre></div>    </div>
 
-    <p>This command reproduces the second experiment using the benchmarks in the directory ‘../benchmarks/exp2’</p>
+    <p>This command reproduces the experiment using models in ‘../../benchmarks/exp2’.</p>
   </li>
 </ul>
 
-<p><em>Remark: The reproduction scripts creates the ‘log’ directory and put the log files in it.</em></p>
+<p><em>Remark: Each reproduction script creates a ‘log’ directory and put log files in it.</em></p>
 
-<p><strong>Generating the Reports</strong></p>
+<p><strong>Generating Reports</strong></p>
 
-<p>You can create a spreadsheet report for each experiment from the log files using the following commands:</p>
+<p>You can create a spreadsheet report for each experiment from the log files using the ‘gen-report’ script in each experiment directory.</p>
 
-<ul>
-  <li>
-    <p>To generate a report file for the first experiment. Use the following command:</p>
+<p>For example, you can generate a report file for the first experiment as follows:</p>
 
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~/scp2024/scripts<span class="nv">$ </span>./gen-report1 ./log
-</code></pre></div>    </div>
-
-    <p>This command generates the report file ‘log-report-exp1.csv’ for the first experiment in the same directory, using the log files in the ‘log’ directory.</p>
-  </li>
-  <li>
-    <p>To generate a report file for the second experiment. Use the following command:</p>
-
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~/scp2024/scripts<span class="nv">$ </span>./gen-report2 ./log
-</code></pre></div>    </div>
-
-    <p>This command generates the report file ‘log-report-exp2.csv’ for the second experiment.</p>
-  </li>
-</ul>
-
-<p><strong>Generating the HTML Tables</strong></p>
-
-<p>You can create an html table for each report using the following commands:</p>
-
-<ul>
-  <li>
-    <p>To generate an html table for the first experiment. Use the following command:</p>
-
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~/scp2024/scripts<span class="nv">$ </span>./gen-table1
-</code></pre></div>    </div>
-
-    <p>This command generates the html file ‘table-exp1.html’ for the first experiment in the same directory, using the report file ‘log-report-exp1.csv’ in the same directory.</p>
-  </li>
-  <li>
-    <p>To generate an html table for the second experiment. Use the following command:</p>
-  </li>
-</ul>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~/scp2024/scripts<span class="nv">$ </span>./gen-report2 ./log
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~/scp2024/scripts/exp1<span class="nv">$ </span>./gen-report <span class="c"># generates a report 'exp1-report.csv'</span>
 </code></pre></div></div>
 
-<p>This command generates two html files ‘table1-exp2.html’ and for ‘table2-exp2.html’ the second experiment.</p>
+<p><em>Note: Each script generates a report file using the log files in the ‘log’ directory.</em></p>
+
+<p><strong>Generating HTML Tables</strong></p>
+
+<p>You can also create an html table from a report file using the ‘gen-table’ script.</p>
+
+<p>For example, the following command generates an html table ‘exp1-table.html’ using the ‘exp1-report.csv’.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~/scp2024/scripts/exp1<span class="nv">$ </span>./gen-table <span class="c"># generates a table 'exp1-table.html'</span>
+</code></pre></div></div>
 
 <hr />
 
 <h4 id="experimental-results">Experimental Results</h4>
 
-<p>You can also find the log files of the experiments of our paper, spreadsheet reports, and html tables in the ‘logs’ directory at the top directory. Note that all the log files, reports, and tables are generated by our scripts.</p>
+<p>You can find log files for our paper, including spreadsheet reports and html tables from <a href="/assets/files/scp2024-artifact/logs.zip">logs.zip</a>.</p>
+
+<p>We also provide online links to our tables: <a href="/assets/files/scp2024-artifact/exp1-table.html">exp1-table</a> and <a href="/assets/files/scp2024-artifact/exp2-table.html">exp2-table</a>.</p>
 
   </div>
 

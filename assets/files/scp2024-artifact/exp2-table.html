@@ -1,0 +1,128 @@
+<html>
+<head>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$'], ['\(', '\)']]}};</script>
+<style>table { text-align: center; padding: 3px 3px 5px 3px; border-top: 2px solid; border-bottom: 2px solid; border-spacing: 0px;}
+th { border-bottom: 1px solid; padding: 3px 10px 5px 10px;}
+td {padding: 10px 10px 5px 10px;}
+.draw {border-bottom: 1px solid;}
+.left { text-align: left; }
+.t-draw {border-bottom: 2px solid;}
+mjx-container[display="block"] { display: inline; margin: 1em 0;}</style>
+</head><body><table>
+<thead>
+        <tr>
+            <th class="tg-0lax">Model</th>
+            <th class="tg-0lax">STLmc</th>
+            <th class="tg-0lax">HyComp</th>
+            <th class="tg-0lax">SpaceEx</th>
+            <th class="tg-0lax">Flow*</th>
+            <th class="tg-0lax">dReach</th>
+            <th class="tg-0lax">Model</th>
+            <th class="tg-0lax">STLmc</th>
+            <th class="tg-0lax">SpaceEx</th>
+            <th class="tg-0lax">Flow*</th>
+            <th class="tg-0lax">dReach</th>
+        </tr></thead>
+        
+<tbody><tr><td class="tg-0lax">Bat-L</td>
+<td class="tg-0lax">0.18</td>
+<td class="tg-0lax">0.15</td>
+<td class="tg-0lax">0.07</td>
+<td class="tg-0lax">41.20</td>
+<td class="tg-0lax">8.06</td>
+<td class="tg-0lax">Bat-P</td>
+<td class="tg-0lax">0.11</td>
+<td class="tg-0lax">0.01</td>
+<td class="tg-0lax">23.36</td>
+<td class="tg-0lax">1.30</td></tr>
+<tr><td class="tg-0lax">Wat-L</td>
+<td class="tg-0lax">0.12</td>
+<td class="tg-0lax">0.09</td>
+<td class="tg-0lax">0.41</td>
+<td class="tg-0lax">122.15</td>
+<td class="tg-0lax">T/O</td>
+<td class="tg-0lax">Wat-P</td>
+<td class="tg-0lax">0.64</td>
+<td class="tg-0lax">0.00</td>
+<td class="tg-0lax">0.12</td>
+<td class="tg-0lax">38.35</td></tr>
+<tr><td class="tg-0lax">Car-L</td>
+<td class="tg-0lax">0.16</td>
+<td class="tg-0lax">0.05</td>
+<td class="tg-0lax">0.89</td>
+<td class="tg-0lax">24.93</td>
+<td class="tg-0lax">T/O</td>
+<td class="tg-0lax">Car-P</td>
+<td class="tg-0lax">0.23</td>
+<td class="tg-0lax">2200.08</td>
+<td class="tg-0lax">25.58</td>
+<td class="tg-0lax">357.01</td></tr>
+<tr><td class="tg-0lax">Rail-L</td>
+<td class="tg-0lax">0.08</td>
+<td class="tg-0lax">0.04</td>
+<td class="tg-0lax">0.12</td>
+<td class="tg-0lax">3.77</td>
+<td class="tg-0lax">1747.73</td>
+<td class="tg-0lax">Rail-P</td>
+<td class="tg-0lax">0.06</td>
+<td class="tg-0lax">0.21</td>
+<td class="tg-0lax">2.69</td>
+<td class="tg-0lax">0.22</td></tr>
+<tr><td class="tg-0lax">Thm-L</td>
+<td class="tg-0lax">0.15</td>
+<td class="tg-0lax">0.12</td>
+<td class="tg-0lax">0.54</td>
+<td class="tg-0lax">493.59</td>
+<td class="tg-0lax">T/O</td>
+<td class="tg-0lax">Thm-P</td>
+<td class="tg-0lax">0.33</td>
+<td class="tg-0lax">3.09</td>
+<td class="tg-0lax">5.17</td>
+<td class="tg-0lax">75.71</td></tr>
+<tr><td class="tg-0lax">Bat-N</td>
+<td class="tg-0lax">0.45</td>
+<td class="tg-0lax">-</td>
+<td class="tg-0lax">0.03</td>
+<td class="tg-0lax">8.90</td>
+<td class="tg-0lax">0.35</td>
+<td class="tg-0lax">Nav-N</td>
+<td class="tg-0lax">0.09</td>
+<td class="tg-0lax">0.02</td>
+<td class="tg-0lax">0.43</td>
+<td class="tg-0lax">0.17</td></tr>
+<tr><td class="tg-0lax">Thm-N</td>
+<td class="tg-0lax">1.37</td>
+<td class="tg-0lax">-</td>
+<td class="tg-0lax">0.20</td>
+<td class="tg-0lax">15.96</td>
+<td class="tg-0lax">0.76</td>
+<td class="tg-0lax">Wat-N</td>
+<td class="tg-0lax">0.02</td>
+<td class="tg-0lax">-</td>
+<td class="tg-0lax">7.13</td>
+<td class="tg-0lax">0.15</td></tr>
+<tr><td class="tg-0lax">Oscil-N</td>
+<td class="tg-0lax">0.88</td>
+<td class="tg-0lax">-</td>
+<td class="tg-0lax">0.01</td>
+<td class="tg-0lax">0.47</td>
+<td class="tg-0lax">0.36</td>
+<td class="tg-0lax">Car-N</td>
+<td class="tg-0lax">47.32</td>
+<td class="tg-0lax">-</td>
+<td class="tg-0lax">412.27</td>
+<td class="tg-0lax">11.75</td></tr>
+<tr><td class="tg-0lax">Space-N</td>
+<td class="tg-0lax">1.91</td>
+<td class="tg-0lax">-</td>
+<td class="tg-0lax">0.03</td>
+<td class="tg-0lax">8.66</td>
+<td class="tg-0lax">1.04</td>
+<td class="tg-0lax">Rail-N</td>
+<td class="tg-0lax">0.15</td>
+<td class="tg-0lax">-</td>
+<td class="tg-0lax">0.08</td>
+<td class="tg-0lax">0.17</td></tr></tbody></table></body>
+</html>
