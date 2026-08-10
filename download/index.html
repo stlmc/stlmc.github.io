@@ -2,7 +2,7 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
 <title>Download | STLMC</title>
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="Download" />
@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="STLMC" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Download" />
+<meta name="twitter:title" content="Download" />
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","headline":"Download","url":"https://stlmc.github.io/download/"}</script>
 <!-- End Jekyll SEO tag -->
@@ -42,11 +42,10 @@
   <div class="post-content justify">
     <h4 id="install-the-stlmc-tool">Install the STLmc Tool</h4>
 
-<p>The STLmc tool is written in Python. 
-The tool is available for Ubuntu 18.04 (64-bit) and macOS (64-bit). 
-You can download the tool using the following command:</p>
+<p>The STLmc tool is written in Python and requires Python 3.8 or newer.
+You can install the tool from PyPI using the following command:</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>stlmc
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-m</span> pip <span class="nb">install </span>stlmc
 </code></pre></div></div>
 
 <!-- *Remark: Our tool can be run on [Ubuntu 18.04](https://ubuntu.com/download) only.
@@ -59,16 +58,18 @@ We made this restriction because one of our underlying SMT solvers, Yices2, does
 <p>The following libraries are prerequisites for our tool:</p>
 
 <ul>
-  <li>Python3 (3.8.6) or newer: <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></li>
+  <li>Python3 (3.8 or newer): <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></li>
   <li>
     <p>Python3-pip: <a href="https://pypi.org/">https://pypi.org/</a></p>
 
     <p>Please make sure that pip is up-to-date. Otherwise some Python libraries STLmc used, such as numpy, may fail to be installed.</p>
   </li>
   <li>
-    <p>Gnuplot: <a href="http://www.gnuplot.info/">http://www.gnuplot.info/</a></p>
+    <p>Gnuplot (optional): <a href="http://www.gnuplot.info/">http://www.gnuplot.info/</a></p>
 
-    <p>STLmc uses ‘Gnuplot’ to visualize counterexample graphs. You can install Gnuplot using the following command:</p>
+    <p>Gnuplot is required only when exporting counterexample graphs in PDF
+  format. It is not required for HTML or text counterexample output. You can
+  install Gnuplot using the following command:</p>
 
     <p><strong>Ubuntu or Debian</strong></p>
 

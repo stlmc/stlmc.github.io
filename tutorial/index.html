@@ -2,7 +2,7 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
 <title>Tutorial | STLMC</title>
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="Tutorial" />
@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="STLMC" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Tutorial" />
+<meta name="twitter:title" content="Tutorial" />
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","headline":"Tutorial","url":"https://stlmc.github.io/tutorial/"}</script>
 <!-- End Jekyll SEO tag -->
@@ -222,7 +222,18 @@ we choose thresholds $\epsilon_1 = 1.0$ and $\epsilon_3 = 2.0$, respectively.</p
 <p>The formula $\textsf{f2}$ is violated. The following command generates visualization graphs from 
 the extra data for the visualization.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">stlmc-vis ./therm.counterexample <span class="nt">-output</span> html</code></pre></figure>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">stlmc-vis ./therm_b5_f2_dreal.counterexample <span class="nt">-output</span> html</code></pre></figure>
+
+<p>A counterexample can also be exported as a human-readable text report without
+generating a graph or providing a visualization configuration file.</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">stlmc-vis ./therm_b5_f2_dreal.counterexample <span class="nt">-output</span> text</code></pre></figure>
+
+<p>This command creates <code class="language-plaintext highlighter-rouge">therm_b5_f2_dreal.counterexample.txt</code>. The report
+contains the analyzed goal and formula, constants, variable ranges, and the
+initial condition. For each bound, it shows the start and end times, selected
+mode, invariant and flow conditions, continuous-variable values, next mode,
+and available jump candidates.</p>
 
 <script type="text/javascript">
     (function() {
@@ -273,10 +284,9 @@ the extra data for the visualization.</p>
     \textsf{f2}_{\textsf{3}} &amp;= \lozenge_{[3, 10]} (x_0 - x_1 \leq -3) \qquad \textsf{f2}_{\textsf{4}} = x_0 - x_1 \leq -3 \qquad \textsf{f2}_{\textsf{5}} = x_0 - x_1 \geq 4
 \end{align*}</p>
 
-<p>The robustness degree of $\textsf{f2}$ is less than $\epsilon$ at time $0$, since the robustness degrees of $\textsf{f2}_{\textsf{1}}$ goes below $\epsilon$ in the interval $[2, 4]$,
+<p>The robustness degree of $\textsf{f2}$ is less than $\epsilon$ at time $0$, since the robustness degree of $\textsf{f2}_{\textsf{1}}$ goes below $\epsilon$ in the interval $[2, 4]$,
 which is because both the degrees of $\textsf{f2}_{\textsf{2}}$ and $\textsf{f2}_{\textsf{3}}$ are less than $\epsilon$ in $[2, 4]$. 
 The robustness degree of $\textsf{f2}_{\textsf{3}}$ is less than $\epsilon$ in $[2, 4]$, since the robustness degree of $\textsf{f2}_{\textsf{4}}$ is less than $\epsilon$ in $[5, 14] = [2, 4] + [3, 10]$.</p>
-
 
   </div>
 

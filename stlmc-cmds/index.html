@@ -2,7 +2,7 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
 <title>STLMC</title>
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="STLMC" />
@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="STLMC" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="STLMC" />
+<meta name="twitter:title" content="STLMC" />
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","headline":"STLMC","url":"https://stlmc.github.io/stlmc-cmds/"}</script>
 <!-- End Jekyll SEO tag -->
@@ -115,8 +115,13 @@ summarized in Table [<a href="#cmds">2</a>].</p>
       <td>disabled</td>
     </tr>
     <tr>
-      <td>$\textsf{-visualization}$</td>
-      <td>generate extra visualization data</td>
+      <td>$\textsf{-parallel-core}&lt;N&gt;$</td>
+      <td>the maximum number of parallel solver workers</td>
+      <td>$25$</td>
+    </tr>
+    <tr>
+      <td>$\textsf{-visualize}$</td>
+      <td>generate counterexample data for visualization and text output</td>
       <td>disabled</td>
     </tr>
     <tr>
@@ -129,26 +134,57 @@ summarized in Table [<a href="#cmds">2</a>].</p>
       <td>a precision parameter for $\textsf{dreal}$</td>
       <td>$0.001$</td>
     </tr>
+    <tr>
+      <td>$\textsf{-save-smt2}$</td>
+      <td>save every SMT2 query sent to the underlying solver</td>
+      <td>disabled</td>
+    </tr>
+    <tr>
+      <td>$\textsf{-smt2-dir}&lt;\textsf{DIR}&gt;$</td>
+      <td>a directory for saved SMT2 queries</td>
+      <td>$\textsf{smt2-logs}$</td>
+    </tr>
   </tbody>
 </table>
 <p class="center">
     <em>Table.2: The command line options of STLmc</em>
 </p>
 
-<p>A discrete bound $N$ limits the number of mode changes and
-the number of <em>variable points</em>-at which the truth value of some STL subformula changes-in trajectories.
+<p>A discrete bound $N$ limits the number of mode changes and the number of
+<em>variable points</em>—points at which the truth value of an STL subformula
+changes—along a trajectory.
 A time horizon $T$ limits the maximum time duration of single modes in trajectories.
 The options $\textsf{-two-step}$ and $\textsf{-parallel}$ enable the (parallelized) two-phase optimization.
-When the option $\textsf{-visualize}$ is set, extra data for visualization is generated. 
+When the option $\textsf{-visualize}$ is set, STLmc generates counterexample
+data that can be exported as an HTML graph, a PDF graph, or a text report.
 Among the STL formulas specified in the input model file, formulas to be analyzed are chosen using the $\textsf{-goal}$.</p>
 
 <p>We can choose different SMT solvers using the $\textsf{-solver}$ option.
 The STLmc tool currently supports three SMT solvers: Z3, Yices2 and dReal.
 The underlying solver is chosen depending on the flow conditions of a hybrid automaton.
-Z3 and Yices2 can deal with linear and polynomial functions, and dReal
-can deal with nonlinear ODEs-which is undecidable in general for hybrid automata-approximately up to a given precision 
-$\delta &gt; 0$.</p>
+Z3 and Yices2 can deal with linear and polynomial functions. dReal can
+approximately handle nonlinear ODEs—which generally make reachability
+undecidable for hybrid automata—up to a given precision $\delta &gt; 0$.</p>
 
+<hr />
+
+<h4 id="saving-smt2-queries">Saving SMT2 Queries</h4>
+
+<p>By default, STLmc does not retain the SMT2 queries sent to the underlying
+solver. Use <code class="language-plaintext highlighter-rouge">-save-smt2</code> to save queries for dReal, Z3, and Yices:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc model.model <span class="nt">-save-smt2</span>
+</code></pre></div></div>
+
+<p>The queries are written below <code class="language-plaintext highlighter-rouge">smt2-logs/&lt;solver&gt;/</code>. A different output
+directory can be selected with <code class="language-plaintext highlighter-rouge">-smt2-dir</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc model.model <span class="nt">-save-smt2</span> <span class="nt">-smt2-dir</span> solver-inputs
+</code></pre></div></div>
+
+<p>Saved filenames identify the model, goal, solver, and bound. For the two-step
+algorithm, they also identify the scenario. Existing files are not
+overwritten; STLmc adds a numeric suffix when necessary.</p>
 
   </div>
 
