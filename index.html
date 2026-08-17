@@ -53,7 +53,14 @@
 \____/   \_/  \_____/|_| |_| |_| \___|
 </pre>
 
-<p><strong>STLmc</strong> is a bounded model checker for signal temporal logic (STL) of hybrid systems. The algorithm of the tool is refutationally complete for STL properties of bounded signals. It reduces bounded STL model checking problems into the satisfiability of a first-order logic formula over the reals. The satisfiability of the formula can be determined using SMT solvers (<strong>Z3</strong>, <strong>Yices2</strong>, or <strong>dReal3</strong>). STLmc supports an input modelling language to describe hybrid automata and STL properties. The tool searches for counterexample trajectories that falsify the given STL formulas. When a counterexample is found, STLmc can generate interactive graphs or a human-readable text report.</p>
+<p><strong>STLmc</strong> is an SMT-based bounded model checker for signal temporal logic
+(STL) properties of hybrid systems. It supports linear, polynomial, and ODE
+dynamics through <strong>Z3</strong>, <strong>Yices2</strong>, and <strong>dReal3</strong>. STLmc provides robust STL
+model checking and bounded reachability checking, with one-step or two-step
+solving and symbolic or explicit transition-path exploration. It can generate
+counterexamples for violated STL properties and witnesses for reachable
+targets, which can be inspected as interactive graphs or human-readable text
+reports.</p>
 
 <p><br /></p>
 

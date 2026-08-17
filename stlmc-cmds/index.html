@@ -105,8 +105,23 @@ summarized in Table [<a href="#cmds">2</a>].</p>
       <td>all</td>
     </tr>
     <tr>
+      <td>$\textsf{-solver}&lt;\textsf{Solver}&gt;$</td>
+      <td>an SMT solver to be used ($\textsf{auto}$/$\textsf{z3}$/$\textsf{yices}$/$\textsf{dreal}$)</td>
+      <td>$\textsf{auto}$</td>
+    </tr>
+    <tr>
+      <td>$\textsf{-path-strategy}&lt;\textsf{Strategy}&gt;$</td>
+      <td>handle transition paths symbolically or explicitly</td>
+      <td>$\textsf{symbolic}$</td>
+    </tr>
+    <tr>
       <td>$\textsf{-two-step}$</td>
       <td>use the two-phase optimization</td>
+      <td>disabled</td>
+    </tr>
+    <tr>
+      <td>$\textsf{-concrete}$</td>
+      <td>disable unsat-core scenario generalization in two-step solving</td>
       <td>disabled</td>
     </tr>
     <tr>
@@ -120,14 +135,29 @@ summarized in Table [<a href="#cmds">2</a>].</p>
       <td>$25$</td>
     </tr>
     <tr>
-      <td>$\textsf{-visualize}$</td>
-      <td>generate counterexample data for visualization and text output</td>
+      <td>$\textsf{-solver-batch-size}&lt;N&gt;$</td>
+      <td>the maximum candidates combined in one solver query</td>
+      <td>$1$</td>
+    </tr>
+    <tr>
+      <td>$\textsf{-core-minimize-attempts}&lt;N&gt;$</td>
+      <td>the number of minimized unsat cores tried per scenario</td>
+      <td>$1$</td>
+    </tr>
+    <tr>
+      <td>$\textsf{-reach}$</td>
+      <td>interpret a selected state goal as a reachability target</td>
       <td>disabled</td>
     </tr>
     <tr>
-      <td>$\textsf{-solver}&lt;\textsf{Solver}&gt;$</td>
-      <td>an SMT solver to be used ($\textsf{z3}$/$\textsf{yices}$/$\textsf{dreal}$)</td>
-      <td>$\textsf{z3}$</td>
+      <td>$\textsf{-visualize}$</td>
+      <td>generate counterexample or witness data</td>
+      <td>disabled</td>
+    </tr>
+    <tr>
+      <td>$\textsf{-verbose}$</td>
+      <td>print detailed progress information</td>
+      <td>disabled</td>
     </tr>
     <tr>
       <td>$\textsf{-precision}&lt;\delta&gt;$</td>
@@ -152,19 +182,48 @@ summarized in Table [<a href="#cmds">2</a>].</p>
 
 <p>A discrete bound $N$ limits the number of mode changes and the number of
 <em>variable points</em>—points at which the truth value of an STL subformula
-changes—along a trajectory.
-A time horizon $T$ limits the maximum time duration of single modes in trajectories.
-The options $\textsf{-two-step}$ and $\textsf{-parallel}$ enable the (parallelized) two-phase optimization.
+changes—along a trajectory. For reachability, it limits the number of jumps.
+A time horizon $T$ limits the duration of each continuous segment.
+The option $\textsf{-two-step}$ enables abstraction-based two-step solving,
+while $\textsf{-parallel}$ runs its refinement checks concurrently.
 When the option $\textsf{-visualize}$ is set, STLmc generates counterexample
-data that can be exported as an HTML graph, a PDF graph, or a text report.
+or reachability-witness data that can be exported as an HTML graph, a PDF
+graph, or a text report.
 Among the STL formulas specified in the input model file, formulas to be analyzed are chosen using the $\textsf{-goal}$.</p>
 
 <p>We can choose different SMT solvers using the $\textsf{-solver}$ option.
 The STLmc tool currently supports three SMT solvers: Z3, Yices2 and dReal.
-The underlying solver is chosen depending on the flow conditions of a hybrid automaton.
+With $\textsf{auto}$, the underlying solver is chosen according to the model’s
+formula and dynamics.
 Z3 and Yices2 can deal with linear and polynomial functions. dReal can
 approximately handle nonlinear ODEs—which generally make reachability
 undecidable for hybrid automata—up to a given precision $\delta &gt; 0$.</p>
+
+<hr />
+
+<h4 id="reachability-and-solving-strategies">Reachability and Solving Strategies</h4>
+
+<p>A model may declare a <code class="language-plaintext highlighter-rouge">reach</code> goal directly. The <code class="language-plaintext highlighter-rouge">-reach</code> option can also
+interpret a selected ordinary state goal as a reachability target:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc system.model <span class="nt">-goal</span> target <span class="nt">-reach</span>
+</code></pre></div></div>
+
+<p>A reachable query reports <code class="language-plaintext highlighter-rouge">reachable</code> and, with <code class="language-plaintext highlighter-rouge">-visualize</code>, writes a
+<code class="language-plaintext highlighter-rouge">.witness</code> artifact. Ordinary STL model checking reports <code class="language-plaintext highlighter-rouge">violated</code> when it
+finds a counterexample and continues to use the <code class="language-plaintext highlighter-rouge">.counterexample</code> suffix.</p>
+
+<p>Path exploration and continuous solving can be selected independently. The
+default is symbolic one-step solving. The four combinations are:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc system.model <span class="nt">-path-strategy</span> symbolic
+stlmc system.model <span class="nt">-path-strategy</span> symbolic <span class="nt">-two-step</span>
+stlmc system.model <span class="nt">-path-strategy</span> explicit
+stlmc system.model <span class="nt">-path-strategy</span> explicit <span class="nt">-two-step</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">-solver-batch-size</code> option controls how many final candidates are combined
+in one solver OR query. A value of <code class="language-plaintext highlighter-rouge">1</code> checks candidates individually.</p>
 
 <hr />
 

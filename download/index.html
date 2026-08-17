@@ -42,28 +42,51 @@
   <div class="post-content justify">
     <h4 id="install-the-stlmc-tool">Install the STLmc Tool</h4>
 
-<p>The STLmc tool is written in Python and requires Python 3.8 or newer.
+<p>The STLmc tool supports CPython 3.8 through 3.14.
 You can install the tool from PyPI using the following command:</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-m</span> pip <span class="nb">install </span>stlmc
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> pip <span class="nb">install </span>stlmc
 </code></pre></div></div>
-
-<!-- *Remark: Our tool can be run on [Ubuntu 18.04](https://ubuntu.com/download) only.
-We made this restriction because one of our underlying SMT solvers, Yices2, does not support Ubuntu 20.04 on Ubuntu PPA.* -->
 
 <hr />
 
-<h4 id="prerequisites">Prerequisites</h4>
+<h4 id="install-and-check-solvers">Install and Check Solvers</h4>
 
-<p>The following libraries are prerequisites for our tool:</p>
+<p>The Python interfaces for Z3 and Yices are installed with STLmc. After
+installing the package, check whether all solver prerequisites are available:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc-install-solvers <span class="nt">--check</span>
+</code></pre></div></div>
+
+<p>Install all missing solver components where automatic installation is
+supported:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc-install-solvers
+</code></pre></div></div>
+
+<p>An individual solver can be selected with <code class="language-plaintext highlighter-rouge">z3</code>, <code class="language-plaintext highlighter-rouge">yices</code>, or <code class="language-plaintext highlighter-rouge">dreal</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc-install-solvers dreal
+stlmc-install-solvers yices
+</code></pre></div></div>
+
+<p>Automatic Yices installation supports Ubuntu/Debian and macOS with Homebrew.
+Automatic dReal installation supports macOS and x86-64 Linux. Native package
+installation may request administrator privileges. If a required solver is
+unavailable, STLmc reports the corresponding installer command.</p>
+
+<p>Use the following commands to confirm the installation and view the available
+options:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc <span class="nt">-h</span>
+stlmc-vis <span class="nt">-h</span>
+</code></pre></div></div>
+
+<hr />
+
+<h4 id="optional-pdf-output">Optional PDF Output</h4>
 
 <ul>
-  <li>Python3 (3.8 or newer): <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></li>
-  <li>
-    <p>Python3-pip: <a href="https://pypi.org/">https://pypi.org/</a></p>
-
-    <p>Please make sure that pip is up-to-date. Otherwise some Python libraries STLmc used, such as numpy, may fail to be installed.</p>
-  </li>
   <li>
     <p>Gnuplot (optional): <a href="http://www.gnuplot.info/">http://www.gnuplot.info/</a></p>
 
