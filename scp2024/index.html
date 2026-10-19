@@ -2,7 +2,7 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
 <title>Artifact | STLMC</title>
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="Artifact" />
@@ -16,8 +16,12 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","headline":"Artifact","url":"https://stlmc.github.io/scp2024/"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
-  
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/stlmc-highlight.css">
+  <script defer src="/assets/js/stlmc-highlight.js"></script>
+  <link rel="stylesheet" href="/assets/css/code-copy.css">
+  <link rel="stylesheet" href="/assets/css/benchmark-tables.css">
+  <script defer src="/assets/js/code-copy.js"></script><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
   
 </head>
 <body><header class="site-header" role="banner">
@@ -32,7 +36,8 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a></div>
+        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a><a class="page-link" href="/assets/web-ui/index.html">Workspace</a>
+        </div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -60,11 +65,11 @@
 <p>To install our artifact, follow the below instruction steps:</p>
 
 <ul>
-  <li>Follow the instructions in <a href="https://stlmc.github.io/download/">https://stlmc.github.io/download/</a> to install prerequisites for STLmc.</li>
+  <li>This artifact uses STLmc <code class="language-plaintext highlighter-rouge">1.0.0.dev3</code>; use its version-specific prerequisites rather than the current installer commands.</li>
   <li>
     <p>Install the STLmc tool using the following command:</p>
 
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~<span class="nv">$ </span>pip <span class="nb">install </span><span class="nv">stlmc</span><span class="o">==</span>1.0.0.dev3
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">user@ubuntu:~$</span><span class="w"> </span>pip <span class="nb">install </span><span class="nv">stlmc</span><span class="o">==</span>1.0.0.dev3
 </code></pre></div>    </div>
   </li>
   <li>Download and unzip the artifact archive file (<a href="/assets/files/scp2024-artifact/artifact.zip">artifact.zip</a>).</li>
@@ -82,7 +87,7 @@
   <li>
     <p>To run the <u>first experiment</u> of the paper. Go to the ‘scripts/exp1’ directory and use the following command:</p>
 
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~/artifact/scripts/exp1<span class="nv">$ </span>./run-exp ../../benchmarks/exp1 <span class="nt">-t</span> 3600
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">user@ubuntu:~/artifact/scripts/exp1$</span><span class="w"> </span>./run-exp ../../benchmarks/exp1 <span class="nt">-t</span> 3600
 </code></pre></div>    </div>
 
     <p>This command reproduces the first experiment with a time out 3600s using the benchmarks in the directory ‘../../benchmarks/exp1’.</p>
@@ -90,7 +95,7 @@
   <li>
     <p>To run the <u>second experiment</u> of the paper. Go to the ‘scripts/exp2’ directory and use the following command:</p>
 
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~/artifact/scripts/exp2<span class="nv">$ </span>./run-exp ../../benchmarks/exp2 <span class="nt">-t</span> 3600
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">user@ubuntu:~/artifact/scripts/exp2$</span><span class="w"> </span>./run-exp ../../benchmarks/exp2 <span class="nt">-t</span> 3600
 </code></pre></div>    </div>
 
     <p>This command reproduces the experiment using models in ‘../../benchmarks/exp2’.</p>
@@ -105,7 +110,7 @@
 
 <p>For example, you can generate a report file for the first experiment as follows:</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~/artifact/scripts/exp1<span class="nv">$ </span>./gen-report <span class="c"># generates a report 'exp1-report.csv'</span>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">user@ubuntu:~/artifact/scripts/exp1$</span><span class="w"> </span>./gen-report <span class="c"># generates a report 'exp1-report.csv'</span>
 </code></pre></div></div>
 
 <p><em>Note: Each script generates a report file using the log files in the ‘log’ directory.</em></p>
@@ -116,7 +121,7 @@
 
 <p>For example, the following command generates an html table ‘exp1-table.html’ using the ‘exp1-report.csv’.</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@ubuntu:~/artifact/scripts/exp1<span class="nv">$ </span>./gen-table <span class="c"># generates a table 'exp1-table.html'</span>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">user@ubuntu:~/artifact/scripts/exp1$</span><span class="w"> </span>./gen-table <span class="c"># generates a table 'exp1-table.html'</span>
 </code></pre></div></div>
 
 <hr />

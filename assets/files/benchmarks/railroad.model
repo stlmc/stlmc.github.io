@@ -49,9 +49,8 @@ init: a = false; 89 <= x; x <= 90;
       vb = 0;
 proposition:
 
-# bound: 10, timebound 20, solver: yices
+# Pass the per-goal analysis settings listed on the benchmark page explicitly.
 goal:
-  [f1]: <>[0, 5] ((pb >= 40) U[1, 8] (x < 40));	  # threshold: 1.0
+  [f1]: [][0, 14] (x <= 94); # threshold: 0
   [f2]: <>[0, 4](x < 50 -> [][2,10] pb > 40);	  # threshold: 5.0
-  [f3]: [][0.0,5.0) ((x < 50) U[2, 10] (pb > 5)); # threshold: 4.0
-
+  [f3]: [][0, 2) ((x < 50) U[1, 5] (pb > 5)); # threshold: 4.0

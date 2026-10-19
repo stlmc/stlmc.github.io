@@ -4,7 +4,7 @@ body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, dl, dd, ol, ul, figure { margi
 hr { border: none; height: 1px; color: #e5e5e5; background-color: #e5e5e5; margin-top: 3%; margin-bottom: 3%; }
 
 /** Basic styling */
-body { font: 400 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; color: #111; background-color: #fdfdfd; -webkit-text-size-adjust: 100%; -webkit-font-feature-settings: "kern" 1; -moz-font-feature-settings: "kern" 1; -o-font-feature-settings: "kern" 1; font-feature-settings: "kern" 1; font-kerning: normal; display: flex; min-height: 100vh; flex-direction: column; }
+body { font: 400 16px/1.6 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; color: #111; background-color: #fdfdfd; -webkit-text-size-adjust: 100%; -webkit-font-feature-settings: "kern" 1; -moz-font-feature-settings: "kern" 1; -o-font-feature-settings: "kern" 1; font-feature-settings: "kern" 1; font-kerning: normal; display: flex; min-height: 100vh; flex-direction: column; }
 
 /** Set `margin-bottom` to maintain vertical rhythm */
 h1, h2, h3, h4, h5, h6, p, blockquote, pre, ul, ol, dl, figure { margin-bottom: 15px; }
@@ -45,7 +45,7 @@ blockquote { color: #828282; border-left: 4px solid #e8e8e8; padding-left: 15px;
 blockquote > :last-child { margin-bottom: 0; }
 
 /** Code formatting */
-pre, code { font-size: 15px; }
+pre, code { font-size: 15px; font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace; line-height: 1.6; text-align: left; }
 
 code { padding: 1px 5px; }
 
@@ -80,17 +80,17 @@ table td { border: 1px solid #e8e8e8; }
 /** Site header */
 .site-header { border-top: 5px solid #424242; border-bottom: 1px solid #e8e8e8; min-height: 55.95px; position: relative; }
 
-.site-title { font-size: 26px; font-weight: 300; line-height: 54px; letter-spacing: -1px; margin-bottom: 0; float: left; }
+.site-title { font-size: 26px; font-weight: 300; line-height: 57.6px; letter-spacing: -1px; margin-bottom: 0; float: left; }
 
 .site-title, .site-title:visited { color: #424242; }
 
-.site-nav { float: right; line-height: 54px; }
+.site-nav { float: right; line-height: 57.6px; }
 
 .site-nav .nav-trigger { display: none; }
 
 .site-nav .menu-icon { display: none; }
 
-.site-nav .page-link { color: #111; line-height: 1.5; }
+.site-nav .page-link { color: #111; line-height: 1.6; }
 
 .site-nav .page-link:not(:last-child) { margin-right: 20px; }
 
@@ -247,76 +247,98 @@ table td { border: 1px solid #e8e8e8; }
 
 .paper-body { text-align: justify; }
 
+/* Microsoft VS Code Light+ palette, mapped onto Rouge token categories. Reference: microsoft/vscode extensions/theme-defaults/themes/light_plus.json and light_vs.json. No VS Code runtime or tokenizer is embedded. */
 .highlight table td { padding: 5px; }
 
 .highlight table pre { margin: 0; }
 
-.highlight, .highlight .w { color: #c9d1d9; background-color: #161b22; }
+.highlight, .highlight .w { color: #000000; background-color: #FFFFFF; }
 
-.highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt, .highlight .kv { color: #ff7b72; }
+.highlight pre, .highlight code { color: #000000; background-color: #FFFFFF; }
 
-.highlight .gr { color: #f0f6fc; }
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt, .highlight .kv { color: #0000FF; }
 
-.highlight .gd { color: #ffdcd7; background-color: #67060c; }
+.highlight .gr { color: #82071e; }
 
-.highlight .nb { color: #ffa657; }
+.highlight .gd { color: #82071e; background-color: #ffebe9; }
 
-.highlight .nc { color: #ffa657; }
+.highlight .nb { color: #795E26; }
 
-.highlight .no { color: #ffa657; }
+.highlight .nc { color: #795E26; }
 
-.highlight .nn { color: #ffa657; }
+.highlight .no { color: #795E26; }
 
-.highlight .sr { color: #7ee787; }
+.highlight .nn { color: #795E26; }
 
-.highlight .na { color: #7ee787; }
+.highlight .sr { color: #A31515; }
 
-.highlight .nt { color: #7ee787; }
+.highlight .na { color: #A31515; }
 
-.highlight .gi { color: #aff5b4; background-color: #033a16; }
+.highlight .nt { color: #A31515; }
 
-.highlight .kc { color: #79c0ff; }
+.highlight .gi { color: #A31515; background-color: #dafbe1; }
 
-.highlight .l, .highlight .ld, .highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mx { color: #79c0ff; }
+.highlight .kc { color: #098658; }
 
-.highlight .sb { color: #79c0ff; }
+.highlight .l, .highlight .ld, .highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mx { color: #098658; }
 
-.highlight .bp { color: #79c0ff; }
+.highlight .sb { color: #098658; }
 
-.highlight .ne { color: #79c0ff; }
+.highlight .bp { color: #098658; }
 
-.highlight .nl { color: #79c0ff; }
+.highlight .ne { color: #098658; }
 
-.highlight .py { color: #79c0ff; }
+.highlight .nl { color: #098658; }
 
-.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi, .highlight .vm { color: #79c0ff; }
+.highlight .py { color: #098658; }
 
-.highlight .o, .highlight .ow { color: #79c0ff; }
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi, .highlight .vm { color: #098658; }
 
-.highlight .gh { color: #1f6feb; font-weight: bold; }
+.highlight .o, .highlight .ow { color: #098658; }
 
-.highlight .gu { color: #1f6feb; font-weight: bold; }
+.highlight .gh { color: #098658; font-weight: bold; }
 
-.highlight .s, .highlight .sa, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .se, .highlight .sh, .highlight .sx, .highlight .s1, .highlight .ss { color: #a5d6ff; }
+.highlight .gu { color: #098658; font-weight: bold; }
 
-.highlight .nd { color: #d2a8ff; }
+.highlight .s, .highlight .sa, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .se, .highlight .sh, .highlight .sx, .highlight .s1, .highlight .ss { color: #A31515; }
 
-.highlight .nf, .highlight .fm { color: #d2a8ff; }
+.highlight .nd { color: #795E26; }
 
-.highlight .err { color: #f0f6fc; background-color: #8e1519; }
+.highlight .nf, .highlight .fm { color: #795E26; }
 
-.highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cp, .highlight .cpf, .highlight .c1, .highlight .cs { color: #8b949e; }
+.highlight .err { color: #82071e; background-color: #ffebe9; }
 
-.highlight .gl { color: #8b949e; }
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cp, .highlight .cpf, .highlight .c1, .highlight .cs { color: #008000; }
 
-.highlight .gt { color: #8b949e; }
+.highlight .gl { color: #008000; }
 
-.highlight .ni { color: #c9d1d9; }
+.highlight .gt { color: #008000; }
 
-.highlight .si { color: #c9d1d9; }
+.highlight .ni { color: #000000; }
 
-.highlight .ge { color: #c9d1d9; font-style: italic; }
+.highlight .si { color: #000000; }
 
-.highlight .gs { color: #c9d1d9; font-weight: bold; }
+.highlight .ge { color: #000000; font-style: italic; }
+
+.highlight .gs { color: #000000; font-weight: bold; }
+
+/* VS Code Light+ semantic categories: types, variables, operators, constants. */
+.highlight .kt { color: #267F99; }
+
+.highlight .kc, .highlight .kp { color: #0000FF; }
+
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi, .highlight .vm, .highlight .bp, .highlight .py { color: #001080; }
+
+.highlight .o, .highlight .ow, .highlight .nl { color: #000000; }
+
+.highlight .nt { color: #0000FF; }
+
+.highlight .na, .highlight .nc, .highlight .nn { color: #267F99; }
+
+.highlight .no { color: #0070C1; }
+
+.highlight .sb { color: #A31515; }
+
+.highlight .ne { color: #267F99; }
 
 /*# sourceMappingURL=main.css.map */

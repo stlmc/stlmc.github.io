@@ -1,0 +1,47 @@
+.code-copy-container {
+  position: relative;
+  margin: 0 0 4px;
+  border: 1px solid #e5e7eb;
+  background: #FFFFFF;
+}
+/* Fenced and Liquid wrappers share one border, with no extra outer gap. */
+.highlighter-rouge:has(> .code-copy-container) { margin: 0; }
+.highlight pre, pre.highlight {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+.highlight pre code { white-space: inherit; }
+/* Keep code readable without a dedicated, empty toolbar row. */
+.code-copy-container pre { margin: 0; padding: 10px 76px 10px 12px; border: 0; border-radius: 0; }
+/* Model/source controls share the same compact, non-overlapping layout. */
+.code-copy-container.code-copy-source pre { padding: 10px 76px 10px 12px; }
+.code-copy-button {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  min-width: 58px;
+  min-height: 30px;
+  padding: 3px 8px;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  background: #f6f8fa;
+  color: #24292f;
+  font: 12px/1.5 system-ui, sans-serif;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+.code-copy-container:hover .code-copy-button,
+.code-copy-container:focus-within .code-copy-button,
+.code-copy-button:focus-visible { opacity: 1; pointer-events: auto; }
+.code-copy-button:hover { background: #eef1f4; }
+.code-copy-button:focus-visible { outline: 2px solid #0969da; outline-offset: 2px; }
+.code-copy-button[aria-disabled="true"] { cursor: default; }
+@media (hover: none) {
+  .code-copy-button { opacity: 1; pointer-events: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .code-copy-button { transition: none; }
+}

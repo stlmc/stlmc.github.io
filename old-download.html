@@ -2,22 +2,26 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
-<title>Download | STLMC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>Legacy Installation | STLMC</title>
 <meta name="generator" content="Jekyll v4.2.2" />
-<meta property="og:title" content="Download" />
+<meta property="og:title" content="Legacy Installation" />
 <meta property="og:locale" content="en_US" />
 <link rel="canonical" href="https://stlmc.github.io/old-download.html" />
 <meta property="og:url" content="https://stlmc.github.io/old-download.html" />
 <meta property="og:site_name" content="STLMC" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Download" />
+<meta name="twitter:title" content="Legacy Installation" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","headline":"Download","url":"https://stlmc.github.io/old-download.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","headline":"Legacy Installation","url":"https://stlmc.github.io/old-download.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
-  
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/stlmc-highlight.css">
+  <script defer src="/assets/js/stlmc-highlight.js"></script>
+  <link rel="stylesheet" href="/assets/css/code-copy.css">
+  <link rel="stylesheet" href="/assets/css/benchmark-tables.css">
+  <script defer src="/assets/js/code-copy.js"></script><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
   
 </head>
 <body><header class="site-header" role="banner">
@@ -32,7 +36,8 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a></div>
+        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a><a class="page-link" href="/assets/web-ui/index.html">Workspace</a>
+        </div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -40,7 +45,11 @@
         <article class="post">
 
   <div class="post-content justify">
-    <h4 id="install-the-stlmc-tool">Install the STLmc Tool</h4>
+    <p>This page describes an earlier STLmc release and is retained for historical
+reference. Its dependencies, platform restrictions, and commands do not apply
+to current releases. See the <a href="/download/">current installation instructions</a>.</p>
+
+<h4 id="install-the-stlmc-tool">Install the STLmc Tool</h4>
 
 <p>The STLmc tool is written in Python. 
 The tool is available for Ubuntu 18.04 (64-bit) and macOS (64-bit). 
@@ -81,17 +90,23 @@ We made this restriction because one of our underlying SMT solvers, Yices2, does
 
     <p>To install Yices on Ubuntu or Debian, do the following:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  sudo apt install software-properties-common
-  sudo add-apt-repository ppa:sri-csl/formal-methods
-  sudo apt-get update
-  sudo apt-get install yices2-dev
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">sudo </span>apt <span class="nb">install </span>software-properties-common
+</code></pre></div>    </div>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">sudo </span>add-apt-repository ppa:sri-csl/formal-methods
+</code></pre></div>    </div>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">sudo </span>apt-get update
+</code></pre></div>    </div>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">sudo </span>apt-get <span class="nb">install </span>yices2-dev
 </code></pre></div>    </div>
 
     <p><strong>MacOS</strong></p>
 
     <p>To install on Darwin, use homebrew:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew install SRI-CSL/sri-csl/yices2
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew <span class="nb">install </span>SRI-CSL/sri-csl/yices2
 </code></pre></div>    </div>
 
     <p><em>Remark: Some experiments may not run properly on the following architectures:
@@ -108,7 +123,7 @@ We made this restriction because one of our underlying SMT solvers, Yices2, does
 
     <p>Normally, Z3 solver is automatically installed as in Linux environment. But for some cases, we found that one may need to install Z3 binaries manually. This can be done using the following command:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew install z3
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew <span class="nb">install </span>z3
 </code></pre></div>    </div>
   </li>
   <li>
@@ -118,12 +133,12 @@ We made this restriction because one of our underlying SMT solvers, Yices2, does
 
     <p><strong>Ubuntu or Debian</strong></p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  sudo apt install gnuplot
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">sudo </span>apt <span class="nb">install </span>gnuplot
 </code></pre></div>    </div>
 
     <p><strong>MacOS</strong></p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew install gnuplot
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew <span class="nb">install </span>gnuplot
 </code></pre></div>    </div>
   </li>
 </ul>
@@ -139,19 +154,19 @@ We made this restriction because one of our underlying SMT solvers, Yices2, does
   <li>
     <p>Install the following python packages:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> pip3 install termcolor yices z3-solver antlr4-python3-runtime==4.9.1 sympy numpy bokeh scipy
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code> pip3 <span class="nb">install </span>termcolor yices z3-solver antlr4-python3-runtime<span class="o">==</span>4.9.1 sympy numpy bokeh scipy
 </code></pre></div>    </div>
   </li>
   <li>
     <p>Run the following command:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd stlmc-tool &amp;&amp; make
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">cd </span>stlmc-tool <span class="o">&amp;&amp;</span> make
 </code></pre></div>    </div>
   </li>
   <li>
     <p>Use the following command to run smoke tests for our installation:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> make test
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code> make <span class="nb">test</span>
 </code></pre></div>    </div>
 
     <p>This command requires sudo permission. The command tests if all neccessary executables exist and are set to right permissions.
@@ -159,13 +174,13 @@ We made this restriction because one of our underlying SMT solvers, Yices2, does
   test cases for integrity. Then, it tests STLmc using test STLmc models in ‘tests’ subdirectory.</p>
 
     <p><em>Remark: One may see ‘clock skew warning’. To resolve this, use the following command in the ‘stlmc’ directory:</em></p>
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> find . -exec touch {} \;
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code> find <span class="nb">.</span> <span class="nt">-exec</span> <span class="nb">touch</span> <span class="o">{}</span> <span class="se">\;</span>
 </code></pre></div>    </div>
   </li>
   <li>
     <p>If the tests succeed, you will see the following messages:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>start smoke test ...
+    <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>start smoke test ...
 [exec] Python: pass
 [exec] Yices: pass
 [exec] dReal: pass
@@ -213,7 +228,7 @@ You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.
   <li>
     <p>Use the following command to initialize Vagrant:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd STLmc-Tool-Vagrant &amp;&amp; vagrant up
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">cd </span>STLmc-Tool-Vagrant <span class="o">&amp;&amp;</span> vagrant up
 </code></pre></div>    </div>
     <p>Vagrant automatically creates a VM image for our artifact.</p>
 
@@ -222,20 +237,20 @@ You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.
   <li>
     <p>To use the generated VM image, use ssh connect as follows:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> vagrant ssh
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code> vagrant ssh
 </code></pre></div>    </div>
   </li>
   <li>
     <p>If succeed, you can see the artifact directory 'stlmc-tool' as follows:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> vagrant@ubuntu-bionic:~$ ls
- stlmc-tool
-</code></pre></div>    </div>
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp"> vagrant@ubuntu-bionic:~$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go"> stlmc-tool
+</span></code></pre></div>    </div>
   </li>
   <li>
     <p>(Optional step) When the ‘clock skew warning’ occurred, use the following command in the ‘stlmc-tool’ directory:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> vagrant@ubuntu-bionic:~/stlmc-tool$ find . -exec touch {} \;
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp"> vagrant@ubuntu-bionic:~/stlmc-tool$</span><span class="w"> </span>find <span class="nb">.</span> <span class="nt">-exec</span> <span class="nb">touch</span> <span class="o">{}</span> <span class="se">\;</span>
 </code></pre></div>    </div>
   </li>
 </ol>

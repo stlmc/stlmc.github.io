@@ -2,7 +2,7 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
 <title>STLMC</title>
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="STLMC" />
@@ -16,8 +16,12 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","headline":"STLMC","name":"STLMC","url":"https://stlmc.github.io/"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
-  
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/stlmc-highlight.css">
+  <script defer src="/assets/js/stlmc-highlight.js"></script>
+  <link rel="stylesheet" href="/assets/css/code-copy.css">
+  <link rel="stylesheet" href="/assets/css/benchmark-tables.css">
+  <script defer src="/assets/js/code-copy.js"></script><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
   
 </head>
 <body><header class="site-header" role="banner">
@@ -32,7 +36,8 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a></div>
+        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a><a class="page-link" href="/assets/web-ui/index.html">Workspace</a>
+        </div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -55,12 +60,14 @@
 
 <p><strong>STLmc</strong> is an SMT-based bounded model checker for signal temporal logic
 (STL) properties of hybrid systems. It supports linear, polynomial, and ODE
-dynamics through <strong>Z3</strong>, <strong>Yices2</strong>, and <strong>dReal3</strong>. STLmc provides robust STL
+dynamics through <strong>Z3</strong>, <strong>CVC5</strong>, <strong>Yices2</strong>, and <strong>dReal3</strong>. STLmc provides robust STL
 model checking and bounded reachability checking, with one-step or two-step
 solving and symbolic or explicit transition-path exploration. It can generate
 counterexamples for violated STL properties and witnesses for reachable
 targets, which can be inspected as interactive graphs or human-readable text
-reports.</p>
+reports.
+The <a href="/assets/web-ui/index.html">browser-based GUI</a> lets you edit models, select goals, run analyses, and
+inspect results with your locally installed STLmc and solvers.</p>
 
 <p><br /></p>
 

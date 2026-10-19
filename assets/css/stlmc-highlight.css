@@ -1,0 +1,43 @@
+/* Token colors follow Microsoft VS Code Light+ / Light (Visual Studio):
+ * https://github.com/microsoft/vscode/tree/main/extensions/theme-defaults/themes
+ * STLmc tokenization is independent of the VS Code implementation.
+ */
+.language-stlmc .highlight,
+.language-stlmc-config .highlight,
+.highlight:has(code.language-stlmc),
+.highlight:has(code.language-stlmc-config) {
+  color: #000000;
+  background: #FFFFFF;
+}
+.language-stlmc pre,
+.language-stlmc-config pre,
+pre:has(code.language-stlmc),
+pre:has(code.language-stlmc-config) {
+  color: #000000;
+  background: #FFFFFF;
+  border: 0;
+  border-radius: 0;
+  padding: 12px 16px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+.language-stlmc code, code.language-stlmc,
+.language-stlmc-config code, code.language-stlmc-config {
+  color: #000000;
+  background: #FFFFFF;
+  border: 0;
+  padding: 0;
+}
+:is(.language-stlmc, .language-stlmc-config) .stlmc-token-comment { color: #008000; font-style: normal; }
+:is(.language-stlmc, .language-stlmc-config) .stlmc-token-number { color: #098658; }
+:is(.language-stlmc, .language-stlmc-config) .stlmc-token-builtin { color: #795E26; }
+:is(.language-stlmc, .language-stlmc-config) .stlmc-token-operator { color: #000000; }
+:is(.language-stlmc, .language-stlmc-config) .stlmc-token-string { color: #A31515; }
+:is(.language-stlmc, .language-stlmc-config) .stlmc-token-keyword,
+:is(.language-stlmc, .language-stlmc-config) .stlmc-token-bool { color: #0000FF; font-weight: normal; }
+:is(.language-stlmc, .language-stlmc-config) .stlmc-token-type { color: #267F99; font-weight: normal; }
+:is(.language-stlmc, .language-stlmc-config) .stlmc-token-variable,
+:is(.language-stlmc, .language-stlmc-config) .stlmc-token-next { color: #001080; font-weight: normal; }
+:is(.language-stlmc, .language-stlmc-config) .stlmc-token-label { color: #000000; }

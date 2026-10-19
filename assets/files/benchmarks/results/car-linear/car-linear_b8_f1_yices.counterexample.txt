@@ -1,0 +1,238 @@
+Counterexample
+==============
+
+goal: f1
+formula: ((<>[3,5] ((y2 - y1) <= 5)) U[2,10] ((y2 - y1) >= 8))
+bound: 8
+delta: 0.1
+
+Variables
+---------
+x1: [-100.0, 100.0]
+x2: [-100.0, 100.0]
+y1: [-100.0, 100.0]
+y2: [-100.0, 100.0]
+
+Initial condition
+-----------------
+(and (not r) (not d) (0 <= x1) (x1 <= 1) (2 <= x2) (x2 <= 3) (0 <= y1) (y1 <= 1) (2 <= y2) (y2 <= 3))
+
+Bound 0
+-------
+time: 0.0 -> 1.95
+mode: (and (r = False) (d = False))
+
+invariant:
+  (and ((x2 - x1) <= 5) ((y2 - y1) <= 5))
+
+flow:
+  d/dt[x1] = 3
+  d/dt[y1] = 0
+  d/dt[x2] = 2
+  d/dt[y2] = 2
+
+state:
+  x1: 0.27499999999999997 -> 6.125
+  x2: 2.0 -> 5.8999999999999995
+  y1: 1.0 -> 1.0
+  y2: 2.0 -> 5.8999999999999995
+
+next mode: (and (r = True) (d = False))
+jump candidates:
+  ((y2 - y1) >= 3) => (and (r' = True) (d' = False) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+  ((y2 - y1) <= (- 3)) => (and (r' = True) (d' = True) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+
+Bound 1
+-------
+time: 1.95 -> 7.85
+mode: (and (r = True) (d = False))
+
+invariant:
+  (and ((x2 - x1) >= (- 5)) ((y2 - y1) >= (- 5)))
+
+flow:
+  d/dt[x1] = 1.5
+  d/dt[y1] = 3
+  d/dt[x2] = 2
+  d/dt[y2] = 2
+
+state:
+  x1: 6.125 -> 14.975
+  x2: 5.8999999999999995 -> 17.7
+  y1: 1.0 -> 18.7
+  y2: 5.8999999999999995 -> 17.7
+
+next mode: (and (r = False) (d = False))
+jump candidates:
+  (and ((y2 - y1) <= 1) ((y2 - y1) >= (- 1))) => (and (r' = False) (d' = False) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+  ((y2 - y1) <= (- 3)) => (and (r' = True) (d' = True) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+
+Bound 2
+-------
+time: 7.85 -> 10.799999999999999
+mode: (and (r = False) (d = False))
+
+invariant:
+  (and ((x2 - x1) <= 5) ((y2 - y1) <= 5))
+
+flow:
+  d/dt[x1] = 3
+  d/dt[y1] = 0
+  d/dt[x2] = 2
+  d/dt[y2] = 2
+
+state:
+  x1: 14.975 -> 23.825
+  x2: 17.7 -> 23.599999999999998
+  y1: 18.7 -> 18.7
+  y2: 17.7 -> 23.599999999999998
+
+next mode: (and (r = True) (d = False))
+jump candidates:
+  ((y2 - y1) >= 3) => (and (r' = True) (d' = False) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+  ((y2 - y1) <= (- 3)) => (and (r' = True) (d' = True) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+
+Bound 3
+-------
+time: 10.799999999999999 -> 16.7
+mode: (and (r = True) (d = False))
+
+invariant:
+  (and ((x2 - x1) >= (- 5)) ((y2 - y1) >= (- 5)))
+
+flow:
+  d/dt[x1] = 1.5
+  d/dt[y1] = 3
+  d/dt[x2] = 2
+  d/dt[y2] = 2
+
+state:
+  x1: 23.825 -> 32.675
+  x2: 23.599999999999998 -> 35.4
+  y1: 18.7 -> 36.4
+  y2: 23.599999999999998 -> 35.4
+
+next mode: (and (r = False) (d = False))
+jump candidates:
+  (and ((y2 - y1) <= 1) ((y2 - y1) >= (- 1))) => (and (r' = False) (d' = False) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+  ((y2 - y1) <= (- 3)) => (and (r' = True) (d' = True) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+
+Bound 4
+-------
+time: 16.7 -> 19.65
+mode: (and (r = False) (d = False))
+
+invariant:
+  (and ((x2 - x1) <= 5) ((y2 - y1) <= 5))
+
+flow:
+  d/dt[x1] = 3
+  d/dt[y1] = 0
+  d/dt[x2] = 2
+  d/dt[y2] = 2
+
+state:
+  x1: 32.675 -> 41.525
+  x2: 35.4 -> 41.3
+  y1: 36.4 -> 36.4
+  y2: 35.4 -> 41.3
+
+next mode: (and (r = True) (d = False))
+jump candidates:
+  ((y2 - y1) >= 3) => (and (r' = True) (d' = False) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+  ((y2 - y1) <= (- 3)) => (and (r' = True) (d' = True) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+
+Bound 5
+-------
+time: 19.65 -> 28.35833333333333
+mode: (and (r = True) (d = False))
+
+invariant:
+  (and ((x2 - x1) >= (- 5)) ((y2 - y1) >= (- 5)))
+
+flow:
+  d/dt[x1] = 1.5
+  d/dt[y1] = 3
+  d/dt[x2] = 2
+  d/dt[y2] = 2
+
+state:
+  x1: 41.525 -> 54.5875
+  x2: 41.3 -> 58.71666666666666
+  y1: 36.4 -> 62.525
+  y2: 41.3 -> 58.71666666666666
+
+next mode: (and (r = True) (d = True))
+jump candidates:
+  (and ((y2 - y1) <= 1) ((y2 - y1) >= (- 1))) => (and (r' = False) (d' = False) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+  ((y2 - y1) <= (- 3)) => (and (r' = True) (d' = True) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+
+Bound 6
+-------
+time: 28.35833333333333 -> 30.099999999999998
+mode: (and (r = True) (d = True))
+
+invariant:
+  (and ((x2 - x1) >= (- 5)) ((x2 - x1) <= 5))
+
+flow:
+  d/dt[x1] = 1.5
+  d/dt[y1] = (- 3)
+  d/dt[x2] = 2
+  d/dt[y2] = 2
+
+state:
+  x1: 54.5875 -> 57.199999999999996
+  x2: 58.71666666666666 -> 62.199999999999996
+  y1: 62.525 -> 57.3
+  y2: 58.71666666666666 -> 62.199999999999996
+
+next mode: (and (r = True) (d = False))
+jump candidates:
+  (and ((y2 - y1) <= 1) ((y2 - y1) >= (- 1))) => (and (r' = False) (d' = False) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+  ((y2 - y1) >= 3) => (and (r' = True) (d' = False) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+
+Bound 7
+-------
+time: 30.099999999999998 -> 37.0
+mode: (and (r = True) (d = False))
+
+invariant:
+  (and ((x2 - x1) >= (- 5)) ((y2 - y1) >= (- 5)))
+
+flow:
+  d/dt[x1] = 1.5
+  d/dt[y1] = 3
+  d/dt[x2] = 2
+  d/dt[y2] = 2
+
+state:
+  x1: 57.199999999999996 -> 67.55
+  x2: 62.199999999999996 -> 76.0
+  y1: 57.3 -> 78.0
+  y2: 62.199999999999996 -> 76.0
+
+next mode: (and (r = True) (d = False))
+jump candidates:
+  (and ((y2 - y1) <= 1) ((y2 - y1) >= (- 1))) => (and (r' = False) (d' = False) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+  ((y2 - y1) <= (- 3)) => (and (r' = True) (d' = True) (x1' = x1) (y1' = y1) (x2' = x2) (y2' = y2))
+
+Bound 8
+-------
+time: 37.0 -> 40.0
+mode: (and (r = True) (d = False))
+
+invariant:
+  (and ((x2 - x1) >= (- 5)) ((y2 - y1) >= (- 5)))
+
+flow:
+  d/dt[x1] = 1.5
+  d/dt[y1] = 3
+  d/dt[x2] = 2
+  d/dt[y2] = 2
+
+state:
+  x1: 67.55 -> 72.05
+  x2: 76.0 -> 82.0
+  y1: 78.0 -> 87.0
+  y2: 76.0 -> 82.0

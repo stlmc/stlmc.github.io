@@ -2,7 +2,7 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
 <title>STLMC</title>
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="STLMC" />
@@ -16,17 +16,25 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","headline":"STLMC","url":"https://stlmc.github.io/stlmc-language/"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/stlmc-highlight.css">
+  <script defer src="/assets/js/stlmc-highlight.js"></script>
+  <link rel="stylesheet" href="/assets/css/code-copy.css">
+  <link rel="stylesheet" href="/assets/css/benchmark-tables.css">
+  <script defer src="/assets/js/code-copy.js"></script><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
     <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
+    CommonHTML: {
+      linebreaks: { automatic: true, width: "container" }
+    },
     TeX: {
       equationNumbers: {
         autoNumber: "AMS"
       }
     },
     tex2jax: {
-    inlineMath: [ ['$', '$'] ],
-    displayMath: [ ['$$', '$$'] ],
+    inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+    displayMath: [ ['$$', '$$'], ['\\[', '\\]'] ],
     processEscapes: true,
   }
 });
@@ -38,10 +46,9 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 	});
 </script>
 <script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 
-  
   
   
 </head>
@@ -57,7 +64,8 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a></div>
+        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a><a class="page-link" href="/assets/web-ui/index.html">Workspace</a>
+        </div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -81,22 +89,22 @@ set of discrete modes $Q$, and continuous variables define a set of real-valued
 variables $X$. We can also declare named constants whose values do not change.
 Mode variables are declared with one of three types: $\textsf{bool}$ variables with $\textsf{true}$
 and $\textsf{false}$ values, $\textsf{int}$ variables with integer values, and $\textsf{real}$ variables with real
-values. For example, in the <a href="#two-networked-thermostat-systems">thermostat model</a>, the following declares two $\textsf{int}$ variables $\textsf{on0}$ and $\textsf{on1}$ and two $\textsf{real}$ variables $\textsf{x0}$ and $\textsf{x1}$.</p>
+values. For example, in the <a href="/benchmarks/therm.html">thermostat model</a>, the following declares two $\textsf{int}$ variables $\textsf{on0}$ and $\textsf{on1}$ and two continuous variables $\textsf{x0}$ and $\textsf{x1}$ with the declared ranges.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int on0;         int on1;
+<pre><code class="language-stlmc">int on0;         int on1;
 [10, 35] x0; [10, 35] x1;
-</code></pre></div></div>
+</code></pre>
 
 <p><strong id="mode-definitions">Mode Definitions.</strong>
 In STLmc, mode blocks define mode, jump, invariant, and
 flow conditions for a group of modes in a hybrid automaton. Multiple model
 blocks can be declared, and each mode block consists of four components:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ mode: ...
+<pre><code class="language-stlmc">{ mode: ...
   inv:  ...
   flow: ...
   jump: ...
 }
-</code></pre></div></div>
+</code></pre>
 <ul>
   <li>A mode component contains a semicolon-separated set of Boolean conditions over mode variables.</li>
   <li>An inv component contains a semicolon-separated set of Boolean formulas over continuous variables.</li>
@@ -106,17 +114,17 @@ blocks can be declared, and each mode block consists of four components:</p>
 continuous variables $x_1$, $…$ , $x_n$ is written as a semicolon-separated equation of
 the following form, where $e_i$ denotes an expression over $x_1$, $…$ , $x_n$:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>d/dt[x1] = e1(x1,...,xn) ;
+    <pre><code class="language-stlmc">d/dt[x1] = e1(x1,...,xn) ;
 ...
 d/dt[xn] = en(x1,...,xn) ;
-</code></pre></div>    </div>
+</code></pre>
     <p>A closed-form solution of ODEs is written as a set of continuous functions,
 parameterized by a time variable $\textsf{t}$ and the initial values $x_1(0)$, $…$, $x_n(0)$:</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x1(t) = e1(t, x1(0),...,xn(0)) ;
+    <pre><code class="language-stlmc">x1(t) = e1(t, x1(0),...,xn(0)) ;
 ...
 xn(t) = en(t, x1(0),...,xn(0)) ;
-</code></pre></div>    </div>
+</code></pre>
   </li>
   <li>A jump component contains a set of jump conditions <em>guard</em> =&gt; <em>reset</em>, where 
 guard and reset are Boolean conditions over mode and continuous variables.
@@ -124,7 +132,7 @@ We use “primed” variables to denote states after jumps have occurred</li>
 </ul>
 
 <p>For example, the $\textsf{Off}_{\textsf{0}}\textsf{On}_{\textsf{1}}$ mode is defined as follows:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ mode: on0 = 0; on1 = 1;
+<pre><code class="language-stlmc">{ mode: on0 = 0; on1 = 1;
   inv: 10 &lt; x0; x1 &lt; 30;
   flow: d/dt[x0] = - k0 * (c0 * x0 - d0 * x1);
         d/dt[x1] = k1 * (h1 - (c1 * x1 - d1 * x0));
@@ -133,16 +141,16 @@ We use “primed” variables to denote states after jumps have occurred</li>
         x1 &gt;= 26 =&gt; (and (on1' = 0) (on0' = on0)
                     (x0' = x0) (x1' = x1));
 }
-</code></pre></div></div>
+</code></pre>
 
 <p><strong id="initial-conditions">Initial Conditions.</strong>
 In the init section, an initial condition is declared as a
 set of Boolean formulas over mode and continuous variables.
 For example, the initial conditions $18 \leq x_0 \, , \, x_1 \leq 22$ with 
 $\textsf{on0} = 0$ and $\textsf{on1} = 0$ are defined as follows:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>init: on0 = 0;  18 &lt;= x0;  x0 &lt;= 22;
+<pre><code class="language-stlmc">init: on0 = 0;  18 &lt;= x0;  x0 &lt;= 22;
       on1 = 0;  18 &lt;= x1;  x1 &lt;= 22;
-</code></pre></div></div>
+</code></pre>
 
 <p><strong id="stl-properties">STL properties.</strong>
 In the goal section, STL properties are declared with labels.
@@ -150,20 +158,21 @@ State propositions are arithmetic and relational expressions over mode and conti
 and labels can be omitted.<br />
 For example, the following declares an STL formula 
 $\square_{[2,4]} ((x_0 - x_1 \geq 4) \to \lozenge_{[3,10]} (x_0 - x_1 \leq -3))$ with label $\textsf{f2}$:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f2: [][2, 4]((x0 - x1 &gt;= 4) -&gt; &lt;&gt;[3, 10] (x0 - x1 &lt;= -3));
-</code></pre></div></div>
+<pre><code class="language-stlmc">goal:
+[f2]: [][2, 4]((x0 - x1 &gt;= 4) -&gt; &lt;&gt;[3, 10] (x0 - x1 &lt;= -3));
+</code></pre>
 
 <p><strong id="state-propositions">State Propositions.</strong>
 To make it easy to write repeated propositions, “named” state propositions
 can be declared in the proposition section. For example, the above STL formula
 can be rewritten using two propositions $\textsf{p1}$ and $\textsf{p2}$ as follows:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>proposition:
+<pre><code class="language-stlmc">proposition:
 [p1]: x0 - x1 &gt;= 4;
 [p2]: x0 - x1 &lt;= -3;
 
 goal:
 [f2]: [][2, 4](p1 -&gt; &lt;&gt;[3, 10] p2);
-</code></pre></div></div>
+</code></pre>
 
 
   </div>

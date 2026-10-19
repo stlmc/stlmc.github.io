@@ -1,0 +1,115 @@
+Counterexample
+==============
+
+goal: f1
+formula: ([][0,4] ((vx < (- 2)) -> (<>[2,5] (rx <= (- 2)))))
+bound: 3
+delta: 0.5
+
+Variables
+---------
+rx: [-40.0, 40.0]
+ry: [-40.0, 40.0]
+vx: [-30.0, 30.0]
+vy: [-30.0, 30.0]
+
+Initial condition
+-----------------
+(and (not ix) (not iy) (0 <= rx) (rx <= 1) ((- 2.5) <= vx) (vx <= (- 2)) (0 <= ry) (ry <= 1) ((- 2.5) <= vy) (vy <= (- 2)))
+
+Bound 0
+-------
+time: 0 -> 17/16
+mode: (and (ix = False) (iy = False))
+
+invariant:
+  (and (rx > (- 20)) (ry > (- 20)) (vx > (- 8)) (vy > (- 8)))
+
+flow:
+  d/dt[rx] = vx
+  d/dt[ry] = vy
+  d/dt[vx] = (- 1.2)
+  d/dt[vy] = (- 1.4)
+
+state:
+  rx: 0.9140625 -> -2.12734375
+  ry: 0.05390625 -> -3.140234375
+  vx: -2.225 -> -3.5
+  vy: -2.2625 -> -3.75
+
+next mode: (and (ix = True) (iy = True))
+jump candidates:
+  (and (rx < 3) (ry < 3)) => (and (ix' = True) (iy' = True) (rx' = rx) (ry' = ry) (vx' = 0) (vy' = 0))
+  (and (rx >= 3) (ry < 3)) => (and (ix' = False) (iy' = True) (rx' = rx) (ry' = ry) (vx' = 0) (vy' = 0))
+  (and (rx < 3) (ry >= 3)) => (and (ix' = True) (iy' = False) (rx' = rx) (ry' = ry) (vx' = 0) (vy' = 0))
+
+Bound 1
+-------
+time: 17/16 -> 4
+mode: (and (ix = True) (iy = True))
+
+invariant:
+  (and (rx < 20) (ry < 20) (vx < 8) (vy < 8))
+
+flow:
+  d/dt[rx] = vx
+  d/dt[ry] = vy
+  d/dt[vx] = 1.2
+  d/dt[vy] = 1.4
+
+state:
+  rx: -2.12734375 -> 3.05
+  ry: -3.140234375 -> 2.9
+  vx: 0.0 -> 3.525
+  vy: 0.0 -> 4.1125
+
+next mode: (and (ix = False) (iy = True))
+jump candidates:
+  (and (rx >= 3) (ry < 3)) => (and (ix' = False) (iy' = True) (rx' = rx) (ry' = ry) (vx' = 0) (vy' = 0))
+  (and (rx < 3) (ry >= 3)) => (and (ix' = True) (iy' = False) (rx' = rx) (ry' = ry) (vx' = 0) (vy' = 0))
+
+Bound 2
+-------
+time: 4 -> 81/16
+mode: (and (ix = False) (iy = True))
+
+invariant:
+  (and (rx > (- 20)) (ry < 20) (vx > (- 8)) (vy < 8))
+
+flow:
+  d/dt[rx] = vx
+  d/dt[ry] = vy
+  d/dt[vx] = (- 1.2)
+  d/dt[vy] = 1.4
+
+state:
+  rx: 3.05 -> 2.37265625
+  ry: 2.9 -> 3.690234375
+  vx: 0.0 -> -1.275
+  vy: 0.0 -> 1.4875
+
+next mode: (and (ix = True) (iy = False))
+jump candidates:
+  (and (rx < 3) (ry < 3)) => (and (ix' = True) (iy' = True) (rx' = rx) (ry' = ry) (vx' = 0) (vy' = 0))
+  (and (rx >= 3) (ry >= 3)) => (and (ix' = False) (iy' = False) (rx' = rx) (ry' = ry) (vx' = 0) (vy' = 0))
+  (and (rx < 3) (ry >= 3)) => (and (ix' = True) (iy' = False) (rx' = rx) (ry' = ry) (vx' = 0) (vy' = 0))
+
+Bound 3
+-------
+time: 81/16 -> 10
+mode: (and (ix = True) (iy = False))
+
+invariant:
+  (and (rx < 20) (ry > (- 20)) (vx < 8) (vy > (- 8)))
+
+flow:
+  d/dt[rx] = vx
+  d/dt[ry] = vy
+  d/dt[vx] = 1.2
+  d/dt[vy] = (- 1.4)
+
+state:
+  rx: 2.37265625 -> 17.0
+  ry: 3.690234375 -> -13.375
+  vx: 0.0 -> 5.925
+  vy: 0.0 -> -6.9125

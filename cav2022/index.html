@@ -2,7 +2,7 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
 <title>CAV2022 | STLMC</title>
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="CAV2022" />
@@ -16,17 +16,25 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","headline":"CAV2022","url":"https://stlmc.github.io/cav2022/"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/stlmc-highlight.css">
+  <script defer src="/assets/js/stlmc-highlight.js"></script>
+  <link rel="stylesheet" href="/assets/css/code-copy.css">
+  <link rel="stylesheet" href="/assets/css/benchmark-tables.css">
+  <script defer src="/assets/js/code-copy.js"></script><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
     <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
+    CommonHTML: {
+      linebreaks: { automatic: true, width: "container" }
+    },
     TeX: {
       equationNumbers: {
         autoNumber: "AMS"
       }
     },
     tex2jax: {
-    inlineMath: [ ['$', '$'] ],
-    displayMath: [ ['$$', '$$'] ],
+    inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+    displayMath: [ ['$$', '$$'], ['\\[', '\\]'] ],
     processEscapes: true,
   }
 });
@@ -38,10 +46,9 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 	});
 </script>
 <script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 
-  
   
   
 </head>
@@ -57,7 +64,8 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a></div>
+        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a><a class="page-link" href="/assets/web-ui/index.html">Workspace</a>
+        </div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -380,7 +388,7 @@ Each model for the tools are placed under the [tool-name] directories with corre
 
 <p>We provide a script to automate the experiments: <em>run</em> in the top directory. The following command runs all 18 cases for this experiment (6 models, 3 formulas) with a 30-minute timeout:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./run -t 30
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./run <span class="nt">-t</span> 30
 </code></pre></div></div>
 
 <p>The argument $\textsf{-t 30}$ sets a timeout. This command produces a log directory <em>data/log</em> and a csv report <em>data/exp-result.csv</em>.</p>
@@ -389,7 +397,7 @@ Each model for the tools are placed under the [tool-name] directories with corre
 The following command generates the table using the data of <em>exp-result.csv</em>,
 placed in the <em>data</em> directory with a name <em>table2.html</em> (i.e., <em>data/table2.html</em>):</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./run -gen-tb &gt; ./data/table2.html
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./run <span class="nt">-gen-tb</span> <span class="o">&gt;</span> ./data/table2.html
 </code></pre></div></div>
 
 <h4 id="more-details-on-our-script">More Details on Our Script</h4>
@@ -397,25 +405,25 @@ placed in the <em>data</em> directory with a name <em>table2.html</em> (i.e., <e
 
 <p>The <em>run</em> script provides several options to run a subset of the experiments and generate reports. There are seven (optional) command-line arguments as follows:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$./run -m &lt;MODEL&gt; \ 
-       -d &lt;DYNAMICS&gt; \
-       -t &lt;TIMEOUT&gt; \
-       -f &lt;FORMULA&gt; \
-       -gen-csv \
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span>./run <span class="nt">-m</span> &lt;MODEL&gt; <span class="se">\ </span>
+<span class="gp">       -d &lt;DYNAMICS&gt;</span><span class="w"> </span><span class="se">\</span>
+<span class="gp">       -t &lt;TIMEOUT&gt;</span><span class="w"> </span><span class="se">\</span>
+<span class="gp">       -f &lt;FORMULA&gt;</span><span class="w"> </span><span class="se">\</span>
+<span class="go">       -gen-csv \
        -gen-tb \
        -r
-</code></pre></div></div>
+</span></code></pre></div></div>
 
 <p>If the directory <em>data/log</em> exists in the top directory, the csv report <em>exp1-result.csv</em> and <em>exp2-result.csv</em> can be obtained with the following command:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./run -gen-csv
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./run <span class="nt">-gen-csv</span>
 </code></pre></div></div>
 
 <p>Other options (<em>-m</em>, <em>-t</em>, and <em>-f</em>) restricts the cases to be executed. Run <em>./run -h</em> for more details about the options.</p>
 
 <p>For example, the following command runs the experiment using the oscilator and polynomial car model with formula f1 and f2 with a timeout of 10 minutes:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./run -m rail -d p oscil -f f1 f2 -t 10
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./run <span class="nt">-m</span> rail <span class="nt">-d</span> p oscil <span class="nt">-f</span> f1 f2 <span class="nt">-t</span> 10
 </code></pre></div></div>
 
 <p>Note that for the nonlinear dynamics models, the script <em>run</em> uses the algorithm $\textsf{2-step}$. For efficient parallelism, the script automatically detects the number of CPU cores in the computing environment.</p>

@@ -2,7 +2,7 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
 <title>STLMC</title>
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="STLMC" />
@@ -16,17 +16,25 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","headline":"STLMC","url":"https://stlmc.github.io/stlmc-cmds/"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/stlmc-highlight.css">
+  <script defer src="/assets/js/stlmc-highlight.js"></script>
+  <link rel="stylesheet" href="/assets/css/code-copy.css">
+  <link rel="stylesheet" href="/assets/css/benchmark-tables.css">
+  <script defer src="/assets/js/code-copy.js"></script><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
     <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
+    CommonHTML: {
+      linebreaks: { automatic: true, width: "container" }
+    },
     TeX: {
       equationNumbers: {
         autoNumber: "AMS"
       }
     },
     tex2jax: {
-    inlineMath: [ ['$', '$'] ],
-    displayMath: [ ['$$', '$$'] ],
+    inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+    displayMath: [ ['$$', '$$'], ['\\[', '\\]'] ],
     processEscapes: true,
   }
 });
@@ -38,10 +46,9 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 	});
 </script>
 <script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 
-  
   
   
 </head>
@@ -57,7 +64,8 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a></div>
+        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a><a class="page-link" href="/assets/web-ui/index.html">Workspace</a>
+        </div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -91,7 +99,7 @@ summarized in Table [<a href="#cmds">2</a>].</p>
     </tr>
     <tr>
       <td>$\textsf{-time-horizon}&lt;T&gt;$</td>
-      <td>a mode duration bound $T$</td>
+      <td>a continuous-segment duration bound $T$ for all solvers</td>
       <td>$\tau$</td>
     </tr>
     <tr>
@@ -106,7 +114,7 @@ summarized in Table [<a href="#cmds">2</a>].</p>
     </tr>
     <tr>
       <td>$\textsf{-solver}&lt;\textsf{Solver}&gt;$</td>
-      <td>an SMT solver to be used ($\textsf{auto}$/$\textsf{z3}$/$\textsf{yices}$/$\textsf{dreal}$)</td>
+      <td>an SMT solver to be used ($\textsf{auto}$/$\textsf{z3}$/$\textsf{cvc5}$/$\textsf{yices}$/$\textsf{dreal}$)</td>
       <td>$\textsf{auto}$</td>
     </tr>
     <tr>
@@ -132,16 +140,11 @@ summarized in Table [<a href="#cmds">2</a>].</p>
     <tr>
       <td>$\textsf{-parallel-core}&lt;N&gt;$</td>
       <td>the maximum number of parallel solver workers</td>
-      <td>$25$</td>
+      <td>$\textsf{auto}$ (host logical CPUs)</td>
     </tr>
     <tr>
       <td>$\textsf{-solver-batch-size}&lt;N&gt;$</td>
       <td>the maximum candidates combined in one solver query</td>
-      <td>$1$</td>
-    </tr>
-    <tr>
-      <td>$\textsf{-core-minimize-attempts}&lt;N&gt;$</td>
-      <td>the number of minimized unsat cores tried per scenario</td>
       <td>$1$</td>
     </tr>
     <tr>
@@ -183,7 +186,9 @@ summarized in Table [<a href="#cmds">2</a>].</p>
 <p>A discrete bound $N$ limits the number of mode changes and the number of
 <em>variable points</em>—points at which the truth value of an STL subformula
 changes—along a trajectory. For reachability, it limits the number of jumps.
-A time horizon $T$ limits the duration of each continuous segment.
+A time horizon $T$ limits the duration of each continuous segment for every
+solver backend. It is not a wall-clock timeout. A smaller horizon can exclude
+otherwise valid full-length executions.
 The option $\textsf{-two-step}$ enables abstraction-based two-step solving,
 while $\textsf{-parallel}$ runs its refinement checks concurrently.
 When the option $\textsf{-visualize}$ is set, STLmc generates counterexample
@@ -192,12 +197,15 @@ graph, or a text report.
 Among the STL formulas specified in the input model file, formulas to be analyzed are chosen using the $\textsf{-goal}$.</p>
 
 <p>We can choose different SMT solvers using the $\textsf{-solver}$ option.
-The STLmc tool currently supports three SMT solvers: Z3, Yices2 and dReal.
-With $\textsf{auto}$, the underlying solver is chosen according to the model’s
-formula and dynamics.
-Z3 and Yices2 can deal with linear and polynomial functions. dReal can
+The STLmc tool supports Z3, CVC5, Yices2, and dReal.
+With $\textsf{auto}$, STLmc selects the first supported, usable installed
+backend in the order Z3, CVC5, Yices, then dReal, subject to the formula and
+dynamics. If none is available, it reports an error and installation guidance.
+Z3, CVC5, and Yices2 can deal with supported linear and polynomial functions. dReal can
 approximately handle nonlinear ODEs—which generally make reachability
-undecidable for hybrid automata—up to a given precision $\delta &gt; 0$.</p>
+undecidable for hybrid automata—up to a given precision $\delta &gt; 0$.
+Parallel final Yices checks require a thread-safe native library; an unsafe
+library produces an error rather than concurrent solver calls.</p>
 
 <hr />
 
@@ -206,7 +214,7 @@ undecidable for hybrid automata—up to a given precision $\delta &gt; 0$.</p>
 <p>A model may declare a <code class="language-plaintext highlighter-rouge">reach</code> goal directly. The <code class="language-plaintext highlighter-rouge">-reach</code> option can also
 interpret a selected ordinary state goal as a reachability target:</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc system.model <span class="nt">-goal</span> target <span class="nt">-reach</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc system.model <span class="nt">-goal</span> target <span class="nt">-reach</span> <span class="nt">-bound</span> 5 <span class="nt">-time-bound</span> 20
 </code></pre></div></div>
 
 <p>A reachable query reports <code class="language-plaintext highlighter-rouge">reachable</code> and, with <code class="language-plaintext highlighter-rouge">-visualize</code>, writes a
@@ -216,10 +224,16 @@ finds a counterexample and continues to use the <code class="language-plaintext 
 <p>Path exploration and continuous solving can be selected independently. The
 default is symbolic one-step solving. The four combinations are:</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc system.model <span class="nt">-path-strategy</span> symbolic
-stlmc system.model <span class="nt">-path-strategy</span> symbolic <span class="nt">-two-step</span>
-stlmc system.model <span class="nt">-path-strategy</span> explicit
-stlmc system.model <span class="nt">-path-strategy</span> explicit <span class="nt">-two-step</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc system.model <span class="nt">-bound</span> 5 <span class="nt">-time-bound</span> 20 <span class="nt">-path-strategy</span> symbolic
+</code></pre></div></div>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc system.model <span class="nt">-bound</span> 5 <span class="nt">-time-bound</span> 20 <span class="nt">-path-strategy</span> symbolic <span class="nt">-two-step</span>
+</code></pre></div></div>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc system.model <span class="nt">-bound</span> 5 <span class="nt">-time-bound</span> 20 <span class="nt">-path-strategy</span> explicit
+</code></pre></div></div>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc system.model <span class="nt">-bound</span> 5 <span class="nt">-time-bound</span> 20 <span class="nt">-path-strategy</span> explicit <span class="nt">-two-step</span>
 </code></pre></div></div>
 
 <p>The <code class="language-plaintext highlighter-rouge">-solver-batch-size</code> option controls how many final candidates are combined
@@ -230,15 +244,15 @@ in one solver OR query. A value of <code class="language-plaintext highlighter-r
 <h4 id="saving-smt2-queries">Saving SMT2 Queries</h4>
 
 <p>By default, STLmc does not retain the SMT2 queries sent to the underlying
-solver. Use <code class="language-plaintext highlighter-rouge">-save-smt2</code> to save queries for dReal, Z3, and Yices:</p>
+solver. Use <code class="language-plaintext highlighter-rouge">-save-smt2</code> to save queries for dReal, Z3, CVC5, and Yices:</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc model.model <span class="nt">-save-smt2</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc model.model <span class="nt">-bound</span> 5 <span class="nt">-time-bound</span> 20 <span class="nt">-save-smt2</span>
 </code></pre></div></div>
 
 <p>The queries are written below <code class="language-plaintext highlighter-rouge">smt2-logs/&lt;solver&gt;/</code>. A different output
 directory can be selected with <code class="language-plaintext highlighter-rouge">-smt2-dir</code>:</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc model.model <span class="nt">-save-smt2</span> <span class="nt">-smt2-dir</span> solver-inputs
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc model.model <span class="nt">-bound</span> 5 <span class="nt">-time-bound</span> 20 <span class="nt">-save-smt2</span> <span class="nt">-smt2-dir</span> solver-inputs
 </code></pre></div></div>
 
 <p>Saved filenames identify the model, goal, solver, and bound. For the two-step

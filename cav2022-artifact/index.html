@@ -2,7 +2,7 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
 <title>Artifact | STLMC</title>
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="Artifact" />
@@ -16,17 +16,25 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","headline":"Artifact","url":"https://stlmc.github.io/cav2022-artifact/"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/stlmc-highlight.css">
+  <script defer src="/assets/js/stlmc-highlight.js"></script>
+  <link rel="stylesheet" href="/assets/css/code-copy.css">
+  <link rel="stylesheet" href="/assets/css/benchmark-tables.css">
+  <script defer src="/assets/js/code-copy.js"></script><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
     <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
+    CommonHTML: {
+      linebreaks: { automatic: true, width: "container" }
+    },
     TeX: {
       equationNumbers: {
         autoNumber: "AMS"
       }
     },
     tex2jax: {
-    inlineMath: [ ['$', '$'] ],
-    displayMath: [ ['$$', '$$'] ],
+    inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+    displayMath: [ ['$$', '$$'], ['\\[', '\\]'] ],
     processEscapes: true,
   }
 });
@@ -38,10 +46,9 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 	});
 </script>
 <script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 
-  
   
   
 </head>
@@ -57,7 +64,8 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a></div>
+        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a><a class="page-link" href="/assets/web-ui/index.html">Workspace</a>
+        </div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -160,14 +168,14 @@ You can create a VirtualBox image using Vagrant (<a href="https://www.vagrantup.
   <li>
     <p>If succeed, you can see the artifact directory 'CAV2022-AeC' as follows:</p>
 
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code> vagrant@ubuntu-bionic:~<span class="nv">$ </span><span class="nb">ls
- </span>CAV2022-AeC
-</code></pre></div>    </div>
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp"> vagrant@ubuntu-bionic:~$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go"> CAV2022-AeC
+</span></code></pre></div>    </div>
   </li>
   <li>
     <p>(Optional step) When the ‘clock skew warning’ occurred, use the following command in the ‘CAV2022-AeC’ directory:</p>
 
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code> vagrant@ubuntu-bionic:~/CAV2022-AeC<span class="nv">$ </span>find <span class="nb">.</span> <span class="nt">-exec</span> <span class="nb">touch</span> <span class="o">{}</span> <span class="se">\;</span>
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp"> vagrant@ubuntu-bionic:~/CAV2022-AeC$</span><span class="w"> </span>find <span class="nb">.</span> <span class="nt">-exec</span> <span class="nb">touch</span> <span class="o">{}</span> <span class="se">\;</span>
 </code></pre></div>    </div>
   </li>
 </ol>
@@ -210,9 +218,15 @@ But for your information, the password of ‘vagrant’ is ‘vagrant’.</p>
     <p>To install Yices on Ubuntu or Debian, do the following:</p>
 
     <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">sudo </span>apt <span class="nb">install </span>software-properties-common
-  <span class="nb">sudo </span>add-apt-repository ppa:sri-csl/formal-methods
-  <span class="nb">sudo </span>apt-get update
-  <span class="nb">sudo </span>apt-get <span class="nb">install </span>yices2-dev
+</code></pre></div>    </div>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">sudo </span>add-apt-repository ppa:sri-csl/formal-methods
+</code></pre></div>    </div>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">sudo </span>apt-get update
+</code></pre></div>    </div>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">sudo </span>apt-get <span class="nb">install </span>yices2-dev
 </code></pre></div>    </div>
 
     <p><strong>MacOS</strong></p>
@@ -293,24 +307,24 @@ But for your information, the password of ‘vagrant’ is ‘vagrant’.</p>
   <li>
     <p>If the tests succeed, you will see the following messages:</p>
 
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>start smoke <span class="nb">test</span> ...
-<span class="o">[</span><span class="nb">exec</span><span class="o">]</span> Python: pass
-<span class="o">[</span><span class="nb">exec</span><span class="o">]</span> Yices: pass
-<span class="o">[</span><span class="nb">exec</span><span class="o">]</span> dReal: pass
-<span class="o">[</span><span class="nb">exec</span><span class="o">]</span> Z3: pass
-<span class="o">[</span><span class="nb">exec</span><span class="o">]</span> Java: pass
-<span class="o">[</span><span class="nb">exec</span><span class="o">]</span> Gnuplot: pass
-<span class="o">[</span>file] Config: pass
-<span class="o">[</span>smt] dReal
+    <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>start smoke test ...
+[exec] Python: pass
+[exec] Yices: pass
+[exec] dReal: pass
+[exec] Z3: pass
+[exec] Java: pass
+[exec] Gnuplot: pass
+[file] Config: pass
+[smt] dReal
   ./tests/smt2/dreal/01.smt2: pass
   ./tests/smt2/dreal/02.smt2: pass
-<span class="o">[</span>smt] Z3
+[smt] Z3
   ./tests/smt2/z3/01.smt2: pass
   ./tests/smt2/z3/02.smt2: pass
-<span class="o">[</span>smt] Yices
+[smt] Yices
   ./tests/smt2/yices2/01.smt2: pass
   ./tests/smt2/yices2/02.smt2: pass
-<span class="o">[</span>tool] STLmc
+[tool] STLmc
   ./tests/stlmc/01.model: pass
   ./tests/stlmc/02.model: pass
 </code></pre></div>    </div>

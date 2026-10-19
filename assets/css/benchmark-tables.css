@@ -1,0 +1,17 @@
+/* Keep long property formulas separate from their prose explanations. */
+.post-content > table { display: block; max-width: 100%; overflow-x: auto; }
+.stl-table { max-width: 100%; overflow-x: auto; margin-bottom: 24px; }
+.stl-table, .tutorial-table { border: 0; padding: 0; background: transparent; }
+.tutorial-table { max-width: 100%; overflow-x: auto; margin-bottom: 24px; }
+.tutorial-table > table { display: table; width: 100%; margin-bottom: 0; }
+.tutorial-formulas { max-width: 100%; overflow-x: auto; }
+.tutorial-plot { max-width: 100%; overflow-x: auto; margin-bottom: 12px; border: 0; padding: 0; }
+.post-content :not(pre) > code { overflow-wrap: anywhere; }
+.tutorial-steps { text-align: left; }
+.stl-table > .stl-properties { width: 100%; min-width: 720px; table-layout: fixed; margin-bottom: 0; }
+.stl-properties > thead > tr > th,
+.stl-properties > tbody > tr > td { vertical-align: top; padding: 10px; border-left: 0; border-right: 0; }
+.stl-properties > thead > tr > th:first-child { width: 8%; }
+.stl-properties > thead > tr > th:nth-child(2) { width: 55%; }
+.stl-properties > thead > tr > th:nth-child(3) { width: 37%; }
+.stl-properties > tbody > tr > td:nth-child(3) { font-size: 0.9375em; line-height: 1.65; overflow-wrap: anywhere; }

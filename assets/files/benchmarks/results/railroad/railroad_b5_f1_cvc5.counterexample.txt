@@ -1,0 +1,148 @@
+Counterexample
+==============
+
+goal: f1
+formula: ([][0,14] (x <= 94))
+bound: 5
+delta: 0.0
+
+Variables
+---------
+pb: [0.0, 90.0]
+vb: [-50.0, 50.0]
+x: [-20.0, 100.0]
+
+Initial condition
+-----------------
+(and (a = False) (89 <= x) (x <= 90) (b = False) (0 <= pb) (pb <= 0.5) (vb = 0))
+
+Bound 0
+-------
+time: 0 -> 7/8
+mode: (and (a = False) (b = False))
+
+invariant:
+  (x > 60)
+
+flow:
+  d/dt[x] = (- 30)
+  d/dt[pb] = vb
+  d/dt[vb] = 0
+
+state:
+  pb: 0.3892578125 -> 0.3892578125
+  vb: 0.0 -> 0.0
+  x: 89.0390625 -> 62.7890625
+
+next mode: (and (a = True) (b = False))
+jump candidates:
+  (x < 80) => (and (a' = a) (b' = True) (pb' = pb) (x' = x) (vb' = 6))
+  (x < 70) => (and (a' = True) (b' = b) (pb' = pb) (x' = x) (vb' = 8))
+
+Bound 1
+-------
+time: 7/8 -> 151/16
+mode: (and (a = True) (b = False))
+
+invariant:
+  (x > 10)
+
+flow:
+  d/dt[x] = (- 5)
+  d/dt[pb] = vb
+  d/dt[vb] = 0.5
+
+state:
+  pb: 0.3892578125 -> 87.218359375
+  vb: 8.0 -> 12.28125
+  x: 62.7890625 -> 19.9765625
+
+next mode: (and (a = True) (b = True))
+jump candidates:
+  (x < 20) => (and (a' = a) (b' = True) (pb' = pb) (x' = x) (vb' = (- 4)))
+
+Bound 2
+-------
+time: 151/16 -> 14
+mode: (and (a = True) (b = True))
+
+invariant:
+  (x > (- 10))
+
+flow:
+  d/dt[x] = (- 5)
+  d/dt[pb] = vb
+  d/dt[vb] = (- 1)
+
+state:
+  pb: 87.218359375 -> 58.56015625
+  vb: -4.0 -> -8.5625
+  x: 19.9765625 -> -2.8359375
+
+next mode: (and (a = False) (b = False))
+jump candidates:
+  (x < 0) => (and (a' = False) (b' = False) (pb' = pb) (vb' = 0) (x' = (100 + x)))
+
+Bound 3
+-------
+time: 14 -> 3611/256
+mode: (and (a = False) (b = False))
+
+invariant:
+  (x > 60)
+
+flow:
+  d/dt[x] = (- 30)
+  d/dt[pb] = vb
+  d/dt[vb] = 0
+
+state:
+  pb: 58.56015625 -> 58.56015625
+  vb: 0.0 -> 0.0
+  x: 97.1640625 -> 94.0
+
+next mode: (and (a = False) (b = False))
+jump candidates:
+  (x < 80) => (and (a' = a) (b' = True) (pb' = pb) (x' = x) (vb' = 6))
+  (x < 70) => (and (a' = True) (b' = b) (pb' = pb) (x' = x) (vb' = 8))
+
+Bound 4
+-------
+time: 3611/256 -> 119/8
+mode: (and (a = False) (b = False))
+
+invariant:
+  (x > 60)
+
+flow:
+  d/dt[x] = (- 30)
+  d/dt[pb] = vb
+  d/dt[vb] = 0
+
+state:
+  pb: 58.56015625 -> 58.56015625
+  vb: 0.0 -> 0.0
+  x: 94.0 -> 70.9140625
+
+next mode: (and (a = False) (b = True))
+jump candidates:
+  (x < 80) => (and (a' = a) (b' = True) (pb' = pb) (x' = x) (vb' = 6))
+  (x < 70) => (and (a' = True) (b' = b) (pb' = pb) (x' = x) (vb' = 8))
+
+Bound 5
+-------
+time: 119/8 -> 16
+mode: (and (a = False) (b = True))
+
+invariant:
+  (x > 20)
+
+flow:
+  d/dt[x] = (- 5)
+  d/dt[pb] = vb
+  d/dt[vb] = 0.3
+
+state:
+  pb: 58.56015625 -> 65.5
+  vb: 6.0 -> 6.3375
+  x: 70.9140625 -> 65.2890625

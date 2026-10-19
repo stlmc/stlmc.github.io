@@ -2,7 +2,7 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
 <title>Download | STLMC</title>
 <meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="Download" />
@@ -16,8 +16,12 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","headline":"Download","url":"https://stlmc.github.io/download/"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
-  
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/stlmc-highlight.css">
+  <script defer src="/assets/js/stlmc-highlight.js"></script>
+  <link rel="stylesheet" href="/assets/css/code-copy.css">
+  <link rel="stylesheet" href="/assets/css/benchmark-tables.css">
+  <script defer src="/assets/js/code-copy.js"></script><link type="application/atom+xml" rel="alternate" href="https://stlmc.github.io/feed.xml" title="STLMC" />
   
 </head>
 <body><header class="site-header" role="banner">
@@ -32,7 +36,8 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a></div>
+        <div class="trigger"><a class="page-link" href="/tutorial/">Tutorial</a><a class="page-link" href="/download/">Download</a><a class="page-link" href="/benchmarks/">Benchmarks</a><a class="page-link" href="/documents/">Docs</a><a class="page-link" href="/cav2022-artifact/">Artifact</a><a class="page-link" href="/assets/web-ui/index.html">Workspace</a>
+        </div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -42,69 +47,90 @@
   <div class="post-content justify">
     <h4 id="install-the-stlmc-tool">Install the STLmc Tool</h4>
 
-<p>The STLmc tool supports CPython 3.8 through 3.14.
-You can install the tool from PyPI using the following command:</p>
+<p>STLmc requires CPython 3.11 through 3.14. Create and activate a virtual
+environment on Linux or macOS:</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> pip <span class="nb">install </span>stlmc
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3.11 <span class="nt">-m</span> venv .venv
 </code></pre></div></div>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">.</span> .venv/bin/activate
+</code></pre></div></div>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> pip <span class="nb">install</span> <span class="nt">--upgrade</span> pip
+</code></pre></div></div>
+
+<p>Install the latest available prerelease:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> pip <span class="nb">install</span> <span class="nt">--pre</span> stlmc
+</code></pre></div></div>
+
+<p>For detailed setup and troubleshooting, see the <a href="https://github.com/stlmc/stlmc/blob/main/docs/installation.md">installation guide</a>.</p>
 
 <hr />
 
-<h4 id="install-and-check-solvers">Install and Check Solvers</h4>
+<h4 id="install-solvers-and-visualization">Install Solvers and Visualization</h4>
 
-<p>The Python interfaces for Z3 and Yices are installed with STLmc. After
-installing the package, check whether all solver prerequisites are available:</p>
+<p>The default package includes no solver backends or HTML/PDF renderers.
+For a first installation, install Z3 and both renderers:</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc-install-solvers <span class="nt">--check</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc-installer <span class="nb">install</span> <span class="nt">--solver</span> z3 <span class="nt">--visualize</span> html pdf
 </code></pre></div></div>
 
-<p>Install all missing solver components where automatic installation is
-supported:</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc-install-solvers
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc-installer check <span class="nt">--solver</span> z3 <span class="nt">--visualize</span> html pdf
 </code></pre></div></div>
 
-<p>An individual solver can be selected with <code class="language-plaintext highlighter-rouge">z3</code>, <code class="language-plaintext highlighter-rouge">yices</code>, or <code class="language-plaintext highlighter-rouge">dreal</code>:</p>
+<p>Additional solvers can be installed as needed. Z3 is also required by the
+default internal reasoning backend when another final solver is selected:</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc-install-solvers dreal
-stlmc-install-solvers yices
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc-installer <span class="nb">install</span> <span class="nt">--solver</span> cvc5 yices dreal
 </code></pre></div></div>
 
-<p>Automatic Yices installation supports Ubuntu/Debian and macOS with Homebrew.
-Automatic dReal installation supports macOS and x86-64 Linux. Native package
-installation may request administrator privileges. If a required solver is
-unavailable, STLmc reports the corresponding installer command.</p>
+<p>Native solver availability depends on the platform. The managed dReal
+download is the official 3.16.06.02 release; Apple Silicon requires Rosetta.
+This release has known correctness limitations for some ODE invariants.
+Parallel final Yices checks require a thread-safe native library.
+See <a href="https://github.com/stlmc/stlmc/blob/main/docs/installation.md#dreal-on-apple-silicon">dReal on Apple Silicon</a>
+and <a href="https://github.com/stlmc/stlmc/blob/main/docs/installation.md#yices-on-macos">Yices on macOS</a>
+for platform-specific setup.</p>
 
-<p>Use the following commands to confirm the installation and view the available
-options:</p>
+<hr />
+
+<h4 id="run-stlmc">Run STLmc</h4>
+
+<p>After installing STLmc and the solver/renderers above, install and check the
+GUI dependencies in the same activated virtual environment:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc-installer <span class="nb">install</span> <span class="nt">--ui</span>
+</code></pre></div></div>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc-installer check <span class="nt">--ui</span>
+</code></pre></div></div>
+
+<p>Start the locally hosted GUI:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc-gui
+</code></pre></div></div>
+
+<p>The browser opens at <code class="language-plaintext highlighter-rouge">http://127.0.0.1:8766/</code>. Keep the terminal open, then
+paste its session token into the GUI and choose <strong>Connect</strong>. Models and analyses
+remain on your computer. See the <a href="https://github.com/stlmc/stlmc/blob/main/docs/gui.md">GUI user guide</a>
+for editing files, analysis settings, results, and SSH connections.</p>
+
+<p>Follow the <a href="/tutorial/">tutorial</a> for a complete model, executable
+commands, and counterexample plots. To see the available options:</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc <span class="nt">-h</span>
-stlmc-vis <span class="nt">-h</span>
 </code></pre></div></div>
 
-<hr />
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stlmc-vis <span class="nt">-h</span>
+</code></pre></div></div>
 
-<h4 id="optional-pdf-output">Optional PDF Output</h4>
-
-<ul>
-  <li>
-    <p>Gnuplot (optional): <a href="http://www.gnuplot.info/">http://www.gnuplot.info/</a></p>
-
-    <p>Gnuplot is required only when exporting counterexample graphs in PDF
-  format. It is not required for HTML or text counterexample output. You can
-  install Gnuplot using the following command:</p>
-
-    <p><strong>Ubuntu or Debian</strong></p>
-
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">sudo </span>apt <span class="nb">install </span>gnuplot
-</code></pre></div>    </div>
-
-    <p><strong>MacOS</strong></p>
-
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  brew <span class="nb">install </span>gnuplot
-</code></pre></div>    </div>
-  </li>
-</ul>
+<p>HTML output uses Bokeh and PDF output uses Matplotlib; Gnuplot is not required.
+Text reports need no additional renderer. The <code class="language-plaintext highlighter-rouge">-visualize</code> option saves data
+for later rendering, rather than opening a graph. Use the filename printed
+by STLmc with <code class="language-plaintext highlighter-rouge">stlmc-vis</code> as shown in the tutorial.
+Older pickle-based result files are unsupported; rerun model checking to
+generate current <code class="language-plaintext highlighter-rouge">.counterexample</code> or <code class="language-plaintext highlighter-rouge">.witness</code> files.</p>
 
   </div>
 
