@@ -167,6 +167,12 @@ exact scheme, hostname, and port. Paste the terminal’s <strong>Session token</
 choose <strong>Connect</strong>. The default <strong>Bridge URL</strong>, under <strong>Advanced connection
 settings</strong>, is <code class="language-plaintext highlighter-rouge">http://127.0.0.1:8765</code>. Allow local-network access if your browser asks.</p>
 
+<p><strong>Safari:</strong> Connecting from this HTTPS website to the local HTTP bridge is currently
+unsupported: Safari blocks the request as mixed content, even with the correct
+<code class="language-plaintext highlighter-rouge">--allow-origin</code> setting and session token. Use the locally hosted GUI at
+<code class="language-plaintext highlighter-rouge">http://127.0.0.1:8766/</code> in Safari instead. This restriction concerns the connection
+from this website, not running STLmc or using the local GUI.</p>
+
 <p>The following steps apply to either GUI. See the <a href="https://github.com/stlmc/stlmc/blob/main/docs/gui.md">GUI user guide</a>
 for file management, run history, and remote connections.</p>
 
